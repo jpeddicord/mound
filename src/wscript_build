@@ -2,7 +2,16 @@ bld.new_task_gen(
     features = 'cc cprogram',
     packages = 'config gio-2.0 gtk+-2.0',
     vapi_dirs = '.',
-    source = 'Mound.vala',
+    source = 'Mound.vala UI.vala',
     target = 'mound',
     uselib = 'GTK',
 )
+
+bld.new_task_gen(
+    features = 'subst',
+    source = 'mound.ui.in',
+    target = 'mound.ui',
+    dict = {'VERSION': bld.env['VERSION']},
+    install_path = '${PREFIX}/share/mound'
+)
+

@@ -28,22 +28,27 @@ namespace Mound {
     struct Application {
         public string[] locations;
         public long size;
+        public string full_name;
+        public string icon_name;
     }
 
     class Mound : GLib.Object {
         
         public HashTable<string,string> default_apps;
-        public HashTable<string,AppUserData?> applications;
+        public HashTable<string,Application?> applications;
         
         public static int main (string[] args) {
+            Gtk.init (ref args);
             var mound = new Mound ();
             mound.load_applications (APPLICATIONS_DIR);
+            new MainUI (ref mound);
+            Gtk.main ();
             return 0;
         }
         
         construct {
             default_apps = new HashTable<string,string> (str_hash, str_equal);
-            applications = new HashTable<string,AppUserData?> (str_hash, str_equal);
+            applications = new HashTable<string,Application?> (str_hash, str_equal);
         }
         
         public void load_applications (string appdir) {
@@ -90,8 +95,6 @@ namespace Mound {
                         desktop_locations = default_apps.lookup (desktop_name);
                         if (desktop_locations == null) {
                             continue;
-                        } else { //XXX
-                            print ("default for %s is %s\n", desktop_name, desktop_locations); //XXX
                         }
                     } else {
                         warning ("%s: %s", desktop_filename, e.message);
@@ -99,11 +102,6 @@ namespace Mound {
                     }
                 }
                 
-                print ("=== %s\n", desktop_name);
-                // finally, add to the list of userdata-aware apps
-                foreach (string tmp in desktop_locations.split (";")){
-                    print (" %s\n", tmp);
-                }
                 Application app = Application ();
                 app.locations = desktop_locations.split (";");
                 applications.insert (desktop_name, app);
