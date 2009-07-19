@@ -27,8 +27,12 @@ namespace Mound {
         public Builder builder;
         public Window main_window;
         private unowned HashTable<string,Application?> applications;
+        private unowned Application? selected_app;
         private ListStore lst_applications;
         private IconView apps_iconview;
+        private Image img_appicon;
+        private Label lbl_title;
+        private Label lbl_app_details;
         private Button btn_snapshots;
         private Button btn_copy;
         private Button btn_delete;
@@ -57,10 +61,14 @@ namespace Mound {
                 update_ui ();
             });
             
+            img_appicon = builder.get_object ("img_appicon") as Image;
+            lbl_title = builder.get_object ("lbl_title") as Label;
+            lbl_app_details = builder.get_object ("lbl_app_details") as Label;
             btn_snapshots = builder.get_object ("btn_snapshots") as Button;
             btn_copy = builder.get_object ("btn_copy") as Button;
             btn_delete = builder.get_object ("btn_delete") as Button;
             
+            update_ui ();
             main_window.show_all ();
         }
         
@@ -70,25 +78,35 @@ namespace Mound {
                 var treeiter = TreeIter ();
                 lst_applications.append (out treeiter);
                 Application app = applications.lookup (appname);
-                lst_applications.set_value (treeiter, 0, app.icon);
+                lst_applications.set_value (treeiter, 0, appname);
                 lst_applications.set_value (treeiter, 1, app.full_name);
+                lst_applications.set_value (treeiter, 2, app.icon);
             }
             // force 4 rows
             apps_iconview.columns = ((int) applications.size ()) / 4;
         }
         
         private void update_ui () {
-            TreePath path = null;
+            TreeIter iter;
+            Value selected_val;
+            string selected_name = null;
             unowned List<TreePath> selection = apps_iconview.get_selected_items ();
-            print ("%d\n", (int) selection.length());
+            // this should only iterate once
             foreach (TreePath selected in selection) {
-                path = selected;
+                lst_applications.get_iter (out iter, selected);
+                lst_applications.get_value (iter, 0, out selected_val);
+                selected_name = (string) selected_val;
             }
-            if (path != null) {
+            if (selected_name != null) {
+                selected_app = applications.lookup (selected_name);
+                lbl_title.label = "<span font=\"Sans Bold 14\">%s</span>".printf (selected_app.full_name);
+                img_appicon.set_from_pixbuf (selected_app.icon);
                 btn_snapshots.sensitive = true;
                 btn_copy.sensitive = true;
                 btn_delete.sensitive = true;
             } else {
+                selected_app = null;
+                lbl_title.label = "<span font=\"Sans Bold 14\">Select an Application</span>";
                 btn_snapshots.sensitive = false;
                 btn_copy.sensitive = false;
                 btn_delete.sensitive = false;
