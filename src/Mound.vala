@@ -20,28 +20,31 @@
 
 const string APPLICATIONS_DIR = "/usr/share/applications";
 const string DESKTOP_KEY = "X-UserData";
-const string DEFAULTS_FILE = "/home/jacob/Desktop/userdata"; // XXX
+const string DEFAULTS_FILE = "/etc/userdata";
 
 namespace Mound {
 
     // used in conjunction with the Mound.applications HashTable
     struct Application {
         public string[] locations;
-        public long size;
         public string full_name;
         public string icon_name;
+        public Gdk.Pixbuf icon;
+        public long data_size;
     }
 
     class Mound : GLib.Object {
         
         public HashTable<string,string> default_apps;
         public HashTable<string,Application?> applications;
+        private Gtk.IconTheme icon_theme;
         
         public static int main (string[] args) {
             Gtk.init (ref args);
             var mound = new Mound ();
             mound.load_applications (APPLICATIONS_DIR);
-            new MainUI (ref mound);
+            var ui = new MainUI ();
+            ui.load_applications (ref mound.applications);
             Gtk.main ();
             return 0;
         }
@@ -49,6 +52,7 @@ namespace Mound {
         construct {
             default_apps = new HashTable<string,string> (str_hash, str_equal);
             applications = new HashTable<string,Application?> (str_hash, str_equal);
+            icon_theme = Gtk.IconTheme.get_default ();
         }
         
         public void load_applications (string appdir) {
@@ -102,7 +106,22 @@ namespace Mound {
                     }
                 }
                 
+                // at this point we should have a desktop entry that is valid
                 Application app = Application ();
+                
+                try {
+                    app.full_name = desktop.get_string ("Desktop Entry", "Name");
+                } catch {
+                    app.full_name = desktop_name;
+                }
+                try {
+                    app.icon_name = desktop.get_string ("Desktop Entry", "Icon");
+                    app.icon = icon_theme.load_icon (app.icon_name, 32, Gtk.IconLookupFlags.FORCE_SIZE);
+                } catch {
+                    app.icon_name = "";
+                    app.icon = null;
+                }
+                
                 app.locations = desktop_locations.split (";");
                 applications.insert (desktop_name, app);
             }
