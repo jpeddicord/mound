@@ -26,8 +26,8 @@ namespace Mound {
         
         public Builder builder;
         public Window main_window;
-        private unowned HashTable<string,Application?> applications;
-        private unowned Application? selected_app;
+        private unowned Mound mound;
+        private string selected_app_name;
         private ListStore lst_applications;
         private IconView apps_iconview;
         private Image img_appicon;
@@ -36,6 +36,10 @@ namespace Mound {
         private Button btn_snapshots;
         private Button btn_copy;
         private Button btn_delete;
+        
+        public MainUI (Mound usemound) {
+            mound = usemound;
+        }
         
         construct {
             builder = new Builder ();
@@ -72,18 +76,17 @@ namespace Mound {
             main_window.show_all ();
         }
         
-        public void load_applications (ref HashTable<string,Application?> use_applications) {
-            applications = use_applications;
-            foreach (string appname in applications.get_keys()) {
+        public void load_applications () {
+            foreach (string appname in mound.applications.get_keys()) {
                 var treeiter = TreeIter ();
                 lst_applications.append (out treeiter);
-                Application app = applications.lookup (appname);
+                Application app = mound.applications.lookup (appname);
                 lst_applications.set_value (treeiter, 0, appname);
                 lst_applications.set_value (treeiter, 1, app.full_name);
                 lst_applications.set_value (treeiter, 2, app.icon);
             }
             // force 4 rows
-            apps_iconview.columns = ((int) applications.size ()) / 4;
+            apps_iconview.columns = ((int) mound.applications.size ()) / 4;
         }
         
         private void update_ui () {
@@ -98,15 +101,20 @@ namespace Mound {
                 selected_name = (string) selected_val;
             }
             if (selected_name != null) {
-                selected_app = applications.lookup (selected_name);
-                lbl_title.label = "<span font=\"Sans Bold 14\">%s</span>".printf (selected_app.full_name);
-                img_appicon.set_from_pixbuf (selected_app.icon);
+                selected_app_name = selected_name;
+                var app = mound.applications.lookup (selected_name);
+                lbl_title.label = "<span font=\"Sans Bold 14\">%s</span>".printf (app.full_name);
+                var appsize = mound.calculate_app_size (selected_name);
+                var sizekb = (int)(appsize / 1024);
+                lbl_app_details.label = "This application is using <b>%d KB</b> of space.".printf (sizekb);
+                img_appicon.set_from_pixbuf (app.icon);
                 btn_snapshots.sensitive = true;
                 btn_copy.sensitive = true;
                 btn_delete.sensitive = true;
             } else {
-                selected_app = null;
+                selected_app_name = null;
                 lbl_title.label = "<span font=\"Sans Bold 14\">Select an Application</span>";
+                img_appicon.set_from_stock ("gtk-dialog-question", IconSize.DND);
                 btn_snapshots.sensitive = false;
                 btn_copy.sensitive = false;
                 btn_delete.sensitive = false;

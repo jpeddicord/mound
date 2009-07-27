@@ -24,13 +24,13 @@ const string DEFAULTS_FILE = "/etc/userdata";
 
 namespace Mound {
 
-    // used in conjunction with the Mound.applications HashTable
     struct Application {
+        public string name;
         public string[] locations;
         public string full_name;
         public string icon_name;
         public Gdk.Pixbuf icon;
-        public long data_size;
+        public ulong data_size;
     }
 
     class Mound : GLib.Object {
@@ -43,8 +43,8 @@ namespace Mound {
             Gtk.init (ref args);
             var mound = new Mound ();
             mound.load_applications (APPLICATIONS_DIR);
-            var ui = new MainUI ();
-            ui.load_applications (ref mound.applications);
+            var ui = new MainUI (mound);
+            ui.load_applications ();
             Gtk.main ();
             return 0;
         }
@@ -108,11 +108,12 @@ namespace Mound {
                 
                 // at this point we should have a desktop entry that is valid
                 Application app = Application ();
+                app.name = desktop_name;
                 
                 try {
                     app.full_name = desktop.get_string ("Desktop Entry", "Name");
                 } catch {
-                    app.full_name = desktop_name;
+                    app.full_name = app.name;
                 }
                 try {
                     app.icon_name = desktop.get_string ("Desktop Entry", "Icon");
@@ -123,6 +124,7 @@ namespace Mound {
                 }
                 
                 app.locations = desktop_locations.split (";");
+                app.data_size = 0;
                 applications.insert (desktop_name, app);
             }
         }
@@ -137,6 +139,49 @@ namespace Mound {
                 string app = line.substring (0, line.length - half.length);
                 string locations = half.substring (1);
                 default_apps.insert (app, locations);
+            }
+        }
+        
+        /** Calculate the total size of a list of locations.
+         * Used to find application userdata sizes. This is rather slow,
+         * so use sparingly.
+         */
+        public ulong calculate_app_size (string appname, bool force = false) {
+            print ("=== Scanning %s ===\n", appname);
+            weak Application app = applications.lookup (appname);
+            print ("%p Current size: %lu (%s)\n", &app, app.data_size, app.full_name);
+            if (app.data_size > 0 && force == false) {
+                return app.data_size;
+            }
+            app.data_size = 0;
+            foreach (string loc in app.locations) {
+                print (" -- %s\n", loc);
+                app.data_size += file_size (loc);
+            }
+            print ("%lu\n", app.data_size);
+            return app.data_size;
+        }
+        
+        /** Lookup the size of a file or directory recursively. */
+        public static ulong file_size (string file) {
+            if (FileUtils.test (file, FileTest.IS_DIR)) {
+                ulong size = 0;
+                string dirfile;
+                try {
+                    var dir = Dir.open (file);
+                    string lookup;
+                    while ((dirfile = dir.read_name ()) != null) {
+                        lookup = file + "/" + dirfile;
+                        size += file_size (lookup);
+                    }
+                    return size;
+                } catch (FileError e) {
+                    return 0;
+                }
+            } else {
+                var file_stat = Posix.Stat ();
+                Posix.stat (file, out file_stat);
+                return file_stat.st_size;
             }
         }
         
