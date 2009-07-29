@@ -15,12 +15,16 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import gtk
-import Mound
-from Mound.ui import MainUI
+def format_size(size):
+    """Format a size (bytes) into something more readable."""
+    size = float(size)
+    if size > 1024*1024:
+        return "%0.1f MB" % (size / 1024 / 1024)
+    elif size > 1024:
+        return "%0.1f KB" % (size / 1024)
+    else:
+        # bytes aren't a friendly unit, use more precision instead
+        return "%0.2f KB" % (size / 1024)
 
-m = Mound.Mound()
-m.load_applications("/usr/share/applications")
-ui = MainUI(m)
-ui.load_applications()
-gtk.main()
+def check_for_process(name):
+    pass #TODO

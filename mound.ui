@@ -13,9 +13,11 @@
     </columns>
   </object>
   <object class="GtkWindow" id="win_main">
-    <property name="title" translatable="yes">Mound</property>
+    <property name="title" translatable="yes">Mound Data Manager</property>
+    <property name="resizable">False</property>
     <child>
       <object class="GtkVBox" id="vbox1">
+        <property name="width_request">600</property>
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
@@ -30,33 +32,10 @@
                   <object class="GtkMenu" id="menu1">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem1">
-                        <property name="label">gtk-new</property>
-                        <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem2">
-                        <property name="label">gtk-open</property>
-                        <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem3">
-                        <property name="label">gtk-save</property>
-                        <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
                       <object class="GtkImageMenuItem" id="imagemenuitem4">
-                        <property name="label">gtk-save-as</property>
                         <property name="visible">True</property>
+                        <property name="use_action_appearance">True</property>
+                        <property name="related_action">act_import</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -106,7 +85,7 @@
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
-            <property name="height_request">220</property>
+            <property name="height_request">250</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="vscrollbar_policy">never</property>
@@ -146,7 +125,6 @@
         </child>
         <child>
           <object class="GtkHBox" id="hbox2">
-            <property name="width_request">500</property>
             <property name="height_request">200</property>
             <property name="visible">True</property>
             <child>
@@ -200,8 +178,8 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="btn_copy">
-                        <property name="label" translatable="yes">Copy Data</property>
+                      <object class="GtkButton" id="btn_export">
+                        <property name="label" translatable="yes">Export Data</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -283,6 +261,8 @@
   <object class="GtkWindow" id="win_snapshots">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Snapshots</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
@@ -308,6 +288,7 @@
         </child>
         <child>
           <object class="GtkTreeView" id="snapshots_treeview">
+            <property name="height_request">200</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="model">lst_snapshots</property>
@@ -328,7 +309,6 @@
             <child>
               <object class="GtkTreeViewColumn" id="col_snapshot_date">
                 <property name="title">Date Taken</property>
-                <property name="expand">True</property>
                 <property name="sort_indicator">True</property>
                 <property name="sort_order">descending</property>
                 <child>
@@ -360,12 +340,12 @@
             <property name="visible">True</property>
             <property name="spacing">2</property>
             <child>
-              <object class="GtkButton" id="btn_snapshots_revert">
-                <property name="label">gtk-revert-to-saved</property>
+              <object class="GtkButton" id="btn_snapshots_new">
+                <property name="label" translatable="yes">Take Snapshot</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
+                <property name="image">img_new_snapshot</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -374,8 +354,8 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_snapshots_delete">
-                <property name="label">gtk-delete</property>
+              <object class="GtkButton" id="btn_snapshots_revert">
+                <property name="label">gtk-revert-to-saved</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -388,12 +368,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="btn_snapshots_new">
-                <property name="label" translatable="yes">Take Snapshot</property>
+              <object class="GtkButton" id="btn_snapshots_delete">
+                <property name="label">gtk-delete</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="image">img_new_snapshot</property>
+                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -427,5 +407,52 @@
   <object class="GtkImage" id="img_new_snapshot">
     <property name="visible">True</property>
     <property name="icon_name">appointment-new</property>
+  </object>
+  <object class="GtkMessageDialog" id="dlg_new_snapshot">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Take Snapshot</property>
+    <property name="modal">True</property>
+    <property name="type_hint">normal</property>
+    <property name="skip_taskbar_hint">True</property>
+    <property name="skip_pager_hint">True</property>
+    <property name="transient_for">win_snapshots</property>
+    <property name="message_type">question</property>
+    <property name="buttons">ok-cancel</property>
+    <property name="text" translatable="yes">New Snapshot</property>
+    <property name="secondary_text" translatable="yes">Enter a name for this snapshot below.</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox4">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkEntry" id="entry_snapshot_name">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="invisible_char">&#x2022;</property>
+            <property name="activates_default">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area4">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkAction" id="act_import">
+    <property name="label">Import Data...</property>
+    <property name="icon_name">media-eject</property>
   </object>
 </interface>
