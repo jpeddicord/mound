@@ -65,10 +65,17 @@ class Mound:
                 # load the icon
                 try:
                     app.icon_name = cp.get("Desktop Entry", "Icon")
-                    
                 except:
                     pass # XXX app.icon_name = some-default-icon
                 app.load_icon()
+                
+                # used to check if app is running
+                try:
+                    app.exec_name = cp.get("Desktop Entry", "Exec").split(" ", 1)[0]
+                    app.exec_name = os.path.basename(app.exec_name)
+                except:
+                    pass
+                
                 
                 self.applications[app.name] = app
                 

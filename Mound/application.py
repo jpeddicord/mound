@@ -16,7 +16,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
-from subprocess import Popen
+from subprocess import Popen, call
 from gtk import icon_theme_get_default
 
 try:
@@ -42,6 +42,7 @@ class Application:
         self.icon_name = ""
         self.icon = None
         self.data_size = 0
+        self.exec_name = ""
         self.snapshots = {}
     
     def set_locations(self, locations):
@@ -67,10 +68,16 @@ class Application:
             if os.path.isdir(location):
                 for root, dirs, files in os.walk(location):
                     for f in files:
-                        self.data_size += os.path.getsize(os.path.join(root, f))
+                        if os.path.isfile(os.path.join(root, f)):
+                            self.data_size += os.path.getsize(os.path.join(root, f))
             else:
                 self.data_size += os.path.getsize(location)
         return self.data_size
+    
+    def check_running(self):
+        c = call(["pgrep", "-xu", str(os.getuid()), self.exec_name])
+        assert c < 2   # error codes and whatnot
+        return c == 0
     
     def load_snapshots(self, force=False):
         if self.snapshots and not force:
@@ -93,7 +100,7 @@ class Application:
         if not os.path.isdir(app_snapshot_dir):
             os.makedirs(app_snapshot_dir)
         snap_filename = os.path.join(app_snapshot_dir, "%s.snapshot.tar.gz" % snapshot_name)
-        cmd = ["tar", "-czf",
+        cmd = ["tar", "-czhf",
             snap_filename,
             "-C", user_home
         ]

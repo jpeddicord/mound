@@ -133,19 +133,24 @@ class MainUI:
             selection_iter = self.lst_applications.get_iter(selection)
             selected = self.lst_applications.get_value(selection_iter, 0)
             app = self.selected_app = self.mound.applications[selected]
+            # check if it's running
+            sensitive = self.selected_app.check_running() == False
+            txt = ""
+            if not sensitive:
+                txt = "<b>Please close %s before managing it.</b>\n\n" % self.selected_app.full_name
             # grab the size
             app.calculate_size()
             if app.data_size > 0:
                 size = format_size(app.data_size)
-                txt = "<i>This application is using <b>" + size + "</b> of space.</i>"
+                txt += "<i>This application is using <b>" + size + "</b> of space.</i>"
             else:
-                txt = "<i>This application is not storing any data.</i>"
+                txt += "<i>This application is not storing any data.</i>"
             self.lbl_app_details.props.label = txt
             self.lbl_title.props.label = "<span font='Sans Bold 14'>%s</span>" % app.full_name
             self.img_appicon.set_from_pixbuf(app.icon)
-            self.btn_snapshots.props.sensitive = True
-            self.btn_export.props.sensitive = True
-            self.btn_delete.props.sensitive = True
+            self.btn_snapshots.props.sensitive = sensitive
+            self.btn_export.props.sensitive = sensitive
+            self.btn_delete.props.sensitive = sensitive
         else:
             self.selected_app = None
             self.lbl_app_details.props.label = ""

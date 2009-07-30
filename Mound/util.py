@@ -25,6 +25,3 @@ def format_size(size):
     else:
         # bytes aren't a friendly unit, use more precision instead
         return "%0.2f KB" % (size / 1024)
-
-def check_for_process(name):
-    pass #TODO
