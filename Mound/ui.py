@@ -49,6 +49,7 @@ class MainUI:
             "win_snapshots",
             "lbl_snapshots_info",
             "lst_snapshots",
+            "snapshots_treeview",
             "btn_snapshots_close",
             "btn_snapshots_new",
             "btn_snapshots_revert",
@@ -63,10 +64,13 @@ class MainUI:
         self.apps_iconview.connect("selection-changed", self.update_ui)
         
         self.win_snapshots.connect("delete-event", gtk.Widget.hide_on_delete)
+        self.snapshots_treeview_sel = self.snapshots_treeview.get_selection()
+        self.snapshots_treeview.connect("cursor-changed", self.update_snapshots_ui)
         self.btn_snapshots.connect("clicked", self.show_snapshots)
         self.btn_snapshots_close.connect("clicked",
                 lambda s: self.win_snapshots.hide())
         self.btn_snapshots_new.connect("clicked", self.new_snapshot_ui)
+        self.btn_snapshots_delete.connect("clicked", self.delete_selected_snapshot)
         
         self.dlg_new_snapshot.connect("response", self.new_snapshot_ui_response)
         self.dlg_new_snapshot.set_default_response(gtk.RESPONSE_OK)
@@ -104,6 +108,8 @@ class MainUI:
                 snap_date,
                 snap_size,
             ))
+        self.btn_snapshots_revert.props.sensitive = False
+        self.btn_snapshots_delete.props.sensitive = False
         self.win_snapshots.show_all()
     
     def new_snapshot_ui(self, source):
@@ -125,6 +131,30 @@ class MainUI:
             self.show_snapshots()
         self.dlg_new_snapshot.hide()
     
+    def delete_selected_snapshot(self, source=None):
+        def response(src, resp):
+            if resp == gtk.RESPONSE_OK:
+                self.selected_app.delete_snapshot(self.selected_snapshot_name)
+                self.selected_app.load_snapshots(force=True)
+                self.show_snapshots()
+        dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0,
+                gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
+        dlg_confirm.set_markup('Are you sure you want to delete this "<b>%s</b>" snapshot?\n\n<i>This will not delete any data %s currently uses.</i>' % (self.selected_snapshot_name, self.selected_app.full_name))
+        dlg_confirm.connect("response", response)
+        dlg_confirm.run()
+        dlg_confirm.destroy()
+        # see the response function a few lines above for the rest
+    
+    def update_snapshots_ui(self, source=None):
+        model, ti = self.snapshots_treeview_sel.get_selected()
+        if not ti:
+            self.btn_snapshots_revert.props.sensitive = False
+            self.btn_snapshots_delete.props.sensitive = False
+            return
+        self.selected_snapshot_name = self.lst_snapshots.get_value(ti, 0)
+        self.btn_snapshots_revert.props.sensitive = True
+        self.btn_snapshots_delete.props.sensitive = True
+        
     def update_ui(self, source=None):
         selection = self.apps_iconview.get_selected_items()
         if selection:

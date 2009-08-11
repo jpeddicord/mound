@@ -44,6 +44,7 @@ class Application:
         self.data_size = 0
         self.exec_name = ""
         self.snapshots = {}
+        self.app_snapshot_dir = os.path.join(mound_snapshots, self.name)
     
     def set_locations(self, locations):
         self.locations = []
@@ -75,6 +76,8 @@ class Application:
         return self.data_size
     
     def check_running(self):
+        # FIXME: this doesn't work when process names are > 15 chars
+        # should really traverse /proc instead
         c = call(["pgrep", "-xu", str(os.getuid()), self.exec_name])
         assert c < 2   # error codes and whatnot
         return c == 0
@@ -82,6 +85,7 @@ class Application:
     def load_snapshots(self, force=False):
         if self.snapshots and not force:
             return
+        self.snapshots = {}
         ss_dir = os.path.join(mound_snapshots, self.name)
         for root, dirs, files in os.walk(ss_dir):
             for f in files:
@@ -96,10 +100,9 @@ class Application:
                 )
     
     def take_snapshot(self, snapshot_name):
-        app_snapshot_dir = os.path.join(mound_snapshots, self.name)
-        if not os.path.isdir(app_snapshot_dir):
-            os.makedirs(app_snapshot_dir)
-        snap_filename = os.path.join(app_snapshot_dir, "%s.snapshot.tar.gz" % snapshot_name)
+        if not os.path.isdir(self.app_snapshot_dir):
+            os.makedirs(self.app_snapshot_dir)
+        snap_filename = os.path.join(self.app_snapshot_dir, "%s.snapshot.tar.gz" % snapshot_name)
         cmd = ["tar", "-czhf",
             snap_filename,
             "-C", user_home
@@ -122,4 +125,6 @@ class Application:
         pass #TODO
     
     def delete_snapshot(self, snapshot_name):
-        pass #TODO
+        snap_filename = os.path.join(self.app_snapshot_dir, "%s.snapshot.tar.gz" % snapshot_name)
+        if os.path.exists(snap_filename):
+            os.remove(snap_filename)
