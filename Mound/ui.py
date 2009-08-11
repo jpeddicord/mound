@@ -21,7 +21,7 @@ import datetime
 import gtk
 from Mound.util import format_size
 
-RX_SNAPSHOT_NAME = re.compile("^[\w\-\s]+$")
+RX_SNAPSHOT_NAME = re.compile('^[\w\-\s]+$')
 
 class MainUI:
     
@@ -31,52 +31,52 @@ class MainUI:
         self.mound = mound_inst
         self.builder = gtk.Builder()
         try:
-            self.builder.add_from_file("mound.ui")
+            self.builder.add_from_file('mound.ui')
         except:
-            self.builder.add_from_file("/usr/share/mound/mound.ui")
+            self.builder.add_from_file('/usr/share/mound/mound.ui')
         
         # widgets to load
         load = [
-            "win_main",
-            "lst_applications",
-            "apps_iconview",
-            "img_appicon",
-            "lbl_title",
-            "lbl_app_details",
-            "btn_snapshots",
-            "btn_export",
-            "btn_delete",
-            "win_snapshots",
-            "lbl_snapshots_info",
-            "lst_snapshots",
-            "snapshots_treeview",
-            "btn_snapshots_close",
-            "btn_snapshots_new",
-            "btn_snapshots_revert",
-            "btn_snapshots_delete",
-            "dlg_new_snapshot",
-            "entry_snapshot_name",
+            'win_main',
+            'lst_applications',
+            'apps_iconview',
+            'img_appicon',
+            'lbl_title',
+            'lbl_app_details',
+            'btn_snapshots',
+            'btn_export',
+            'btn_delete',
+            'win_snapshots',
+            'lbl_snapshots_info',
+            'lst_snapshots',
+            'snapshots_treeview',
+            'btn_snapshots_close',
+            'btn_snapshots_new',
+            'btn_snapshots_revert',
+            'btn_snapshots_delete',
+            'dlg_new_snapshot',
+            'entry_snapshot_name',
         ]
         for item in load:
             self.__dict__[item] = self.builder.get_object(item)
         
         # signals
-        self.apps_iconview.connect("selection-changed", self.update_ui)
+        self.apps_iconview.connect('selection-changed', self.update_ui)
         
-        self.win_snapshots.connect("delete-event", gtk.Widget.hide_on_delete)
+        self.win_snapshots.connect('delete-event', gtk.Widget.hide_on_delete)
         self.snapshots_treeview_sel = self.snapshots_treeview.get_selection()
-        self.snapshots_treeview.connect("cursor-changed", self.update_snapshots_ui)
-        self.btn_snapshots.connect("clicked", self.show_snapshots)
-        self.btn_snapshots_close.connect("clicked",
+        self.snapshots_treeview.connect('cursor-changed', self.update_snapshots_ui)
+        self.btn_snapshots.connect('clicked', self.show_snapshots)
+        self.btn_snapshots_close.connect('clicked',
                 lambda s: self.win_snapshots.hide())
-        self.btn_snapshots_new.connect("clicked", self.new_snapshot_ui)
-        self.btn_snapshots_delete.connect("clicked", self.delete_selected_snapshot)
+        self.btn_snapshots_new.connect('clicked', self.new_snapshot_ui)
+        self.btn_snapshots_delete.connect('clicked', self.delete_selected_snapshot)
         
-        self.dlg_new_snapshot.connect("response", self.new_snapshot_ui_response)
+        self.dlg_new_snapshot.connect('response', self.new_snapshot_ui_response)
         self.dlg_new_snapshot.set_default_response(gtk.RESPONSE_OK)
         
         self.update_ui ();
-        self.win_main.connect("destroy", gtk.main_quit)
+        self.win_main.connect('destroy', gtk.main_quit)
         self.win_main.show_all()
     
     def load_applications(self):
@@ -139,8 +139,8 @@ class MainUI:
                 self.show_snapshots()
         dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0,
                 gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
-        dlg_confirm.set_markup('Are you sure you want to delete this "<b>%s</b>" snapshot?\n\n<i>This will not delete any data %s currently uses.</i>' % (self.selected_snapshot_name, self.selected_app.full_name))
-        dlg_confirm.connect("response", response)
+        dlg_confirm.set_markup("Are you sure you want to delete this \"<b>%s</b>\" snapshot?\n\n<i>This will not delete any data %s currently uses.</i>" % (self.selected_snapshot_name, self.selected_app.full_name))
+        dlg_confirm.connect('response', response)
         dlg_confirm.run()
         dlg_confirm.destroy()
         # see the response function a few lines above for the rest
@@ -185,7 +185,7 @@ class MainUI:
             self.selected_app = None
             self.lbl_app_details.props.label = ""
             self.lbl_title.props.label = "<span font='Sans Bold 14'>Select an Application</span>";
-            self.img_appicon.set_from_stock("gtk-dialog-question", gtk.ICON_SIZE_DND);
+            self.img_appicon.set_from_stock('gtk-dialog-question', gtk.ICON_SIZE_DND);
             self.btn_snapshots.props.sensitive = False
             self.btn_export.props.sensitive = False
             self.btn_delete.props.sensitive = False

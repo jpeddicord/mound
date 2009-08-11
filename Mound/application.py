@@ -25,12 +25,12 @@ try:
     XDGCONFIG = xdg.xdg_config_home
     XDGCACHE = xdg.xdg_cache_home
 except:
-    XDGDATA = os.path.expanduser("~/.local/share")
-    XDGCONFIG = os.path.expanduser("~/.config")
-    XDGCACHE = os.path.expanduser("~/.cache")
+    XDGDATA = os.path.expanduser('~/.local/share')
+    XDGCONFIG = os.path.expanduser('~/.config')
+    XDGCACHE = os.path.expanduser('~/.cache')
 
-mound_snapshots = os.path.join(XDGDATA, "mound-snapshots")
-user_home = os.path.expanduser("~")
+mound_snapshots = os.path.join(XDGDATA, 'mound-snapshots')
+user_home = os.path.expanduser('~')
 icon_theme_default = icon_theme_get_default()
 
 class Application:
@@ -78,7 +78,7 @@ class Application:
     def check_running(self):
         # FIXME: this doesn't work when process names are > 15 chars
         # should really traverse /proc instead
-        c = call(["pgrep", "-xu", str(os.getuid()), self.exec_name])
+        c = call(['pgrep', '-xu', str(os.getuid()), self.exec_name])
         assert c < 2   # error codes and whatnot
         return c == 0
     
@@ -89,10 +89,10 @@ class Application:
         ss_dir = os.path.join(mound_snapshots, self.name)
         for root, dirs, files in os.walk(ss_dir):
             for f in files:
-                if not ".snapshot.tar.gz" in f:
+                if not '.snapshot.tar.gz' in f:
                     continue
                 f = os.path.join(root, f)
-                snap_name = os.path.basename(f).split(".", 1)[0]
+                snap_name = os.path.basename(f).split('.', 1)[0]
                 self.snapshots[snap_name] = (
                     f,
                     os.path.getmtime(f),
@@ -102,14 +102,14 @@ class Application:
     def take_snapshot(self, snapshot_name):
         if not os.path.isdir(self.app_snapshot_dir):
             os.makedirs(self.app_snapshot_dir)
-        snap_filename = os.path.join(self.app_snapshot_dir, "%s.snapshot.tar.gz" % snapshot_name)
-        cmd = ["tar", "-czhf",
+        snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
+        cmd = ['tar', '-czhf',
             snap_filename,
-            "-C", user_home
+            '-C', user_home
         ]
         for loc in self.locations:
             # strip off the home directory for tar
-            loc = loc.replace(user_home + "/", "")
+            loc = loc.replace(user_home + '/', '')
             cmd.append(loc)
         print cmd
         p = Popen(cmd)
@@ -125,6 +125,6 @@ class Application:
         pass #TODO
     
     def delete_snapshot(self, snapshot_name):
-        snap_filename = os.path.join(self.app_snapshot_dir, "%s.snapshot.tar.gz" % snapshot_name)
+        snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
         if os.path.exists(snap_filename):
             os.remove(snap_filename)

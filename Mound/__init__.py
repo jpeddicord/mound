@@ -27,7 +27,7 @@ class Mound:
     def load_applications(self, appdir):
         """Load up the applications we can manage, using defaults if
         available."""
-        self.load_defaults("/etc/userdata")
+        self.load_defaults('/etc/userdata')
         
         for root, dirs, files in os.walk(appdir):
             # only toplevel scan
@@ -36,7 +36,7 @@ class Mound:
             
             for f in files:
                 # we only want .desktop files, cheap check
-                if not ".desktop" in f:
+                if not '.desktop' in f:
                     continue
                 cp = RawConfigParser()
                 try:
@@ -44,34 +44,34 @@ class Mound:
                 except:
                     continue
                 
-                app = Application(f.replace(".desktop", ""))
+                app = Application(f.replace('.desktop', ''))
                 
                 # look for the X-UserData key
                 try:
-                    locs = cp.get("Desktop Entry", "X-UserData")
+                    locs = cp.get('Desktop Entry', 'X-UserData')
                 except:
                     # load the default if available, otherwise skip
                     try:
                         locs = self.default_applications[app.name]
                     except:
                         continue
-                app.set_locations(locs.split(";"))
+                app.set_locations(locs.split(';'))
                 
                 try:
-                    app.full_name = cp.get("Desktop Entry", "Name")
+                    app.full_name = cp.get('Desktop Entry', 'Name')
                 except:
                     app.full_name = app.name
                 
                 # load the icon
                 try:
-                    app.icon_name = cp.get("Desktop Entry", "Icon")
+                    app.icon_name = cp.get('Desktop Entry', 'Icon')
                 except:
                     pass # XXX app.icon_name = some-default-icon
                 app.load_icon()
                 
                 # used to check if app is running
                 try:
-                    app.exec_name = cp.get("Desktop Entry", "Exec").split(" ", 1)[0]
+                    app.exec_name = cp.get('Desktop Entry', 'Exec').split(' ', 1)[0]
                     app.exec_name = os.path.basename(app.exec_name)
                 except:
                     pass
@@ -81,10 +81,10 @@ class Mound:
                 
     def load_defaults(self, defaults_file):
         """Load the userdata defaults."""
-        f = open(defaults_file, "r")
+        f = open(defaults_file, 'r')
         for line in f:
             line = line.rstrip()
-            app = line.split(" ", 1)
+            app = line.split(' ', 1)
             self.default_applications[app[0]] = app[1]
         f.close()
         return self.default_applications
