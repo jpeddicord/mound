@@ -50,6 +50,7 @@ class Application:
         self.locations = []
         for loc in locations:
             loc = os.path.expanduser(loc)
+            #TODO: XDG location substitutions: $HOME, $CACHE, $DATA
             # we only allow locations in the home directory
             assert loc.find(user_home) == 0
             self.locations.append(loc)
@@ -122,9 +123,17 @@ class Application:
         )
     
     def revert_to_snapshot(self, snapshot_name):
-        pass #TODO
+        assert False, "review this first"
+        if not os.path.exists(self.snapshots[snapshot_name][0]):
+            return
+        cmd = ['tar', '-xzh', '-C', user_home,
+            '-f', self.snapshots[snapshot_name][0],
+        ]
+        print cmd
+        
     
     def delete_snapshot(self, snapshot_name):
+        #FIXME: look this up from the self.snapshots[] tuple
         snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
         if os.path.exists(snap_filename):
             os.remove(snap_filename)

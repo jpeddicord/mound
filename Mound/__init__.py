@@ -55,7 +55,10 @@ class Mound:
                         locs = self.default_applications[app.name]
                     except:
                         continue
-                app.set_locations(locs.split(';'))
+                try:
+                    app.set_locations(locs.split(';'))
+                except:
+                    pass
                 
                 try:
                     app.full_name = cp.get('Desktop Entry', 'Name')
@@ -75,7 +78,6 @@ class Mound:
                     app.exec_name = os.path.basename(app.exec_name)
                 except:
                     pass
-                
                 
                 self.applications[app.name] = app
                 
