@@ -78,6 +78,7 @@ class Application:
     
     def check_running(self):
         # FIXME: this doesn't work when process names are > 15 chars
+        # XXX: add more checks in between UI operations
         # should really traverse /proc instead
         c = call(['pgrep', '-xu', str(os.getuid()), self.exec_name])
         assert c < 2   # error codes and whatnot
@@ -104,7 +105,7 @@ class Application:
         if not os.path.isdir(self.app_snapshot_dir):
             os.makedirs(self.app_snapshot_dir)
         snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
-        cmd = ['tar', '-czhf',
+        cmd = ['tar', '-cvzf',
             snap_filename,
             '-C', user_home
         ]
@@ -123,13 +124,15 @@ class Application:
         )
     
     def revert_to_snapshot(self, snapshot_name):
-        assert False, "review this first"
         if not os.path.exists(self.snapshots[snapshot_name][0]):
             return
-        cmd = ['tar', '-xzh', '-C', user_home,
+        cmd = ['tar', '-xvz', '-C', user_home,
             '-f', self.snapshots[snapshot_name][0],
         ]
         print cmd
+        p = Popen(cmd)
+        returncode = p.wait()
+        assert returncode == 0
         
     
     def delete_snapshot(self, snapshot_name):

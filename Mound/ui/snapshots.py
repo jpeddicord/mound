@@ -53,6 +53,7 @@ class SnapshotsUI:
         
         self.tb_snap_new.connect('clicked', self.new_snapshot_ui)
         self.tb_snap_delete.connect('clicked', self.delete_selected_snapshot)
+        self.tb_snap_revert.connect('clicked', self.revert_to_selected)
         
         self.dlg_new_snapshot.connect('response', self.new_snapshot_ui_response)
         self.dlg_new_snapshot.set_default_response(gtk.RESPONSE_OK)
@@ -110,12 +111,32 @@ class SnapshotsUI:
                 self.show_snapshots()
         dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0,
                 gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
-        dlg_confirm.set_markup("Are you sure you want to delete this \"<b>%s</b>\" snapshot?\n\n<i>This will not delete any data %s currently uses.</i>" % (self.selected_snapshot_name, self.selected_app.full_name))
+        dlg_confirm.set_markup("Are you sure you want to delete the \"<b>%s</b>\" snapshot?\n\n<i>This will not delete any data %s currently uses.</i>" % (self.selected_snapshot_name, self.selected_app.full_name))
         dlg_confirm.connect('response', response)
         dlg_confirm.run()
         dlg_confirm.destroy()
         # see the response function a few lines above for the rest
     
+    def revert_to_selected(self, source=None):
+        def response(src, resp):
+            if resp == gtk.RESPONSE_OK:
+                self.selected_app.revert_to_snapshot(self.selected_snapshot_name)
+                dlg_success = gtk.MessageDialog(self.win_snapshots, 0,
+                        gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE,
+                        "Successfully reverted %s to the \"%s\" snapshot." % (
+                            self.selected_app.full_name,
+                            self.selected_snapshot_name
+                        ))
+                dlg_success.run()
+                dlg_success.destroy()
+                self.win_snapshots.hide()
+        dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0,
+                gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
+        dlg_confirm.set_markup("<i>You may want to take a snapshot before reverting.</i>\n\nDo you want to revert to the \"<b>%s</b>\" snapshot?" % self.selected_snapshot_name)
+        dlg_confirm.connect('response', response)
+        dlg_confirm.run()
+        dlg_confirm.destroy()
+        
     def update_ui(self, source=None):
         model, ti = self.snapshots_treeview_sel.get_selected()
         if not ti:
