@@ -17,6 +17,7 @@
 
 import os
 from subprocess import Popen, call
+from shutil import rmtree
 from gtk import icon_theme_get_default
 
 try:
@@ -49,8 +50,8 @@ class Application:
     def set_locations(self, locations):
         self.locations = []
         for loc in locations:
-            loc = os.path.expanduser(loc)
             #TODO: XDG location substitutions: $HOME, $CACHE, $DATA
+            loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
             assert loc.find(user_home) == 0
             self.locations.append(loc)
@@ -83,6 +84,13 @@ class Application:
         c = call(['pgrep', '-xu', str(os.getuid()), self.exec_name])
         assert c < 2   # error codes and whatnot
         return c == 0
+    
+    def delete_data(self):
+        for loc in self.locations:
+            if os.path.isdir(loc):
+                rmtree(loc)
+            elif os.path.exists(loc):
+                os.remove(loc)
     
     def load_snapshots(self, force=False):
         if self.snapshots and not force:
@@ -133,10 +141,8 @@ class Application:
         p = Popen(cmd)
         returncode = p.wait()
         assert returncode == 0
-        
     
     def delete_snapshot(self, snapshot_name):
-        #FIXME: look this up from the self.snapshots[] tuple
-        snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
+        snap_filename = self.snapshots[snapshot_name][0]
         if os.path.exists(snap_filename):
             os.remove(snap_filename)

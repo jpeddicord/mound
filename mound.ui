@@ -15,6 +15,7 @@
   <object class="GtkWindow" id="win_main">
     <property name="title" translatable="yes">Mound Data Manager</property>
     <property name="resizable">False</property>
+    <property name="icon_name">applications-system</property>
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="width_request">600</property>
@@ -459,5 +460,37 @@
   <object class="GtkAction" id="act_import">
     <property name="label">Import Data...</property>
     <property name="icon_name">media-eject</property>
+  </object>
+  <object class="GtkAboutDialog" id="dlg_about">
+    <property name="border_width">5</property>
+    <property name="resizable">False</property>
+    <property name="modal">True</property>
+    <property name="type_hint">normal</property>
+    <property name="transient_for">win_main</property>
+    <property name="program_name">Mound Data Manager</property>
+    <property name="version">@VERSION@</property>
+    <property name="copyright" translatable="yes">Copyright &#xA9; 2009 Jacob Peddicord</property>
+    <property name="website">https://launchpad.net/mound</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox3">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area3">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </object>
 </interface>

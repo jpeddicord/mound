@@ -52,6 +52,7 @@ class MainUI:
         self.apps_iconview.connect('selection-changed', self.update_ui)
         self.btn_snapshots.connect('clicked',
                 lambda s: self.snapshots_ui.show_snapshots(self.selected_app))
+        self.btn_delete.connect('clicked', self.delete_application_data)
         
         self.update_ui()
         
@@ -67,6 +68,19 @@ class MainUI:
             ))
         # force a 4-row widget
         self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 4)
+    
+    def delete_application_data(self, source=None):
+        def response(src, resp):
+            if resp == gtk.RESPONSE_OK:
+                self.selected_app.delete_data()
+                self.selected_app.calculate_size(force=True)
+                self.update_ui()
+        dlg_confirm = gtk.MessageDialog(self.win_main, 0,
+                gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
+        dlg_confirm.set_markup("<i>You may want to take a snapshot before continuing.</i>\n\nAre you sure you want to destroy all data, settings, and preferences for <b>%s</b>?" % self.selected_app.full_name)
+        dlg_confirm.connect('response', response)
+        dlg_confirm.run()
+        dlg_confirm.destroy()
         
     def update_ui(self, source=None):
         selection = self.apps_iconview.get_selected_items()
@@ -77,10 +91,15 @@ class MainUI:
             selected = self.lst_applications.get_value(selection_iter, 0)
             app = self.selected_app = self.mound.applications[selected]
             # check if it's running
-            sensitive = self.selected_app.check_running() == False
+            running = self.selected_app.check_running()
             txt = ""
-            if not sensitive:
+            if running:
                 txt = "<b>Please close %s before managing it.</b>\n\n" % self.selected_app.full_name
+                self.btn_snapshots.props.sensitive = False
+                self.btn_delete.props.sensitive = False
+            else:
+                self.btn_snapshots.props.sensitive = True
+                self.btn_delete.props.sensitive = True
             # grab the size
             app.calculate_size()
             if app.data_size > 0:
@@ -88,11 +107,10 @@ class MainUI:
                 txt += "<i>This application is using <b>" + size + "</b> of space.</i>"
             else:
                 txt += "<i>This application is not storing any data.</i>"
+                self.btn_delete.props.sensitive = False
             self.lbl_app_details.props.label = txt
             self.lbl_title.props.label = "<span font='Sans Bold 14'>%s</span>" % app.full_name
             self.img_appicon.set_from_pixbuf(app.icon)
-            self.btn_snapshots.props.sensitive = sensitive
-            self.btn_delete.props.sensitive = sensitive
         else:
             self.selected_app = None
             self.lbl_app_details.props.label = ""

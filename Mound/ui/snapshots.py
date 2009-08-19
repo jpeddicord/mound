@@ -82,6 +82,7 @@ class SnapshotsUI:
         self.tb_snap_delete.props.sensitive = False
         self.tb_snap_export.props.sensitive = False
         self.win_snapshots.props.title = "Snapshots of %s" % self.selected_app.full_name
+        self.update_ui()
         self.win_snapshots.show_all()
     
     def new_snapshot_ui(self, source):
@@ -138,6 +139,7 @@ class SnapshotsUI:
         dlg_confirm.destroy()
         
     def update_ui(self, source=None):
+        self.tb_snap_new.props.sensitive = (self.selected_app.data_size > 0)
         model, ti = self.snapshots_treeview_sel.get_selected()
         if not ti:
             self.tb_snap_revert.props.sensitive = False
