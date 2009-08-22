@@ -17,7 +17,7 @@
 
 import os
 from subprocess import Popen, call
-from shutil import rmtree
+from shutil import rmtree, copyfile
 from gtk import icon_theme_get_default
 
 try:
@@ -51,6 +51,7 @@ class Application:
         self.locations = []
         for loc in locations:
             #TODO: XDG location substitutions: $HOME, $CACHE, $DATA
+            #TODO: detect if any of these are symlinks and trigger a warning
             loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
             assert loc.find(user_home) == 0
@@ -121,7 +122,6 @@ class Application:
             # strip off the home directory for tar
             loc = loc.replace(user_home + '/', '')
             cmd.append(loc)
-        print cmd
         p = Popen(cmd)
         returncode = p.wait()
         assert returncode == 0
@@ -137,12 +137,17 @@ class Application:
         cmd = ['tar', '-xvz', '-C', user_home,
             '-f', self.snapshots[snapshot_name][0],
         ]
-        print cmd
         p = Popen(cmd)
         returncode = p.wait()
         assert returncode == 0
     
     def delete_snapshot(self, snapshot_name):
         snap_filename = self.snapshots[snapshot_name][0]
-        if os.path.exists(snap_filename):
-            os.remove(snap_filename)
+        os.remove(snap_filename)
+    
+    def export_snapshot(self, snapshot_name, export_location):
+        snap_filename = self.snapshots[snapshot_name][0]
+        copyfile(snap_filename, export_location)
+    
+    def import_snapshot(self, import_location):
+        copyfile(import_location, self.app_snapshot_dir)

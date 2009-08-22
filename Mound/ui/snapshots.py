@@ -54,6 +54,12 @@ class SnapshotsUI:
         self.tb_snap_new.connect('clicked', self.new_snapshot_ui)
         self.tb_snap_delete.connect('clicked', self.delete_selected_snapshot)
         self.tb_snap_revert.connect('clicked', self.revert_to_selected)
+        #self.tb_snap_import.connect('clicked', self.import_snapshot)
+        #self.tb_snap_export.connect('clicked', self.export_snapshot)
+        
+        # XXX: these are not yet implemented
+        self.tb_snap_import.props.sensitive = False
+        self.tb_snap_export.props.sensitive = False
         
         self.dlg_new_snapshot.connect('response', self.new_snapshot_ui_response)
         self.dlg_new_snapshot.set_default_response(gtk.RESPONSE_OK)
@@ -149,4 +155,4 @@ class SnapshotsUI:
         self.selected_snapshot_name = self.lst_snapshots.get_value(ti, 0)
         self.tb_snap_revert.props.sensitive = True
         self.tb_snap_delete.props.sensitive = True
-        self.tb_snap_export.props.sensitive = True
+        #XXX self.tb_snap_export.props.sensitive = True

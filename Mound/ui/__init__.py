@@ -37,6 +37,9 @@ class MainUI:
         # widgets to load
         load = [
             'win_main',
+            'item_quit',
+            'item_about',
+            'dlg_about',
             'lst_applications',
             'apps_iconview',
             'img_appicon',
@@ -51,6 +54,12 @@ class MainUI:
         self.snapshots_ui = SnapshotsUI(mound_inst, self.builder)
         
         # signals
+        self.item_quit.connect('activate', gtk.main_quit)
+        self.item_about.connect('activate',
+                lambda s: self.dlg_about.run())
+        self.dlg_about.connect('response',
+                lambda s, r: s.hide())
+        
         self.apps_iconview.connect('selection-changed', self.update_ui)
         self.btn_snapshots.connect('clicked',
                 lambda s: self.snapshots_ui.show_snapshots(self.selected_app))
