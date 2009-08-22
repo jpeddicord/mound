@@ -30,7 +30,9 @@ class MainUI:
         try:
             self.builder.add_from_file('mound.ui')
         except:
-            self.builder.add_from_file('/usr/share/mound/mound.ui')
+            self.builder.add_from_file('/usr/share/mound-data-manager/mound.ui')
+        
+        gtk.window_set_default_icon_name('mound-data-manager')
         
         # widgets to load
         load = [

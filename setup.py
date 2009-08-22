@@ -5,13 +5,21 @@ import distutils.core
 setup_info = dict(
     name='Mound',
     version='0.1',
+    prefix='testdir',
     description='Mound Data Manager',
     author='Jacob Peddicord',
     author_email='jpeddicord@ubuntu.com',
     url='https://launchpad.net/mound',
     packages=['Mound', 'Mound.ui'],
     scripts=['mound-data-manager'],
-    data_files=[('share/mound', ['mound.ui'])]
+    data_files=[
+        ('share/mound-data-manager', ['mound.ui']),
+        ('share/applications', ['data/mound-data-manager.desktop']),
+        ('share/icons/hicolor/16x16/apps', ['data/16x16/mound-data-manager.png']),
+        ('share/icons/hicolor/22x22/apps', ['data/22x22/mound-data-manager.png']),
+        ('share/icons/hicolor/24x24/apps', ['data/24x24/mound-data-manager.png']),
+        ('share/icons/hicolor/scalable/apps', ['data/scalable/mound-data-manager.svg']),
+    ]
 )
 
 distutils.core.setup(**setup_info)

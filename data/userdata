@@ -1,0 +1,6 @@
+chromium-browser ~/.config/chromium
+firefox ~/.mozilla/firefox
+htop ~/.htoprc
+inkscape ~/.config/inkscape
+tangerine-properties ~/.config/tangerine
+

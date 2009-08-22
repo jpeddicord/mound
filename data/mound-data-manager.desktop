@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Mound Data Manager
+Comment=Manage your application data
+Icon=mound-data-manager
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=mound-data-manager
+Categories=Utility;GTK;
