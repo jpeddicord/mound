@@ -286,6 +286,7 @@
             <child>
               <object class="GtkSeparatorToolItem" id="separatortoolitem1">
                 <property name="visible">True</property>
+                <property name="visible_horizontal">False</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -295,6 +296,7 @@
               <object class="GtkToolButton" id="tb_snap_import">
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Import a snapshot</property>
+                <property name="visible_horizontal">False</property>
                 <property name="label" translatable="yes">Import</property>
                 <property name="use_underline">True</property>
                 <property name="icon_name">media-eject</property>
@@ -308,6 +310,7 @@
               <object class="GtkToolButton" id="tb_snap_export">
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Export this snapshot</property>
+                <property name="visible_horizontal">False</property>
                 <property name="label" translatable="yes">Export</property>
                 <property name="use_underline">True</property>
                 <property name="stock_id">gtk-save-as</property>

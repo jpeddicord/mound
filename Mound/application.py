@@ -35,7 +35,7 @@ user_home = os.path.expanduser('~')
 icon_theme_default = icon_theme_get_default()
 
 class Application:
-    
+
     def __init__(self, name):
         self.name = name
         self.locations = []
@@ -46,22 +46,24 @@ class Application:
         self.exec_name = ""
         self.snapshots = {}
         self.app_snapshot_dir = os.path.join(mound_snapshots, self.name)
-    
+
     def set_locations(self, locations):
         self.locations = []
         for loc in locations:
-            #TODO: XDG location substitutions: $HOME, $CACHE, $DATA
-            #TODO: detect if any of these are symlinks and trigger a warning
+            # substitute in XDG locations
+            loc = loc.replace("$XDGDATA", XDGDATA)
+            loc = loc.replace("$XDGCONFIG", XDGCONFIG)
+            loc = loc.replace("$XDGCACHE", XDGCACHE)
             loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
             assert loc.find(user_home) == 0
             self.locations.append(loc)
-    
+
     def load_icon(self):
         if not self.icon_name:
             return
         self.icon = icon_theme_default.load_icon(self.icon_name, 32, 0)
-    
+
     def calculate_size(self, force=False):
         if self.data_size > 0 and not force:
             return self.data_size
@@ -77,22 +79,31 @@ class Application:
             else:
                 self.data_size += os.path.getsize(location)
         return self.data_size
-    
+
     def check_running(self):
-        # FIXME: this doesn't work when process names are > 15 chars
         # XXX: add more checks in between UI operations
-        # should really traverse /proc instead
-        c = call(['pgrep', '-xu', str(os.getuid()), self.exec_name])
-        assert c < 2   # error codes and whatnot
-        return c == 0
-    
+        for root, dirs, files in os.walk("/proc"):
+            for d in dirs:
+                try:
+                    pid = int(d)
+                    f = open("/proc/%d/cmdline" % pid, "r")
+                except:
+                    continue
+                exec_path = f.read().split("\x00")[0]
+                f.close()
+                exec_name = os.path.basename(exec_path)
+                if self.exec_name == exec_name:
+                    return True
+            break # we only want toplevel, so only itereate once
+        return False
+
     def delete_data(self):
         for loc in self.locations:
             if os.path.isdir(loc):
                 rmtree(loc)
             elif os.path.exists(loc):
                 os.remove(loc)
-    
+
     def load_snapshots(self, force=False):
         if self.snapshots and not force:
             return
@@ -109,7 +120,7 @@ class Application:
                     os.path.getmtime(f),
                     os.path.getsize(f)
                 )
-    
+
     def take_snapshot(self, snapshot_name):
         if not os.path.isdir(self.app_snapshot_dir):
             os.makedirs(self.app_snapshot_dir)
@@ -130,7 +141,7 @@ class Application:
             os.path.getmtime(snap_filename),
             os.path.getsize(snap_filename)
         )
-    
+
     def revert_to_snapshot(self, snapshot_name):
         if not os.path.exists(self.snapshots[snapshot_name][0]):
             return
@@ -140,14 +151,14 @@ class Application:
         p = Popen(cmd)
         returncode = p.wait()
         assert returncode == 0
-    
+
     def delete_snapshot(self, snapshot_name):
         snap_filename = self.snapshots[snapshot_name][0]
         os.remove(snap_filename)
-    
+
     def export_snapshot(self, snapshot_name, export_location):
         snap_filename = self.snapshots[snapshot_name][0]
         copyfile(snap_filename, export_location)
-    
+
     def import_snapshot(self, import_location):
         copyfile(import_location, self.app_snapshot_dir)

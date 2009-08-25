@@ -21,9 +21,9 @@ from Mound.util import format_size
 from Mound.ui.snapshots import SnapshotsUI
 
 class MainUI:
-    
+
     selected_app = None
-    
+
     def __init__(self, mound_inst):
         self.mound = mound_inst
         self.builder = gtk.Builder()
@@ -31,9 +31,9 @@ class MainUI:
             self.builder.add_from_file('mound.ui')
         except:
             self.builder.add_from_file('/usr/share/mound-data-manager/mound.ui')
-        
+
         gtk.window_set_default_icon_name('mound-data-manager')
-        
+
         # widgets to load
         load = [
             'win_main',
@@ -50,26 +50,30 @@ class MainUI:
         ]
         for item in load:
             self.__dict__[item] = self.builder.get_object(item)
-        
+
         self.snapshots_ui = SnapshotsUI(mound_inst, self.builder)
-        
+
         # signals
         self.item_quit.connect('activate', gtk.main_quit)
         self.item_about.connect('activate',
                 lambda s: self.dlg_about.run())
         self.dlg_about.connect('response',
                 lambda s, r: s.hide())
-        
+
         self.apps_iconview.connect('selection-changed', self.update_ui)
         self.btn_snapshots.connect('clicked',
                 lambda s: self.snapshots_ui.show_snapshots(self.selected_app))
         self.btn_delete.connect('clicked', self.delete_application_data)
-        
+
         self.update_ui()
-        
+
+        self.win_main.connect('focus-in-event', self.update_ui)
         self.win_main.connect('destroy', gtk.main_quit)
         self.win_main.show_all()
-    
+
+    def test_focus(self, s, d):
+        print "focused"
+
     def load_applications(self):
         for appname in self.mound.applications:
             self.lst_applications.append((
@@ -79,7 +83,7 @@ class MainUI:
             ))
         # force a 4-row widget
         self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 4)
-    
+
     def delete_application_data(self, source=None):
         def response(src, resp):
             if resp == gtk.RESPONSE_OK:
@@ -92,8 +96,8 @@ class MainUI:
         dlg_confirm.connect('response', response)
         dlg_confirm.run()
         dlg_confirm.destroy()
-        
-    def update_ui(self, source=None):
+
+    def update_ui(self, *args, **kwargs):
         selection = self.apps_iconview.get_selected_items()
         if selection:
             # find the selected application
