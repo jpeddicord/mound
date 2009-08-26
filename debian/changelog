@@ -1,0 +1,5 @@
+mound (0.1.0-1) karmic; urgency=low
+
+  * Initial release. (Closes: #XXXXXX)
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Tue, 25 Aug 2009 22:26:15 -0400
