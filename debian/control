@@ -4,12 +4,10 @@ Priority: optional
 Maintainer: Jacob Peddicord <jpeddicord@ubuntu.com>
 Build-Depends: debhelper (>= 6), cdbs (>= 0.4.49), python, python-support (>= 0.5.3)
 Standards-Version: 3.8.3
-XS-Python-Version: current
 Homepage: https://launchpad.net/mound
 
 Package: mound-data-manager
 Architecture: all
-XB-Python-Version: ${python:Versions}
 Depends: ${python:Depends}, ${misc:Depends}
 Description: lock the screen for command execution
  Mound Data Manager is an tool that can manage data in the context of
