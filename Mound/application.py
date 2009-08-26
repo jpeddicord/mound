@@ -66,7 +66,13 @@ class Application:
     def load_icon(self):
         try:
             assert self.icon_name
-            self.icon = icon_theme_default.load_icon(self.icon_name, 32, 0)
+            try:
+                self.icon = icon_theme_default.load_icon(self.icon_name, 32, 0)
+            except:
+                if '/' not in self.icon_name:
+                    self.icon_name = '/usr/share/pixmaps/' + self.icon_name
+                self.icon = gtk.gdk.pixbuf_new_from_file(self.icon_name)
+                self.icon = self.icon.scale_simple(32, 32, gtk.gdk.INTERP_BILINEAR)
         except:
             self.icon_name = None
             self.icon = icon_unknown

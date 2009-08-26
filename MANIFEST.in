@@ -1,0 +1,3 @@
+include COPYING
+include mound.ui
+recursive-include data *
