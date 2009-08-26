@@ -59,6 +59,11 @@ class MainUI:
                 lambda s: self.dlg_about.run())
         self.dlg_about.connect('response',
                 lambda s, r: s.hide())
+        
+        try:
+            from Mound.info import version
+            self.dlg_about.set_version(version)
+        except: pass
 
         self.apps_iconview.connect('selection-changed', self.update_ui)
         self.btn_snapshots.connect('clicked',
@@ -71,16 +76,9 @@ class MainUI:
         self.win_main.connect('destroy', gtk.main_quit)
         self.win_main.show_all()
 
-    def test_focus(self, s, d):
-        print "focused"
-
     def load_applications(self):
-        for appname in self.mound.applications:
-            self.lst_applications.append((
-                self.mound.applications[appname].name,
-                self.mound.applications[appname].full_name,
-                self.mound.applications[appname].icon
-            ))
+        for app in self.mound.applications_lst:
+            self.lst_applications.append((app.name, app.full_name, app.icon))
         # force a 4-row widget
         self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 4)
 

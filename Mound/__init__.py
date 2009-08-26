@@ -23,6 +23,7 @@ class Mound:
 
     default_applications = {}
     applications = {}
+    applications_lst = []
 
     def load_applications(self, appdir):
         """Load up the applications we can manage, using defaults if
@@ -33,7 +34,8 @@ class Mound:
             # only toplevel scan
             if root != appdir:
                 continue
-
+            
+            files.sort()
             for f in files:
                 # we only want .desktop files, cheap check
                 if not '.desktop' in f:
@@ -80,6 +82,8 @@ class Mound:
                     pass
 
                 self.applications[app.name] = app
+                # we need an ordered list as well
+                self.applications_lst.append(app)
 
     def load_defaults(self, defaults_file):
         """Load the userdata defaults."""

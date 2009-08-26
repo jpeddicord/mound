@@ -5,7 +5,6 @@ import distutils.core
 setup_info = dict(
     name='Mound',
     version='0.1',
-    prefix='testdir',
     description='Mound Data Manager',
     author='Jacob Peddicord',
     author_email='jpeddicord@ubuntu.com',
@@ -22,6 +21,11 @@ setup_info = dict(
         ('share/icons/hicolor/scalable/apps', ['data/scalable/mound-data-manager.svg']),
     ]
 )
+
+f = open("Mound/info.py", "w")
+for item in ('name', 'version', 'description', 'author', 'author_email', 'url'):
+    f.write("%s = '%s'\n" % (item, setup_info[item]))
+f.close()
 
 distutils.core.setup(**setup_info)
 

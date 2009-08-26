@@ -18,7 +18,7 @@
 import os
 from subprocess import Popen, call
 from shutil import rmtree, copyfile
-from gtk import icon_theme_get_default
+import gtk
 
 try:
     import xdg
@@ -32,7 +32,8 @@ except:
 
 mound_snapshots = os.path.join(XDGDATA, 'mound-snapshots')
 user_home = os.path.expanduser('~')
-icon_theme_default = icon_theme_get_default()
+icon_theme_default = gtk.icon_theme_get_default()
+icon_unknown = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
 
 class Application:
 
@@ -46,23 +47,29 @@ class Application:
         self.exec_name = ""
         self.snapshots = {}
         self.app_snapshot_dir = os.path.join(mound_snapshots, self.name)
-
+    
+    def __repr__(self):
+        return "%s: %s" % (self.name, self.full_name)
+    
     def set_locations(self, locations):
         self.locations = []
         for loc in locations:
             # substitute in XDG locations
-            loc = loc.replace("$XDGDATA", XDGDATA)
-            loc = loc.replace("$XDGCONFIG", XDGCONFIG)
-            loc = loc.replace("$XDGCACHE", XDGCACHE)
+            loc = loc.replace("$DATA", XDGDATA)
+            loc = loc.replace("$CONFIG", XDGCONFIG)
+            loc = loc.replace("$CACHE", XDGCACHE)
             loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
             assert loc.find(user_home) == 0
             self.locations.append(loc)
 
     def load_icon(self):
-        if not self.icon_name:
-            return
-        self.icon = icon_theme_default.load_icon(self.icon_name, 32, 0)
+        try:
+            assert self.icon_name
+            self.icon = icon_theme_default.load_icon(self.icon_name, 32, 0)
+        except:
+            self.icon_name = None
+            self.icon = icon_unknown
 
     def calculate_size(self, force=False):
         if self.data_size > 0 and not force:
@@ -81,7 +88,6 @@ class Application:
         return self.data_size
 
     def check_running(self):
-        # XXX: add more checks in between UI operations
         for root, dirs, files in os.walk("/proc"):
             for d in dirs:
                 try:
