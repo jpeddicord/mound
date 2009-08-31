@@ -111,15 +111,25 @@ class SnapshotsUI:
         Prevents invalid snapshot names. Takes a snapshot once valid.
         """
         if response == gtk.RESPONSE_OK:
-            if not RX_SNAPSHOT_NAME.match(self.entry_snapshot_name.props.text):
+            snap_name = self.entry_snapshot_name.props.text
+            # check for valid name
+            if not RX_SNAPSHOT_NAME.match(snap_name):
                 dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
                         gtk.MESSAGE_ERROR, gtk.BUTTONS_OK,
                         "The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes.")
                 dlg_error.run()
                 dlg_error.destroy()
                 return
+            # duplicates not allowed
+            if snap_name in self.selected_app.snapshots.keys():
+                dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
+                        gtk.MESSAGE_ERROR, gtk.BUTTONS_OK,
+                        "This snapshot already exists.")
+                dlg_error.run()
+                dlg_error.destroy()
+                return
             # create a snapshot
-            self.selected_app.take_snapshot(self.entry_snapshot_name.props.text)
+            self.selected_app.take_snapshot(snap_name)
             self.show_snapshots()
         self.dlg_new_snapshot.hide()
 

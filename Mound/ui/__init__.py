@@ -163,10 +163,18 @@ class MainUI:
             app.calculate_size()
             if app.data_size > 0:
                 size = format_size(app.data_size)
-                txt.append("<i>This application is using <b>" + size + "</b> of space.</i>")
+                size_info = "This application is using <b>%s</b> of space." % size
             else:
-                txt.append("<i>This application is not storing any data.</i>")
+                size_info = "This application is not storing any data."
                 self.btn_delete.props.sensitive = False
+            # find the number of snapshots
+            app.load_snapshots()
+            num_snapshots = len(app.snapshots)
+            if num_snapshots == 1:
+                size_info += " One snapshot is stored."
+            elif num_snapshots > 1:
+                size_info += " %d snapshots are stored." % num_snapshots
+            txt.append(size_info)
             # check for errors
             if app.errors:
                 txt = ["<b>A problem occurred. This application cannot be managed.</b>"]

@@ -30,16 +30,30 @@ except:
     XDGCONFIG = os.path.expanduser('~/.config')
     XDGCACHE = os.path.expanduser('~/.cache')
 
-mound_snapshots = os.path.join(XDGDATA, 'mound-snapshots')
-user_home = os.path.expanduser('~')
-icon_theme_default = gtk.icon_theme_get_default()
-icon_unknown = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
+MOUND_SNAPSHOTS = os.path.join(XDGDATA, 'mound-snapshots')
+USER_HOME = os.path.expanduser('~')
+ICON_THEME_DEFAULT = gtk.icon_theme_get_default()
+ICON_UNKNOWN = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
+
+# these cannot be managed
+RESTRICTED = [
+    USER_HOME,
+    XDGDATA,
+    XDGCONFIG,
+    XDGCACHE,
+# re-state the XDG directories in case they have been changed
+    '~/.local',
+    '~/.local/share',
+    '~/.cache',
+    '~/.config'
+]
 
 class ApplicationError(Exception):
     def __init__(self, application, message):
         self.application = application
         self.msg = message
         application.errors.append(self)
+        print "Error in %s: %s" % (application.name, message)
 class LocationError(ApplicationError): pass
 
 class Application:
@@ -57,7 +71,7 @@ class Application:
         self.data_size = 0
         self.exec_name = ""
         self.snapshots = {}
-        self.app_snapshot_dir = os.path.join(mound_snapshots, self.name)
+        self.app_snapshot_dir = os.path.join(MOUND_SNAPSHOTS, self.name)
         self.errors = []
     
     def __repr__(self):
@@ -76,11 +90,12 @@ class Application:
             # set absolute pathnames
             loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
-            if loc.find(user_home) != 0:
+            if loc.find(USER_HOME) != 0:
                 raise LocationError(self, "Location is not in home directory")
-            # never allow this to be home itself
-            if os.path.normpath(loc) == os.path.normpath(user_home):
-                raise LocationError(self, "Location *is* home directory")
+            # prevent crucial directories from being managed
+            for restriction in RESTRICTED:
+                if os.path.normpath(loc) == os.path.normpath(os.path.expanduser(restriction)):
+                    raise LocationError(self, "Cannot manage restricted location")
             self.locations.append(loc)
 
     def load_icon(self):
@@ -92,7 +107,7 @@ class Application:
         try:
             assert self.icon_name
             try:
-                self.icon = icon_theme_default.load_icon(self.icon_name, 32, 0)
+                self.icon = ICON_THEME_DEFAULT.load_icon(self.icon_name, 32, 0)
             except:
                 if '/' not in self.icon_name:
                     self.icon_name = '/usr/share/pixmaps/' + self.icon_name
@@ -100,7 +115,7 @@ class Application:
                 self.icon = self.icon.scale_simple(32, 32, gtk.gdk.INTERP_BILINEAR)
         except:
             self.icon_name = None
-            self.icon = icon_unknown
+            self.icon = ICON_UNKNOWN
 
     def calculate_size(self, force=False):
         """
@@ -159,7 +174,7 @@ class Application:
         if self.snapshots and not force:
             return
         self.snapshots = {}
-        ss_dir = os.path.join(mound_snapshots, self.name)
+        ss_dir = os.path.join(MOUND_SNAPSHOTS, self.name)
         for root, dirs, files in os.walk(ss_dir):
             for f in files:
                 if not '.snapshot.tar.gz' in f:
@@ -182,11 +197,11 @@ class Application:
         snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
         cmd = ['tar', '-cvzf',
             snap_filename,
-            '-C', user_home
+            '-C', USER_HOME
         ]
         for loc in self.locations:
             # strip off the home directory for tar
-            loc = loc.replace(user_home + '/', '')
+            loc = loc.replace(USER_HOME + '/', '')
             cmd.append(loc)
         print "#", ' '.join(cmd)
         p = Popen(cmd)
@@ -204,7 +219,7 @@ class Application:
         """
         if not os.path.exists(self.snapshots[snapshot_name][0]):
             return
-        cmd = ['tar', '-xvz', '-C', user_home,
+        cmd = ['tar', '-xvz', '-C', USER_HOME,
             '-f', self.snapshots[snapshot_name][0],
         ]
         print "#", ' '.join(cmd)
