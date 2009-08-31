@@ -35,8 +35,19 @@ user_home = os.path.expanduser('~')
 icon_theme_default = gtk.icon_theme_get_default()
 icon_unknown = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
 
-class Application:
+class ApplicationError(Exception):
+    def __init__(self, application, message):
+        self.application = application
+        self.msg = message
+        application.errors.append(self)
+class LocationError(ApplicationError): pass
 
+class Application:
+    """
+    Handles a single managed application. self.set_locations must be used
+    before any other method.
+    """
+    
     def __init__(self, name):
         self.name = name
         self.locations = []
@@ -47,23 +58,37 @@ class Application:
         self.exec_name = ""
         self.snapshots = {}
         self.app_snapshot_dir = os.path.join(mound_snapshots, self.name)
+        self.errors = []
     
     def __repr__(self):
         return "%s: %s" % (self.name, self.full_name)
     
     def set_locations(self, locations):
+        """
+        Check and set a list of user data locations for this application.
+        """
         self.locations = []
         for loc in locations:
             # substitute in XDG locations
             loc = loc.replace("$DATA", XDGDATA)
             loc = loc.replace("$CONFIG", XDGCONFIG)
             loc = loc.replace("$CACHE", XDGCACHE)
+            # set absolute pathnames
             loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
-            assert loc.find(user_home) == 0
+            if loc.find(user_home) != 0:
+                raise LocationError(self, "Location is not in home directory")
+            # never allow this to be home itself
+            if os.path.normpath(loc) == os.path.normpath(user_home):
+                raise LocationError(self, "Location *is* home directory")
             self.locations.append(loc)
 
     def load_icon(self):
+        """
+        Try to load the icon for this application from the icon theme.
+        If that fails, try loading from the pixmaps directory.
+        And if that fails, use a default "unknown" icon.
+        """
         try:
             assert self.icon_name
             try:
@@ -78,6 +103,10 @@ class Application:
             self.icon = icon_unknown
 
     def calculate_size(self, force=False):
+        """
+        Try to calculate the size of the application's user data.
+        Cache the result unless force is True.
+        """
         if self.data_size > 0 and not force:
             return self.data_size
         self.data_size = 0
@@ -94,6 +123,10 @@ class Application:
         return self.data_size
 
     def check_running(self):
+        """
+        Check the system to see if the application is currently running.
+        Not foolproof, but can stop many oopses.
+        """
         for root, dirs, files in os.walk("/proc"):
             for d in dirs:
                 try:
@@ -110,6 +143,9 @@ class Application:
         return False
 
     def delete_data(self):
+        """
+        Delete the user data for the application. Use with caution!
+        """
         for loc in self.locations:
             if os.path.isdir(loc):
                 rmtree(loc)
@@ -117,6 +153,9 @@ class Application:
                 os.remove(loc)
 
     def load_snapshots(self, force=False):
+        """
+        Read the list of snapshots from the application snapshot directory.
+        """
         if self.snapshots and not force:
             return
         self.snapshots = {}
@@ -134,6 +173,10 @@ class Application:
                 )
 
     def take_snapshot(self, snapshot_name):
+        """
+        Take a new snapshot using tar and store it in the snapshots
+        directory.
+        """
         if not os.path.isdir(self.app_snapshot_dir):
             os.makedirs(self.app_snapshot_dir)
         snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
@@ -145,6 +188,7 @@ class Application:
             # strip off the home directory for tar
             loc = loc.replace(user_home + '/', '')
             cmd.append(loc)
+        print "#", ' '.join(cmd)
         p = Popen(cmd)
         returncode = p.wait()
         assert returncode == 0
@@ -155,22 +199,28 @@ class Application:
         )
 
     def revert_to_snapshot(self, snapshot_name):
+        """
+        Revert a snapshot from the snapshots directory. Use with caution!
+        """
         if not os.path.exists(self.snapshots[snapshot_name][0]):
             return
         cmd = ['tar', '-xvz', '-C', user_home,
             '-f', self.snapshots[snapshot_name][0],
         ]
+        print "#", ' '.join(cmd)
         p = Popen(cmd)
         returncode = p.wait()
         assert returncode == 0
 
     def delete_snapshot(self, snapshot_name):
+        """
+        Delete a snapshot.
+        """
         snap_filename = self.snapshots[snapshot_name][0]
         os.remove(snap_filename)
 
     def export_snapshot(self, snapshot_name, export_location):
-        snap_filename = self.snapshots[snapshot_name][0]
-        copyfile(snap_filename, export_location)
+        pass #TODO: use gzip headers to re-write exported file
 
     def import_snapshot(self, import_location):
-        copyfile(import_location, self.app_snapshot_dir)
+        pass #TODO: check gzip header for integrity

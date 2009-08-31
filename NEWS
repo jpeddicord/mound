@@ -1,0 +1,8 @@
+0.1.1
+    * Second preview release
+    * Better error handling when locations cannot be used
+    * Offer to take a snapshot before data-changing operations
+    * Main window can be scrolled with the mouse
+
+0.1.0
+    * Initial preview release

@@ -23,6 +23,12 @@ from Mound.util import format_size
 RX_SNAPSHOT_NAME = re.compile('^[\w\-\s]+$')
 
 class SnapshotsUI:
+    """
+    The UI for the Snapshots window.
+    
+    Takes a Mound instance like MainUI, as well as MainUI's GtkBuilder
+    instance.
+    """
 
     def __init__(self, mound_inst, builder):
         self.mound = mound_inst
@@ -61,6 +67,10 @@ class SnapshotsUI:
         self.dlg_new_snapshot.set_default_response(gtk.RESPONSE_OK)
 
     def show_snapshots(self, selected_app=None):
+        """
+        Show and update the snapshots window.
+        Can be called while already open to update the UI.
+        """
         if selected_app:
             self.selected_app = selected_app
         def snap_cmp(arg1, arg2):
@@ -87,12 +97,19 @@ class SnapshotsUI:
         self.update_ui()
         self.win_snapshots.show_all()
 
-    def new_snapshot_ui(self, source):
+    def new_snapshot_ui(self, source=None):
+        """
+        Show a dialog prompting for a snapshot name.
+        """
         self.entry_snapshot_name.props.text = ""
         self.entry_snapshot_name.grab_focus()
         self.dlg_new_snapshot.run()
 
     def new_snapshot_ui_response(self, source, response):
+        """
+        Handle the "new snapshot" dialog. (See self.new_snapshot_ui)
+        Prevents invalid snapshot names. Takes a snapshot once valid.
+        """
         if response == gtk.RESPONSE_OK:
             if not RX_SNAPSHOT_NAME.match(self.entry_snapshot_name.props.text):
                 dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
@@ -107,6 +124,10 @@ class SnapshotsUI:
         self.dlg_new_snapshot.hide()
 
     def delete_selected_snapshot(self, source=None):
+        """
+        As described: delete the currently selected snapshot.
+        Present a confirmation dialog "just in case."
+        """
         def response(src, resp):
             if resp == gtk.RESPONSE_OK:
                 self.selected_app.delete_snapshot(self.selected_snapshot_name)
@@ -121,6 +142,10 @@ class SnapshotsUI:
         # see the response function a few lines above for the rest
 
     def revert_to_selected(self, source=None):
+        """
+        Prompt the user to revert to the selected snapshot, giving an
+        option to take another snapshot just to be safe.
+        """
         def response(src, resp):
             if resp == gtk.RESPONSE_OK:
                 self.selected_app.revert_to_snapshot(self.selected_snapshot_name)
@@ -133,14 +158,23 @@ class SnapshotsUI:
                 dlg_success.run()
                 dlg_success.destroy()
                 self.win_snapshots.hide()
-        dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0,
-                gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
+            elif resp == 10:
+                src.hide()
+                self.new_snapshot_ui()
+        dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0, gtk.MESSAGE_WARNING)
         dlg_confirm.set_markup("<i>You may want to take a snapshot before reverting.</i>\n\nDo you want to revert to the \"<b>%s</b>\" snapshot?" % self.selected_snapshot_name)
+        dlg_confirm.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg_confirm.add_button("Take Snapshot", 10)
+        dlg_confirm.add_button(gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_OK)
         dlg_confirm.connect('response', response)
         dlg_confirm.run()
         dlg_confirm.destroy()
 
     def update_ui(self, source=None):
+        """
+        Set the sensitivity of toolbar items depending on the snapshot
+        selected.
+        """
         self.tb_snap_new.props.sensitive = (self.selected_app.data_size > 0)
         model, ti = self.snapshots_treeview_sel.get_selected()
         if not ti:

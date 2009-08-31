@@ -20,14 +20,20 @@ from ConfigParser import RawConfigParser
 from Mound.application import Application
 
 class Mound:
-
+    """
+    The main application.
+    Takes one argument: where to search for applications.
+    """
+    
     default_applications = {}
     applications = {}
     applications_lst = []
 
     def load_applications(self, appdir):
-        """Load up the applications we can manage, using defaults if
-        available."""
+        """
+        Load up the applications we can manage, using defaults if
+        available.
+        """
         self.load_defaults('/etc/userdata')
 
         for root, dirs, files in os.walk(appdir):
@@ -60,7 +66,7 @@ class Mound:
                 try:
                     app.set_locations(locs.split(';'))
                 except:
-                    pass
+                    app.locations = []
 
                 try:
                     app.full_name = cp.get('Desktop Entry', 'Name')
@@ -86,7 +92,9 @@ class Mound:
                 self.applications_lst.append(app)
 
     def load_defaults(self, defaults_file):
-        """Load the userdata defaults."""
+        """
+        Load the userdata defaults.
+        """
         f = open(defaults_file, 'r')
         for line in f:
             line = line.rstrip()

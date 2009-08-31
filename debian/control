@@ -9,7 +9,7 @@ Homepage: https://launchpad.net/mound
 Package: mound-data-manager
 Architecture: all
 Depends: ${python:Depends}, ${misc:Depends}
-Description: lock the screen for command execution
+Description: data manager for other applications
  Mound Data Manager is an tool that can manage data in the context of
  other applications. You can take snapshots, delete, and move data from
  many of your favorite applications.

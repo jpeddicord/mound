@@ -21,6 +21,11 @@ from Mound.util import format_size
 from Mound.ui.snapshots import SnapshotsUI
 
 class MainUI:
+    """
+    Main window UI procedures.
+    
+    Takes an instance of Mound, which is used to load applications.
+    """
 
     selected_app = None
 
@@ -40,6 +45,7 @@ class MainUI:
             'item_quit',
             'item_about',
             'dlg_about',
+            'apps_scroll',
             'lst_applications',
             'apps_iconview',
             'img_appicon',
@@ -64,7 +70,8 @@ class MainUI:
             from Mound.info import version
             self.dlg_about.set_version(version)
         except: pass
-
+        
+        self.apps_scroll.connect('scroll-event', self.handle_scroll)
         self.apps_iconview.connect('selection-changed', self.update_ui)
         self.btn_snapshots.connect('clicked',
                 lambda s: self.snapshots_ui.show_snapshots(self.selected_app))
@@ -77,25 +84,61 @@ class MainUI:
         self.win_main.show_all()
 
     def load_applications(self):
+        """
+        Load the applications from the Mound instance and add them to our
+        display.
+        """
         for app in self.mound.applications_lst:
             self.lst_applications.append((app.name, app.full_name, app.icon))
-        # force a 4-row widget
-        self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 4)
+        # force a 5-row widget
+        self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 5)
 
     def delete_application_data(self, source=None):
+        """
+        Trigger a dialog to delete data for an application. The user is
+        prompted to take a snapshot beforehand.
+        """
         def response(src, resp):
             if resp == gtk.RESPONSE_OK:
                 self.selected_app.delete_data()
                 self.selected_app.calculate_size(force=True)
                 self.update_ui()
-        dlg_confirm = gtk.MessageDialog(self.win_main, 0,
-                gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
+            elif resp == 10:
+                src.hide()
+                self.snapshots_ui.show_snapshots(self.selected_app)
+                self.snapshots_ui.new_snapshot_ui()
+        dlg_confirm = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_WARNING)
         dlg_confirm.set_markup("<i>You may want to take a snapshot before continuing.</i>\n\nAre you sure you want to destroy all data, settings, and preferences for <b>%s</b>?" % self.selected_app.full_name)
+        dlg_confirm.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg_confirm.add_button("Take Snapshot", 10)
+        dlg_confirm.add_button(gtk.STOCK_DELETE, gtk.RESPONSE_OK)
         dlg_confirm.connect('response', response)
         dlg_confirm.run()
         dlg_confirm.destroy()
-
+    
+    def handle_scroll(self, widget, scroll):
+        """
+        Allow scrolling horizontally with the mouse wheel, since there is
+        no vertical scrolling.
+        """
+        adjustment = widget.get_hadjustment()
+        if scroll.direction == gtk.gdk.SCROLL_UP:
+            adjustment.props.value -= adjustment.props.step_increment * 1.5
+        elif scroll.direction == gtk.gdk.SCROLL_DOWN:
+            adjustment.props.value += adjustment.props.step_increment * 1.5
+        # set limits so the GTK scrollbar doesn't commit suicide
+        max_value = adjustment.props.upper - adjustment.props.page_size
+        if adjustment.props.value > max_value:
+            adjustment.props.value = max_value
+        elif adjustment.props.value < adjustment.props.lower:
+            adjustment.props.value = adjustment.props.lower
+    
     def update_ui(self, *args, **kwargs):
+        """
+        Update the bottom panel with information about the selected
+        application. Disable certain buttons if their features are not
+        available for use on the application.
+        """
         selection = self.apps_iconview.get_selected_items()
         if selection:
             # find the selected application
@@ -103,11 +146,14 @@ class MainUI:
             selection_iter = self.lst_applications.get_iter(selection)
             selected = self.lst_applications.get_value(selection_iter, 0)
             app = self.selected_app = self.mound.applications[selected]
+            # update the title & icon
+            self.lbl_title.props.label = "<span font='Sans Bold 14'>%s</span>" % app.full_name
+            self.img_appicon.set_from_pixbuf(app.icon)
             # check if it's running
             running = self.selected_app.check_running()
-            txt = ""
+            txt = []
             if running:
-                txt = "<b>Please close %s before managing it.</b>\n\n" % self.selected_app.full_name
+                txt.append("<b>Please close %s before managing it.</b>" % self.selected_app.full_name)
                 self.btn_snapshots.props.sensitive = False
                 self.btn_delete.props.sensitive = False
             else:
@@ -117,13 +163,16 @@ class MainUI:
             app.calculate_size()
             if app.data_size > 0:
                 size = format_size(app.data_size)
-                txt += "<i>This application is using <b>" + size + "</b> of space.</i>"
+                txt.append("<i>This application is using <b>" + size + "</b> of space.</i>")
             else:
-                txt += "<i>This application is not storing any data.</i>"
+                txt.append("<i>This application is not storing any data.</i>")
                 self.btn_delete.props.sensitive = False
-            self.lbl_app_details.props.label = txt
-            self.lbl_title.props.label = "<span font='Sans Bold 14'>%s</span>" % app.full_name
-            self.img_appicon.set_from_pixbuf(app.icon)
+            # check for errors
+            if app.errors:
+                txt = ["<b>A problem occurred. This application cannot be managed.</b>"]
+                self.btn_snapshots.props.sensitive = False
+                self.btn_delete.props.sensitive = False
+            self.lbl_app_details.props.label = "\n\n".join(txt)
         else:
             self.selected_app = None
             self.lbl_app_details.props.label = ""
