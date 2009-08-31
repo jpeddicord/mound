@@ -1,3 +1,9 @@
+mound (0.1.1-0~ppa1) karmic; urgency=low
+
+  * Second preview release
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Mon, 31 Aug 2009 19:22:16 -0400
+
 mound (0.1.0~ppa2) karmic; urgency=low
 
   * Fix short description

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
-  <!-- interface-naming-policy toplevel-contextual -->
+  <!-- interface-naming-policy project-wide -->
   <object class="GtkListStore" id="lst_snapshots">
     <columns>
       <!-- column-name snapshot_name -->
@@ -16,7 +16,7 @@
     <property name="title" translatable="yes">Mound Data Manager</property>
     <property name="resizable">False</property>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkVBox" id="vbox3">
         <property name="width_request">600</property>
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
@@ -327,7 +327,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="vbox2">
+          <object class="GtkVBox" id="vbox4">
             <property name="visible">True</property>
             <property name="border_width">5</property>
             <property name="orientation">vertical</property>
@@ -393,7 +393,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkHButtonBox" id="hbuttonbox1">
+              <object class="GtkHButtonBox" id="hbuttonbox2">
                 <property name="visible">True</property>
                 <property name="spacing">2</property>
                 <property name="layout_style">end</property>
