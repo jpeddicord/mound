@@ -19,6 +19,7 @@ from math import ceil
 import gtk
 from Mound.util import format_size
 from Mound.ui.snapshots import SnapshotsUI
+from Mound.ui.details import DetailsUI
 
 class MainUI:
     """
@@ -42,6 +43,8 @@ class MainUI:
         # widgets to load
         load = [
             'win_main',
+            'item_details',
+            'item_delete',
             'item_quit',
             'item_about',
             'dlg_about',
@@ -52,19 +55,17 @@ class MainUI:
             'lbl_title',
             'lbl_app_details',
             'btn_snapshots',
-            'btn_delete',
         ]
         for item in load:
             self.__dict__[item] = self.builder.get_object(item)
 
         self.snapshots_ui = SnapshotsUI(mound_inst, self.builder)
+        self.details_ui = DetailsUI(mound_inst, self.builder)
 
         # signals
         self.item_quit.connect('activate', gtk.main_quit)
-        self.item_about.connect('activate',
-                lambda s: self.dlg_about.run())
-        self.dlg_about.connect('response',
-                lambda s, r: s.hide())
+        self.item_about.connect('activate', lambda s: self.dlg_about.run())
+        self.dlg_about.connect('response', lambda s, r: s.hide())
         
         try:
             from Mound.info import version
@@ -75,7 +76,9 @@ class MainUI:
         self.apps_iconview.connect('selection-changed', self.update_ui)
         self.btn_snapshots.connect('clicked',
                 lambda s: self.snapshots_ui.show_snapshots(self.selected_app))
-        self.btn_delete.connect('clicked', self.delete_application_data)
+        self.item_details.connect('activate',
+                lambda s: self.details_ui.show_details(self.selected_app))
+        self.item_delete.connect('activate', self.delete_application_data)
 
         self.update_ui()
 
@@ -155,10 +158,10 @@ class MainUI:
             if running:
                 txt.append("<b>Please close %s before managing it.</b>" % self.selected_app.full_name)
                 self.btn_snapshots.props.sensitive = False
-                self.btn_delete.props.sensitive = False
+                self.item_delete.props.sensitive = False
             else:
                 self.btn_snapshots.props.sensitive = True
-                self.btn_delete.props.sensitive = True
+                self.item_delete.props.sensitive = True
             # grab the size
             app.calculate_size()
             if app.data_size > 0:
@@ -166,7 +169,7 @@ class MainUI:
                 size_info = "This application is using <b>%s</b> of space." % size
             else:
                 size_info = "This application is not storing any data."
-                self.btn_delete.props.sensitive = False
+                self.item_delete.props.sensitive = False
             # find the number of snapshots
             app.load_snapshots()
             num_snapshots = len(app.snapshots)
@@ -179,12 +182,14 @@ class MainUI:
             if app.errors:
                 txt = ["<b>A problem occurred. This application cannot be managed.</b>"]
                 self.btn_snapshots.props.sensitive = False
-                self.btn_delete.props.sensitive = False
+                self.item_delete.props.sensitive = False
             self.lbl_app_details.props.label = "\n\n".join(txt)
+            self.item_details.props.sensitive = True
         else:
             self.selected_app = None
             self.lbl_app_details.props.label = ""
             self.lbl_title.props.label = "<span font='Sans Bold 14'>Select an Application</span>";
             self.img_appicon.set_from_stock('gtk-dialog-question', gtk.ICON_SIZE_DND);
             self.btn_snapshots.props.sensitive = False
-            self.btn_delete.props.sensitive = False
+            self.item_delete.props.sensitive = False
+            self.item_details.props.sensitive = False

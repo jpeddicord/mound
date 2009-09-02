@@ -3,7 +3,7 @@
 import distutils.core
 
 setup_info = dict(
-    name='Mound',
+    name='mound',
     version='0.1.1',
     description='Mound Data Manager',
     author='Jacob Peddicord',

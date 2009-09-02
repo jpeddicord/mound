@@ -53,6 +53,7 @@ class Mound:
                     continue
 
                 app = Application(f.replace('.desktop', ''))
+                app.desktop_path = os.path.join(appdir, f)
 
                 # look for the X-UserData key
                 try:

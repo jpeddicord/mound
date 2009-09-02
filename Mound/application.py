@@ -16,7 +16,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
-from subprocess import Popen, call
+from subprocess import Popen
 from shutil import rmtree, copyfile
 import gtk
 
@@ -30,7 +30,8 @@ except:
     XDGCONFIG = os.path.expanduser('~/.config')
     XDGCACHE = os.path.expanduser('~/.cache')
 
-MOUND_SNAPSHOTS = os.path.join(XDGDATA, 'mound-snapshots')
+MOUND_DATA = os.path.join(XDGDATA, 'mound')
+MOUND_SNAPSHOTS = os.path.join(MOUND_DATA, 'snapshots')
 USER_HOME = os.path.expanduser('~')
 ICON_THEME_DEFAULT = gtk.icon_theme_get_default()
 ICON_UNKNOWN = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
@@ -65,17 +66,27 @@ class Application:
     def __init__(self, name):
         self.name = name
         self.locations = []
+        self.desktop_path = ""
         self.full_name = ""
         self.icon_name = ""
         self.icon = None
         self.data_size = 0
         self.exec_name = ""
         self.snapshots = {}
-        self.app_snapshot_dir = os.path.join(MOUND_SNAPSHOTS, self.name)
+        self._app_snapshot_dir = os.path.join(MOUND_SNAPSHOTS, self.name)
         self.errors = []
     
     def __repr__(self):
         return "%s: %s" % (self.name, self.full_name)
+    
+    @property
+    def app_snapshot_dir(self):
+        """
+        Check/create the app snapshot directory when we need it.
+        """
+        if not os.path.isdir(self._app_snapshot_dir):
+            os.makedirs(self._app_snapshot_dir)
+        return self._app_snapshot_dir
     
     def set_locations(self, locations):
         """
@@ -192,8 +203,6 @@ class Application:
         Take a new snapshot using tar and store it in the snapshots
         directory.
         """
-        if not os.path.isdir(self.app_snapshot_dir):
-            os.makedirs(self.app_snapshot_dir)
         snap_filename = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % snapshot_name)
         cmd = ['tar', '-cvzf',
             snap_filename,
