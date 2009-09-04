@@ -46,7 +46,10 @@ RESTRICTED = [
     '~/.local',
     '~/.local/share',
     '~/.cache',
-    '~/.config'
+    '~/.config',
+# and some extras
+    '~/.gnome2',
+    '~/.gconf',
 ]
 
 class ApplicationError(Exception):

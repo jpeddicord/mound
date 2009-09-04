@@ -15,13 +15,8 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import gtk
-import re
-import datetime
+import os
 from subprocess import Popen
-from Mound.util import format_size
-
-RX_SNAPSHOT_NAME = re.compile('^[\w\-\s]+$')
 
 class DetailsUI:
     """
@@ -37,8 +32,8 @@ class DetailsUI:
 
         load = [
             'dlg_details',
-            'directories_treeview',
-            'lst_directories',
+            'locations_treeview',
+            'lst_locations',
             'btn_open_external',
             'btn_baobab',
             'lbl_app_information',
@@ -47,10 +42,15 @@ class DetailsUI:
             self.__dict__[item] = self.builder.get_object(item)
 
         self.dlg_details.connect('response', lambda s, r: s.hide())
-        self.directories_treeview_sel = self.directories_treeview.get_selection()
+        self.locations_treeview_sel = self.locations_treeview.get_selection()
+        self.locations_treeview.connect('cursor-changed', self.update_ui)
         self.btn_open_external.connect('clicked', self.open_directory_external)
         self.btn_baobab.connect('clicked', self.open_baobab)
         self.lbl_app_information.connect('activate-link', self.open_snapshots_external)
+        
+        # cheap check
+        if not os.path.exists("/usr/bin/baobab"):
+            self.btn_baobab.props.visible = False
         
     def show_details(self, selected_app=None):
         """
@@ -58,26 +58,41 @@ class DetailsUI:
         """
         if selected_app:
             self.selected_app = selected_app
+        self.lst_locations.clear()
+        for l in self.selected_app.locations:
+            self.lst_locations.append((l,))
         self.update_ui()
         self.dlg_details.run()
     
     def open_directory_external(self, source=None):
-        pass
+        Popen(['xdg-open', self.selected_location])
     
     def open_baobab(self, source=None):
-        pass
+        Popen(['baobab', self.selected_location])
+        return True  # needed to prevent default GTK+ handler
     
     def open_snapshots_external(self, *args):
         """
         Open the snapshot directory in a file browser.
         """
         Popen(['xdg-open', self.selected_app.app_snapshot_dir])
-        return True
+        return True  # needed to prevent default GTK+ handler
     
     def update_ui(self, source=None):
         """
-        Update the information displayed.
+        Update the information displayed, along with button sensitivity.
         """
+        model, ti = self.locations_treeview_sel.get_selected()
+        if ti:
+            self.selected_location = self.lst_locations.get_value(ti, 0)
+        # data display
+        if ti and os.path.isdir(self.selected_location):
+            self.btn_open_external.props.sensitive = True
+            self.btn_baobab.props.sensitive = True
+        else:
+            self.btn_open_external.props.sensitive = False
+            self.btn_baobab.props.sensitive = False
+        # information
         if self.selected_app.errors:
             txt = "This application cannot be managed because of the following problems:\n"
             for error in self.selected_app.errors:

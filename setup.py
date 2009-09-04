@@ -4,7 +4,7 @@ import distutils.core
 
 setup_info = dict(
     name='mound',
-    version='0.1.1',
+    version='0.2.0',
     description='Mound Data Manager',
     author='Jacob Peddicord',
     author_email='jpeddicord@ubuntu.com',
