@@ -212,6 +212,9 @@ class Application:
             '-C', USER_HOME
         ]
         for loc in self.locations:
+            # make sure path exists
+            if not os.path.exists(loc):
+                continue
             # strip off the home directory for tar
             loc = loc.replace(USER_HOME + '/', '')
             cmd.append(loc)
