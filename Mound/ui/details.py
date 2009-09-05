@@ -46,7 +46,12 @@ class DetailsUI:
         self.locations_treeview.connect('cursor-changed', self.update_ui)
         self.btn_open_external.connect('clicked', self.open_directory_external)
         self.btn_baobab.connect('clicked', self.open_baobab)
-        self.lbl_app_information.connect('activate-link', self.open_snapshots_external)
+        # only available in gtk+ 2.18 and up
+        try:
+            self.lbl_app_information.connect('activate-link', self.open_snapshots_external)
+            self.no_links = False
+        except:
+            self.no_links = True
         
         # cheap check
         if not os.path.exists("/usr/bin/baobab"):
@@ -99,5 +104,8 @@ class DetailsUI:
                 txt += error.msg + "\n"
         else:
             txt = "%s was loaded from:\n  %s\n\n" % (self.selected_app.full_name, self.selected_app.desktop_path)
-            txt += "Snapshots are stored in:\n<a href='%(snapdir)s'>%(snapdir)s</a>" % {'snapdir': self.selected_app.app_snapshot_dir}
+            if self.no_links:
+                txt += "Snapshots are stored in:\n  %s" % self.selected_app.app_snapshot_dir
+            else:
+                txt += "Snapshots are stored in:\n  <a href='%(snapdir)s'>%(snapdir)s</a>" % {'snapdir': self.selected_app.app_snapshot_dir}
         self.lbl_app_information.props.label = txt
