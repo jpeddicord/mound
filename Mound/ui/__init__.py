@@ -72,7 +72,6 @@ class MainUI:
             self.dlg_about.set_version(version)
         except: pass
         
-        self.apps_scroll.connect('scroll-event', self.handle_scroll)
         self.apps_iconview.connect('selection-changed', self.update_ui)
         self.btn_snapshots.connect('clicked',
                 lambda s: self.snapshots_ui.show_snapshots(self.selected_app))
@@ -93,8 +92,6 @@ class MainUI:
         """
         for app in self.mound.applications_lst:
             self.lst_applications.append((app.name, app.full_name, app.icon))
-        # force a 5-row widget
-        self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 5)
 
     def delete_application_data(self, source=None):
         """
@@ -119,23 +116,6 @@ class MainUI:
         dlg_confirm.run()
         dlg_confirm.destroy()
     
-    def handle_scroll(self, widget, scroll):
-        """
-        Allow scrolling horizontally with the mouse wheel, since there is
-        no vertical scrolling.
-        """
-        adjustment = widget.get_hadjustment()
-        if scroll.direction == gtk.gdk.SCROLL_UP:
-            adjustment.props.value -= adjustment.props.step_increment * 1.5
-        elif scroll.direction == gtk.gdk.SCROLL_DOWN:
-            adjustment.props.value += adjustment.props.step_increment * 1.5
-        # set limits so the GTK scrollbar doesn't commit suicide
-        max_value = adjustment.props.upper - adjustment.props.page_size
-        if adjustment.props.value > max_value:
-            adjustment.props.value = max_value
-        elif adjustment.props.value < adjustment.props.lower:
-            adjustment.props.value = adjustment.props.lower
-    
     def update_ui(self, *args, **kwargs):
         """
         Update the bottom panel with information about the selected
@@ -150,7 +130,7 @@ class MainUI:
             selected = self.lst_applications.get_value(selection_iter, 0)
             app = self.selected_app = self.mound.applications[selected]
             # update the title & icon
-            self.lbl_title.props.label = "<span font='Sans Bold 14'>%s</span>" % app.full_name
+            self.lbl_title.props.label = app.full_name
             self.img_appicon.set_from_pixbuf(app.icon)
             # check if it's running
             running = self.selected_app.check_running()
@@ -188,7 +168,7 @@ class MainUI:
         else:
             self.selected_app = None
             self.lbl_app_details.props.label = ""
-            self.lbl_title.props.label = "<span font='Sans Bold 14'>Select an Application</span>";
+            self.lbl_title.props.label = "Select an Application";
             self.img_appicon.set_from_stock('gtk-dialog-question', gtk.ICON_SIZE_DND);
             self.btn_snapshots.props.sensitive = False
             self.item_delete.props.sensitive = False

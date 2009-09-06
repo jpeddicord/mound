@@ -14,10 +14,10 @@
   </object>
   <object class="GtkWindow" id="win_main">
     <property name="title" translatable="yes">Mound Data Manager</property>
-    <property name="resizable">False</property>
+    <property name="default_width">850</property>
+    <property name="default_height">500</property>
     <child>
       <object class="GtkVBox" id="vbox3">
-        <property name="width_request">600</property>
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <child>
@@ -34,8 +34,8 @@
                     <child>
                       <object class="GtkImageMenuItem" id="item_details">
                         <property name="visible">True</property>
-                        <property name="related_action">act_details</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="related_action">act_details</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -43,8 +43,8 @@
                     <child>
                       <object class="GtkImageMenuItem" id="item_delete">
                         <property name="visible">True</property>
-                        <property name="related_action">act_delete</property>
                         <property name="use_action_appearance">True</property>
+                        <property name="related_action">act_delete</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
                       </object>
@@ -93,77 +93,92 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="apps_scroll">
-            <property name="height_request">310</property>
+          <object class="GtkHBox" id="hbox1">
+            <property name="height_request">400</property>
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="vscrollbar_policy">never</property>
             <child>
-              <object class="GtkIconView" id="apps_iconview">
+              <object class="GtkScrolledWindow" id="apps_scroll">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="orientation">horizontal</property>
-                <property name="model">lst_applications</property>
-                <property name="row_spacing">3</property>
-                <property name="column_spacing">3</property>
-                <property name="margin">3</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkCellRendererPixbuf" id="img_render">
-                    <property name="xpad">3</property>
-                    <property name="ypad">3</property>
+                  <object class="GtkIconView" id="apps_iconview">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="orientation">horizontal</property>
+                    <property name="model">lst_applications</property>
+                    <property name="row_spacing">0</property>
+                    <property name="column_spacing">0</property>
+                    <property name="margin">3</property>
+                    <property name="item_padding">5</property>
+                    <child>
+                      <object class="GtkCellRendererPixbuf" id="img_render">
+                        <property name="xpad">3</property>
+                        <property name="ypad">3</property>
+                      </object>
+                      <attributes>
+                        <attribute name="pixbuf">2</attribute>
+                      </attributes>
+                    </child>
+                    <child>
+                      <object class="GtkCellRendererText" id="text_render">
+                        <property name="ypad">12</property>
+                      </object>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
+                    </child>
                   </object>
-                  <attributes>
-                    <attribute name="pixbuf">2</attribute>
-                  </attributes>
                 </child>
-                <child>
-                  <object class="GtkCellRendererText" id="text_render">
-                    <property name="ypad">12</property>
-                  </object>
-                  <attributes>
-                    <attribute name="text">1</attribute>
-                  </attributes>
-                </child>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="position">1</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkHBox" id="hbox2">
-            <property name="height_request">150</property>
-            <property name="visible">True</property>
-            <child>
-              <object class="GtkImage" id="img_appicon">
-                <property name="visible">True</property>
-                <property name="yalign">0</property>
-                <property name="xpad">15</property>
-                <property name="ypad">15</property>
-                <property name="stock">gtk-dialog-question</property>
-                <property name="icon-size">5</property>
               </object>
               <packing>
-                <property name="expand">False</property>
                 <property name="position">0</property>
               </packing>
             </child>
             <child>
               <object class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
+                <property name="border_width">5</property>
                 <property name="orientation">vertical</property>
+                <property name="spacing">8</property>
                 <child>
-                  <object class="GtkLabel" id="lbl_title">
+                  <object class="GtkHBox" id="hbox3">
                     <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0</property>
-                    <property name="use_markup">True</property>
+                    <child>
+                      <object class="GtkImage" id="img_appicon">
+                        <property name="visible">True</property>
+                        <property name="yalign">0</property>
+                        <property name="xpad">4</property>
+                        <property name="ypad">4</property>
+                        <property name="stock">gtk-dialog-question</property>
+                        <property name="icon-size">5</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="lbl_title">
+                        <property name="width_request">200</property>
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">Application</property>
+                        <property name="wrap">True</property>
+                        <attributes>
+                          <attribute name="weight" value="bold"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">8</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="padding">8</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -194,10 +209,12 @@
                 </child>
                 <child>
                   <object class="GtkLabel" id="lbl_app_details">
+                    <property name="width_request">250</property>
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
                     <property name="yalign">0</property>
                     <property name="use_markup">True</property>
+                    <property name="wrap">True</property>
                   </object>
                   <packing>
                     <property name="padding">5</property>
@@ -206,6 +223,7 @@
                 </child>
               </object>
               <packing>
+                <property name="expand">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
@@ -226,10 +244,6 @@
       <!-- column-name app_icon -->
       <column type="GdkPixbuf"/>
     </columns>
-  </object>
-  <object class="GtkImage" id="img_snapshots">
-    <property name="visible">True</property>
-    <property name="icon_name">appointment-soon</property>
   </object>
   <object class="GtkListStore" id="lst_locations">
     <columns>
@@ -447,8 +461,8 @@
     <property name="transient_for">win_snapshots</property>
     <property name="message_type">question</property>
     <property name="buttons">ok-cancel</property>
-    <property name="text" translatable="yes">New Snapshot</property>
-    <property name="secondary_text" translatable="yes">Enter a name for this snapshot below.</property>
+    <property name="text">New Snapshot</property>
+    <property name="secondary_text">Enter a name for this snapshot below.</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox4">
         <property name="visible">True</property>
@@ -684,5 +698,9 @@
   <object class="GtkImage" id="img_baobab">
     <property name="visible">True</property>
     <property name="icon_name">baobab</property>
+  </object>
+  <object class="GtkImage" id="img_snapshots">
+    <property name="visible">True</property>
+    <property name="icon_name">appointment-soon</property>
   </object>
 </interface>
