@@ -94,7 +94,7 @@ class MainUI:
         for app in self.mound.applications_lst:
             self.lst_applications.append((app.name, app.full_name, app.icon))
         # force a 5-row widget
-        self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 5)
+        #self.apps_iconview.props.columns = ceil(float(len(self.mound.applications)) / 5)
 
     def delete_application_data(self, source=None):
         """
