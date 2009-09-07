@@ -50,11 +50,10 @@ class MainUI:
             'dlg_about',
             'apps_scroll',
             'lst_applications',
-            'apps_iconview',
+            'apps_treeview',
             'img_appicon',
             'lbl_title',
             'lbl_app_details',
-            'btn_snapshots',
         ]
         for item in load:
             self.__dict__[item] = self.builder.get_object(item)
@@ -72,9 +71,8 @@ class MainUI:
             self.dlg_about.set_version(version)
         except: pass
         
-        self.apps_iconview.connect('selection-changed', self.update_ui)
-        self.btn_snapshots.connect('clicked',
-                lambda s: self.snapshots_ui.show_snapshots(self.selected_app))
+        self.apps_treeview.connect('cursor-changed', self.update_ui)
+        self.apps_treeview_sel = self.apps_treeview.get_selection()
         self.item_details.connect('activate',
                 lambda s: self.details_ui.show_details(self.selected_app))
         self.item_delete.connect('activate', self.delete_application_data)
@@ -122,12 +120,11 @@ class MainUI:
         application. Disable certain buttons if their features are not
         available for use on the application.
         """
-        selection = self.apps_iconview.get_selected_items()
-        if selection:
+        #FIXME: update sensitivity of snapshot elements
+        model, ti = self.apps_treeview_sel.get_selected()
+        if ti:
             # find the selected application
-            selection = selection[0]
-            selection_iter = self.lst_applications.get_iter(selection)
-            selected = self.lst_applications.get_value(selection_iter, 0)
+            selected = self.lst_applications.get_value(ti, 0)
             app = self.selected_app = self.mound.applications[selected]
             # update the title & icon
             self.lbl_title.props.label = app.full_name
@@ -137,10 +134,8 @@ class MainUI:
             txt = []
             if running:
                 txt.append("<b>Please close %s before managing it.</b>" % self.selected_app.full_name)
-                self.btn_snapshots.props.sensitive = False
                 self.item_delete.props.sensitive = False
             else:
-                self.btn_snapshots.props.sensitive = True
                 self.item_delete.props.sensitive = True
             # grab the size
             app.calculate_size()
@@ -161,15 +156,15 @@ class MainUI:
             # check for errors
             if app.errors:
                 txt = ["<b>A problem occurred. This application cannot be managed.</b>"]
-                self.btn_snapshots.props.sensitive = False
                 self.item_delete.props.sensitive = False
             self.lbl_app_details.props.label = "\n\n".join(txt)
             self.item_details.props.sensitive = True
+            # show & update snapshots
+            self.snapshots_ui.show_snapshots(self.selected_app)
         else:
             self.selected_app = None
             self.lbl_app_details.props.label = ""
             self.lbl_title.props.label = "Select an Application";
             self.img_appicon.set_from_stock('gtk-dialog-question', gtk.ICON_SIZE_DND);
-            self.btn_snapshots.props.sensitive = False
             self.item_delete.props.sensitive = False
             self.item_details.props.sensitive = False

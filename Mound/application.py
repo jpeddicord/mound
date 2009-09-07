@@ -19,16 +19,7 @@ import os
 from subprocess import Popen
 from shutil import rmtree, copyfile
 import gtk
-
-try:
-    import xdg
-    XDGDATA = xdg.xdg_data_home
-    XDGCONFIG = xdg.xdg_config_home
-    XDGCACHE = xdg.xdg_cache_home
-except:
-    XDGDATA = os.path.expanduser('~/.local/share')
-    XDGCONFIG = os.path.expanduser('~/.config')
-    XDGCACHE = os.path.expanduser('~/.cache')
+from Mound.util import XDGDATA, XDGCONFIG, XDGCACHE
 
 MOUND_DATA = os.path.join(XDGDATA, 'mound')
 MOUND_SNAPSHOTS = os.path.join(MOUND_DATA, 'snapshots')
@@ -37,7 +28,7 @@ ICON_THEME_DEFAULT = gtk.icon_theme_get_default()
 ICON_UNKNOWN = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
 
 # these cannot be managed
-RESTRICTED = [
+RESTRICTED = (
     USER_HOME,
     XDGDATA,
     XDGCONFIG,
@@ -50,7 +41,7 @@ RESTRICTED = [
 # and some extras
     '~/.gnome2',
     '~/.gconf',
-]
+)
 
 class ApplicationError(Exception):
     def __init__(self, application, message):
@@ -76,6 +67,7 @@ class Application:
         self.data_size = 0
         self.exec_name = ""
         self.snapshots = {}
+        self.running = False
         self._app_snapshot_dir = os.path.join(MOUND_SNAPSHOTS, self.name)
         self.errors = []
     
@@ -167,8 +159,10 @@ class Application:
                 f.close()
                 exec_name = os.path.basename(exec_path)
                 if self.exec_name == exec_name:
+                    self.running = True
                     return True
             break # we only want toplevel, so only itereate once
+        self.running = False
         return False
 
     def delete_data(self):

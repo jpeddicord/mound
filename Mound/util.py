@@ -15,6 +15,18 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import os
+
+try:
+    import xdg
+    XDGDATA = xdg.xdg_data_home
+    XDGCONFIG = xdg.xdg_config_home
+    XDGCACHE = xdg.xdg_cache_home
+except:
+    XDGDATA = os.path.expanduser('~/.local/share')
+    XDGCONFIG = os.path.expanduser('~/.config')
+    XDGCACHE = os.path.expanduser('~/.cache')
+
 def format_size(size):
     """Format a size (bytes) into something more readable."""
     size = float(size)

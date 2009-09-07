@@ -35,11 +35,10 @@ class SnapshotsUI:
         self.builder = builder
 
         load = [
-            'win_snapshots',
+            'win_main',
             'lbl_snapshots_info',
             'lst_snapshots',
             'snapshots_treeview',
-            'btn_snapshots_close',
             'tb_snap_new',
             'tb_snap_revert',
             'tb_snap_delete',
@@ -51,11 +50,8 @@ class SnapshotsUI:
         for item in load:
             self.__dict__[item] = self.builder.get_object(item)
 
-        self.win_snapshots.connect('delete-event', gtk.Widget.hide_on_delete)
         self.snapshots_treeview_sel = self.snapshots_treeview.get_selection()
         self.snapshots_treeview.connect('cursor-changed', self.update_ui)
-        self.btn_snapshots_close.connect('clicked',
-                lambda s: self.win_snapshots.hide())
 
         self.tb_snap_new.connect('clicked', self.new_snapshot_ui)
         self.tb_snap_delete.connect('clicked', self.delete_selected_snapshot)
@@ -90,12 +86,7 @@ class SnapshotsUI:
                 snap_date,
                 snap_size,
             ))
-        self.tb_snap_revert.props.sensitive = False
-        self.tb_snap_delete.props.sensitive = False
-        self.tb_snap_export.props.sensitive = False
-        self.win_snapshots.props.title = "Snapshots of %s" % self.selected_app.full_name
         self.update_ui()
-        self.win_snapshots.show_all()
 
     def new_snapshot_ui(self, source=None):
         """
@@ -143,7 +134,7 @@ class SnapshotsUI:
                 self.selected_app.delete_snapshot(self.selected_snapshot_name)
                 self.selected_app.load_snapshots(force=True)
                 self.show_snapshots()
-        dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0,
+        dlg_confirm = gtk.MessageDialog(self.win_main, 0,
                 gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
         dlg_confirm.set_markup("Are you sure you want to delete the \"<b>%s</b>\" snapshot?\n\n<i>This will not delete any data %s currently uses.</i>" % (self.selected_snapshot_name, self.selected_app.full_name))
         dlg_confirm.connect('response', response)
@@ -159,7 +150,7 @@ class SnapshotsUI:
         def response(src, resp):
             if resp == gtk.RESPONSE_OK:
                 self.selected_app.revert_to_snapshot(self.selected_snapshot_name)
-                dlg_success = gtk.MessageDialog(self.win_snapshots, 0,
+                dlg_success = gtk.MessageDialog(self.win_main, 0,
                         gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE,
                         "Successfully reverted %s to the \"%s\" snapshot." % (
                             self.selected_app.full_name,
@@ -167,11 +158,10 @@ class SnapshotsUI:
                         ))
                 dlg_success.run()
                 dlg_success.destroy()
-                self.win_snapshots.hide()
             elif resp == 10:
                 src.hide()
                 self.new_snapshot_ui()
-        dlg_confirm = gtk.MessageDialog(self.win_snapshots, 0, gtk.MESSAGE_WARNING)
+        dlg_confirm = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_WARNING)
         dlg_confirm.set_markup("<i>You may want to take a snapshot before reverting.</i>\n\nDo you want to revert to the \"<b>%s</b>\" snapshot?" % self.selected_snapshot_name)
         dlg_confirm.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg_confirm.add_button("Take Snapshot", 10)
@@ -183,16 +173,26 @@ class SnapshotsUI:
     def update_ui(self, source=None):
         """
         Set the sensitivity of toolbar items depending on the snapshot
-        selected.
+        selected. Disable the interface if the application has errors.
         """
+        if self.selected_app.errors or self.selected_app.running:
+            self.snapshots_treeview.props.sensitive = False
+            self.tb_snap_new.props.sensitive = False
+            self.tb_snap_revert.props.sensitive = False
+            self.tb_snap_delete.props.sensitive = False
+            self.tb_snap_export.props.sensitive = False
+            return
+        else:
+            self.snapshots_treeview.props.sensitive = True
         self.tb_snap_new.props.sensitive = (self.selected_app.data_size > 0)
         model, ti = self.snapshots_treeview_sel.get_selected()
         if not ti:
             self.tb_snap_revert.props.sensitive = False
             self.tb_snap_delete.props.sensitive = False
             self.tb_snap_export.props.sensitive = False
-            return
-        self.selected_snapshot_name = self.lst_snapshots.get_value(ti, 0)
-        self.tb_snap_revert.props.sensitive = True
-        self.tb_snap_delete.props.sensitive = True
-        self.tb_snap_export.props.sensitive = True
+        else:
+            self.selected_snapshot_name = self.lst_snapshots.get_value(ti, 0)
+            self.tb_snap_revert.props.sensitive = True
+            self.tb_snap_delete.props.sensitive = True
+            self.tb_snap_export.props.sensitive = True
+
