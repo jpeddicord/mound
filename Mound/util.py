@@ -18,14 +18,16 @@
 import os
 
 try:
-    import xdg
-    XDGDATA = xdg.xdg_data_home
-    XDGCONFIG = xdg.xdg_config_home
-    XDGCACHE = xdg.xdg_cache_home
+    import xdg.BaseDirectory
+    XDGDATA = xdg.BaseDirectory.xdg_data_home
+    XDGCONFIG = xdg.BaseDirectory.xdg_config_home
+    XDGCACHE = xdg.BaseDirectory.xdg_cache_home
+    XDGDATADIRS = xdg.BaseDirectory.xdg_data_dirs
 except:
     XDGDATA = os.path.expanduser('~/.local/share')
     XDGCONFIG = os.path.expanduser('~/.config')
     XDGCACHE = os.path.expanduser('~/.cache')
+    XDGDATADIRS = [XDGDATA, '/usr/local/share', '/usr/share']
 
 def format_size(size):
     """Format a size (bytes) into something more readable."""

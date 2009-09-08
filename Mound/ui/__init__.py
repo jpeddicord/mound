@@ -90,6 +90,7 @@ class MainUI:
         """
         for app in self.mound.applications_lst:
             self.lst_applications.append((app.name, app.full_name, app.icon))
+        self.lst_applications.set_sort_column_id(1, gtk.SORT_ASCENDING) 
 
     def delete_application_data(self, source=None):
         """

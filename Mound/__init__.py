@@ -18,6 +18,7 @@
 import os
 from ConfigParser import RawConfigParser
 from Mound.application import Application
+from Mound.util import XDGDATADIRS
 
 class Mound:
     """
@@ -29,68 +30,76 @@ class Mound:
     applications = {}
     applications_lst = []
 
-    def load_applications(self, appdir):
+    def load_applications(self):
         """
         Load up the applications we can manage, using defaults if
         available.
         """
         self.load_defaults('/etc/userdata')
-
-        for root, dirs, files in os.walk(appdir):
-            # only toplevel scan
-            if root != appdir:
-                continue
-            
-            files.sort()
-            for f in files:
-                # we only want .desktop files, cheap check
-                if not '.desktop' in f:
+        
+        for xdgdir in XDGDATADIRS:
+            appdir = os.path.join(xdgdir, 'applications')
+            for root, dirs, files in os.walk(appdir):
+                # only toplevel scan
+                if root != appdir:
                     continue
-                cp = RawConfigParser()
-                try:
-                    cp.read(os.path.join(appdir, f))
-                except:
-                    continue
+                
+                #files.sort() #gtk will sort instead
+                for f in files:
+                    # we only want .desktop files, cheap check
+                    if not '.desktop' in f:
+                        continue
 
-                app = Application(f.replace('.desktop', ''))
-                app.desktop_path = os.path.join(appdir, f)
-
-                # look for the X-UserData key
-                try:
-                    locs = cp.get('Desktop Entry', 'X-UserData')
-                except:
-                    # load the default if available, otherwise skip
+                    app = Application(f.replace('.desktop', ''))
+                    app.desktop_path = os.path.join(appdir, f)
+                    
+                    # no duplicates
+                    if app.name in self.applications_lst:
+                        continue
+                    
+                    # load the desktop entry
+                    cp = RawConfigParser()
                     try:
-                        locs = self.default_applications[app.name]
+                        cp.read(app.desktop_path)
                     except:
                         continue
-                try:
-                    app.set_locations(locs.split(';'))
-                except:
-                    app.locations = []
+                    
+                    # look for the X-UserData key
+                    try:
+                        locs = cp.get('Desktop Entry', 'X-UserData')
+                    except:
+                        # load the default if available, otherwise skip
+                        try:
+                            locs = self.default_applications[app.name]
+                        except:
+                            continue
+                    try:
+                        app.set_locations(locs.split(';'))
+                    except:
+                        app.locations = []
 
-                try:
-                    app.full_name = cp.get('Desktop Entry', 'Name')
-                except:
-                    app.full_name = app.name
+                    try:
+                        app.full_name = cp.get('Desktop Entry', 'Name')
+                    except:
+                        app.full_name = app.name
 
-                # load the icon
-                try:
-                    app.icon_name = cp.get('Desktop Entry', 'Icon')
-                except:
-                    pass
-                app.load_icon()
+                    # load the icon
+                    try:
+                        app.icon_name = cp.get('Desktop Entry', 'Icon')
+                    except:
+                        pass
+                    app.load_icon()
 
-                # used to check if app is running
-                try:
-                    app.exec_name = cp.get('Desktop Entry', 'Exec').split(' ', 1)[0]
-                    app.exec_name = os.path.basename(app.exec_name)
-                except:
-                    pass
+                    # used to check if app is running
+                    try:
+                        app.exec_name = cp.get('Desktop Entry', 'Exec').split(' ', 1)[0]
+                        app.exec_name = os.path.basename(app.exec_name)
+                    except:
+                        pass
 
-                self.applications[app.name] = app
-                # we need an ordered list as well
-                self.applications_lst.append(app)
+                    self.applications[app.name] = app
+                    # we need an ordered list as well
+                    self.applications_lst.append(app)
 
     def load_defaults(self, defaults_file):
         """
