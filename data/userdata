@@ -6,6 +6,7 @@ bazaar-properties ~/.bazaar
 blender-fullscreen ~/.blender
 brasero $CONFIG/brasero
 chromium-browser $CONFIG/chromium
+cinelerra ~/.bcast
 compiz ~/.compiz;$CONFIG/compiz
 driconf ~/.drirc
 empathy $CONFIG/Empathy;~/.gnome2/Empathy
@@ -19,6 +20,7 @@ gimp ~/.gimp-2.6
 gtk-recordmydesktop ~/.gtk-recordmydesktop
 htop ~/.htoprc
 inkscape $CONFIG/inkscape
+mplayer ~/.mplayer
 nexuiz ~/.nexuiz
 olive-gtk ~/.olive.conf
 openarena ~/.openarena
@@ -28,9 +30,12 @@ rhythmbox $DATA/rhythmbox
 supertuxkart ~/.supertuxkart
 tangerine-properties $CONFIG/tangerine
 teeworlds ~/.teeworlds
+texmacs ~/.TeXmacs
 tmw ~/.tmw
 tomboy ~/.tomboy
 totem $CONFIG/totem;$DATA/totem
 transmission $CONFIG/transmission
+VirtualBox ~/.VirtualBox
 VisualBoyAdvance ~/VisualBoyAdvance.cfg
+vlc $CONFIG/vlc
 wine ~/.wine
