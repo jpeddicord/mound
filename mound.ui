@@ -261,6 +261,7 @@
                           <object class="GtkToolButton" id="tb_snap_new">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
+                            <property name="tooltip_text" translatable="yes">Create a new snapshot</property>
                             <property name="is_important">True</property>
                             <property name="label" translatable="yes">Take Snapshot</property>
                             <property name="use_underline">True</property>
@@ -275,6 +276,7 @@
                           <object class="GtkToolButton" id="tb_snap_revert">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
+                            <property name="tooltip_text" translatable="yes">Revert to this snapshot</property>
                             <property name="label" translatable="yes">Revert</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-revert-to-saved</property>
@@ -288,6 +290,7 @@
                           <object class="GtkToolButton" id="tb_snap_delete">
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
+                            <property name="tooltip_text" translatable="yes">Delete this snapshot</property>
                             <property name="label" translatable="yes">Delete</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-delete</property>
@@ -300,7 +303,6 @@
                         <child>
                           <object class="GtkSeparatorToolItem" id="separatortoolitem1">
                             <property name="visible">True</property>
-                            <property name="visible_horizontal">False</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -309,7 +311,7 @@
                         <child>
                           <object class="GtkToolButton" id="tb_snap_import">
                             <property name="visible">True</property>
-                            <property name="visible_horizontal">False</property>
+                            <property name="tooltip_text" translatable="yes">Import a snapshot</property>
                             <property name="label" translatable="yes">Import</property>
                             <property name="use_underline">True</property>
                             <property name="icon_name">media-eject</property>
@@ -322,7 +324,7 @@
                         <child>
                           <object class="GtkToolButton" id="tb_snap_export">
                             <property name="visible">True</property>
-                            <property name="visible_horizontal">False</property>
+                            <property name="tooltip_text" translatable="yes">Export the selected snapshot</property>
                             <property name="label" translatable="yes">Export</property>
                             <property name="use_underline">True</property>
                             <property name="stock_id">gtk-save-as</property>

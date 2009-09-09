@@ -47,9 +47,13 @@ class ApplicationError(Exception):
     def __init__(self, application, message):
         self.application = application
         self.msg = message
+class LocationError(ApplicationError):
+    def __init__(self, application, message):
+        self.application = application
+        self.msg = message
         application.errors.append(self)
         print "Error in %s: %s" % (application.name, message)
-class LocationError(ApplicationError): pass
+class SnapshotError(ApplicationError): pass
 
 class Application:
     """
@@ -90,9 +94,9 @@ class Application:
         self.locations = []
         for loc in locations:
             # substitute in XDG locations
-            loc = loc.replace("$DATA", XDGDATA)
-            loc = loc.replace("$CONFIG", XDGCONFIG)
-            loc = loc.replace("$CACHE", XDGCACHE)
+            loc = loc.replace('$DATA', XDGDATA)
+            loc = loc.replace('$CONFIG', XDGCONFIG)
+            loc = loc.replace('$CACHE', XDGCACHE)
             # set absolute pathnames
             loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
@@ -148,14 +152,14 @@ class Application:
         Check the system to see if the application is currently running.
         Not foolproof, but can stop many oopses.
         """
-        for root, dirs, files in os.walk("/proc"):
+        for root, dirs, files in os.walk('/proc'):
             for d in dirs:
                 try:
                     pid = int(d)
-                    f = open("/proc/%d/cmdline" % pid, "r")
+                    f = open('/proc/%d/cmdline' % pid, 'r')
                 except:
                     continue
-                exec_path = f.read().split("\x00")[0]
+                exec_path = f.read().split('\x00')[0]
                 f.close()
                 exec_name = os.path.basename(exec_path)
                 if self.exec_name == exec_name:
@@ -244,7 +248,30 @@ class Application:
         os.remove(snap_filename)
 
     def export_snapshot(self, snapshot_name, export_location):
-        pass #TODO: use gzip headers to re-write exported file
+        """
+        Export a snapshot with a custom gzip header.
+        """
+        snap_filename = self.snapshots[snapshot_name][0]
+        orig = open(snap_filename, 'rb')
+        # sanity check
+        header = orig.read(10)
+        if header[3] != '\x00':
+            raise SnapshotError(self, "Bad source snapshot.")
+        # open the export
+        export = open(export_location, 'wb')
+        # write the gzip header with the FCOMMENT flag
+        export.write(header[:3] + '\x10' + header[4:])
+        # begin writing metadata
+        export.write('MOUNDSNAPSHOT %s %s' % (self.name, snapshot_name))
+        # end of metadata
+        export.write('\x00')
+        # write the rest of the snapshot
+        while True:
+            data = orig.read(4096)
+            if not data: break
+            export.write(data)
+        export.close()
+        orig.close()
 
     def import_snapshot(self, import_location):
         pass #TODO: check gzip header for integrity

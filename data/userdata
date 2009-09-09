@@ -7,7 +7,6 @@ blender-fullscreen ~/.blender
 brasero $CONFIG/brasero
 chromium-browser $CONFIG/chromium
 cinelerra ~/.bcast
-compiz ~/.compiz;$CONFIG/compiz
 driconf ~/.drirc
 empathy $CONFIG/Empathy;~/.gnome2/Empathy
 epiphany-webkit ~/.gnome2/epiphany

@@ -126,7 +126,6 @@ class MainUI:
         application. Disable certain buttons if their features are not
         available for use on the application.
         """
-        #FIXME: update sensitivity of snapshot elements
         model, ti = self.apps_treeview_sel.get_selected()
         if ti:
             # find the selected application
@@ -174,3 +173,4 @@ class MainUI:
             self.img_appicon.set_from_stock('gtk-dialog-question', gtk.ICON_SIZE_DND);
             self.item_delete.props.sensitive = False
             self.item_details.props.sensitive = False
+            self.snapshots_ui.show_snapshots(None)

@@ -56,36 +56,39 @@ class SnapshotsUI:
         self.tb_snap_new.connect('clicked', self.new_snapshot_ui)
         self.tb_snap_delete.connect('clicked', self.delete_selected_snapshot)
         self.tb_snap_revert.connect('clicked', self.revert_to_selected)
-        #self.tb_snap_import.connect('clicked', self.import_snapshot)
-        #self.tb_snap_export.connect('clicked', self.export_snapshot)
+        self.tb_snap_import.connect('clicked', self.import_snapshot)
+        self.tb_snap_export.connect('clicked', self.export_selected_snapshot)
 
         self.dlg_new_snapshot.connect('response', self.new_snapshot_ui_response)
         self.dlg_new_snapshot.set_default_response(gtk.RESPONSE_OK)
 
-    def show_snapshots(self, selected_app=None):
+    def show_snapshots(self, selected_app=False):
         """
         Show and update the snapshots window.
         Can be called while already open to update the UI.
         """
-        if selected_app:
+        if selected_app != False:
             self.selected_app = selected_app
-        def snap_cmp(arg1, arg2):
-            return cmp(self.selected_app.snapshots[arg1][1],
-                       self.selected_app.snapshots[arg2][1])
-        self.selected_app.load_snapshots()
-        self.lst_snapshots.clear()
-        # sort by most recent
-        sorted_keys = sorted(self.selected_app.snapshots, cmp=snap_cmp, reverse=True)
-        for snapshot in sorted_keys:
-            snap_date = datetime.datetime.fromtimestamp(
-                    self.selected_app.snapshots[snapshot][1]).strftime(
-                            "%Y-%m-%d %H:%M:%S")
-            snap_size = format_size(self.selected_app.snapshots[snapshot][2])
-            self.lst_snapshots.append((
-                snapshot,
-                snap_date,
-                snap_size,
-            ))
+        if self.selected_app:
+            def snap_cmp(arg1, arg2):
+                return cmp(self.selected_app.snapshots[arg1][1],
+                           self.selected_app.snapshots[arg2][1])
+            self.selected_app.load_snapshots()
+            self.lst_snapshots.clear()
+            # sort by most recent
+            sorted_keys = sorted(self.selected_app.snapshots, cmp=snap_cmp, reverse=True)
+            for snapshot in sorted_keys:
+                snap_date = datetime.datetime.fromtimestamp(
+                        self.selected_app.snapshots[snapshot][1]).strftime(
+                                "%Y-%m-%d %H:%M:%S")
+                snap_size = format_size(self.selected_app.snapshots[snapshot][2])
+                self.lst_snapshots.append((
+                    snapshot,
+                    snap_date,
+                    snap_size,
+                ))
+        else:
+            self.lst_snapshots.clear()
         self.update_ui()
 
     def new_snapshot_ui(self, source=None):
@@ -169,21 +172,51 @@ class SnapshotsUI:
         dlg_confirm.connect('response', response)
         dlg_confirm.run()
         dlg_confirm.destroy()
+    
+    def import_snapshot(self, source=None):
+        pass
+    
+    def export_selected_snapshot(self, source=None):
+        """
+        Present a dialog allowing the user to export a snapshot.
+        """
+        # ask for a filename
+        dlg_export = gtk.FileChooserDialog("Save Snapshot As", self.win_main,
+                gtk.FILE_CHOOSER_ACTION_SAVE, (
+                    gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                    gtk.STOCK_SAVE, gtk.RESPONSE_ACCEPT,
+                ))
+        dlg_export.props.do_overwrite_confirmation = True
+        ff = gtk.FileFilter()
+        ff.set_name("Mound Snapshots (*.mound.tar.gz)")
+        ff.add_pattern('*.mound.tar.gz')
+        dlg_export.add_filter(ff)
+        #TODO: set default filename
+        if dlg_export.run() == gtk.RESPONSE_ACCEPT:
+            export_filename = dlg_export.get_filename()
+            print export_filename
+            # run the export
+            #self.selected_app.export_snapshot(self.selected_snapshot_name, 
+            #                                  export_filename)
+        dlg_export.destroy()
 
     def update_ui(self, source=None):
         """
         Set the sensitivity of toolbar items depending on the snapshot
-        selected. Disable the interface if the application has errors.
+        selected. Disable the interface if the application has errors,
+        or if nothing is selected.
         """
-        if self.selected_app.errors or self.selected_app.running:
+        if not self.selected_app or self.selected_app.errors or self.selected_app.running:
             self.snapshots_treeview.props.sensitive = False
             self.tb_snap_new.props.sensitive = False
             self.tb_snap_revert.props.sensitive = False
             self.tb_snap_delete.props.sensitive = False
+            self.tb_snap_import.props.sensitive = False
             self.tb_snap_export.props.sensitive = False
             return
         else:
             self.snapshots_treeview.props.sensitive = True
+            self.tb_snap_import.props.sensitive = True
         self.tb_snap_new.props.sensitive = (self.selected_app.data_size > 0)
         model, ti = self.snapshots_treeview_sel.get_selected()
         if not ti:
