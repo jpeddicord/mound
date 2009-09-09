@@ -31,7 +31,7 @@
   <object class="GtkWindow" id="win_main">
     <property name="title" translatable="yes">Mound Data Manager</property>
     <property name="default_width">700</property>
-    <property name="default_height">400</property>
+    <property name="default_height">450</property>
     <child>
       <object class="GtkVBox" id="vbox3">
         <property name="visible">True</property>
@@ -49,20 +49,18 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="item_details">
+                        <property name="label" translatable="yes">Details</property>
                         <property name="visible">True</property>
-                        <property name="use_action_appearance">True</property>
-                        <property name="related_action">act_details</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
+                        <property name="image">img_info</property>
+                        <property name="use_stock">False</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="item_delete">
+                        <property name="label" translatable="yes">Delete Data</property>
                         <property name="visible">True</property>
-                        <property name="use_action_appearance">True</property>
-                        <property name="related_action">act_delete</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
+                        <property name="image">img_delete</property>
+                        <property name="use_stock">False</property>
                       </object>
                     </child>
                     <child>
@@ -90,6 +88,27 @@
                 <child type="submenu">
                   <object class="GtkMenu" id="menu3">
                     <property name="visible">True</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="item_lp_help">
+                        <property name="label" translatable="yes">Get Help Online...</property>
+                        <property name="visible">True</property>
+                        <property name="image">img_lpi_help</property>
+                        <property name="use_stock">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem" id="item_lp_bug">
+                        <property name="label" translatable="yes">Report a Problem</property>
+                        <property name="visible">True</property>
+                        <property name="image">img_lpi_bug</property>
+                        <property name="use_stock">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separatormenuitem2">
+                        <property name="visible">True</property>
+                      </object>
+                    </child>
                     <child>
                       <object class="GtkImageMenuItem" id="item_about">
                         <property name="label">gtk-about</property>
@@ -445,7 +464,7 @@
     <property name="border_width">5</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="type_hint">normal</property>
+    <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">win_main</property>
@@ -477,7 +496,7 @@
     <property name="title" translatable="yes">Details</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="type_hint">normal</property>
+    <property name="type_hint">dialog</property>
     <property name="skip_taskbar_hint">True</property>
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">win_main</property>
@@ -632,18 +651,24 @@
       <action-widget response="0">btn_details_close</action-widget>
     </action-widgets>
   </object>
-  <object class="GtkAction" id="act_delete">
-    <property name="label">Delete Data</property>
-    <property name="tooltip">Delete data for this application</property>
-    <property name="stock_id">gtk-delete</property>
-  </object>
-  <object class="GtkAction" id="act_details">
-    <property name="label">Details</property>
-    <property name="tooltip">Show additional information about this application and its data</property>
-    <property name="stock_id">gtk-info</property>
-  </object>
   <object class="GtkImage" id="img_baobab">
     <property name="visible">True</property>
     <property name="icon_name">baobab</property>
+  </object>
+  <object class="GtkImage" id="img_info">
+    <property name="visible">True</property>
+    <property name="stock">gtk-info</property>
+  </object>
+  <object class="GtkImage" id="img_delete">
+    <property name="visible">True</property>
+    <property name="stock">gtk-delete</property>
+  </object>
+  <object class="GtkImage" id="img_lpi_help">
+    <property name="visible">True</property>
+    <property name="icon_name">lpi-help</property>
+  </object>
+  <object class="GtkImage" id="img_lpi_bug">
+    <property name="visible">True</property>
+    <property name="icon_name">lpi-bug</property>
   </object>
 </interface>

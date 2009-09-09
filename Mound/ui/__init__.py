@@ -16,6 +16,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from math import ceil
+from subprocess import Popen
 import gtk
 from Mound.util import format_size
 from Mound.ui.snapshots import SnapshotsUI
@@ -46,6 +47,8 @@ class MainUI:
             'item_details',
             'item_delete',
             'item_quit',
+            'item_lp_help',
+            'item_lp_bug',
             'item_about',
             'dlg_about',
             'apps_scroll',
@@ -63,6 +66,8 @@ class MainUI:
 
         # signals
         self.item_quit.connect('activate', gtk.main_quit)
+        self.item_lp_help.connect('activate', lambda s: Popen(['xdg-open', 'https://answers.launchpad.net/mound']))
+        self.item_lp_bug.connect('activate', lambda s: Popen(['xdg-open', 'https://bugs.launchpad.net/mound/+filebug']))
         self.item_about.connect('activate', lambda s: self.dlg_about.run())
         self.dlg_about.connect('response', lambda s, r: s.hide())
         
