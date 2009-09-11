@@ -132,49 +132,60 @@ class SnapshotsUI:
         As described: delete the currently selected snapshot.
         Present a confirmation dialog "just in case."
         """
-        def response(src, resp):
-            if resp == gtk.RESPONSE_OK:
-                self.selected_app.delete_snapshot(self.selected_snapshot_name)
-                self.selected_app.load_snapshots(force=True)
-                self.show_snapshots()
         dlg_confirm = gtk.MessageDialog(self.win_main, 0,
                 gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
         dlg_confirm.set_markup("Are you sure you want to delete the \"<b>%s</b>\" snapshot?\n\n<i>This will not delete any data %s currently uses.</i>" % (self.selected_snapshot_name, self.selected_app.full_name))
-        dlg_confirm.connect('response', response)
-        dlg_confirm.run()
+        if dlg_confirm.run() == gtk.RESPONSE_OK:
+            self.selected_app.delete_snapshot(self.selected_snapshot_name)
+            self.selected_app.load_snapshots(force=True)
+            self.show_snapshots()
         dlg_confirm.destroy()
-        # see the response function a few lines above for the rest
 
     def revert_to_selected(self, source=None):
         """
         Prompt the user to revert to the selected snapshot, giving an
         option to take another snapshot just to be safe.
         """
-        def response(src, resp):
-            if resp == gtk.RESPONSE_OK:
-                self.selected_app.revert_to_snapshot(self.selected_snapshot_name)
-                dlg_success = gtk.MessageDialog(self.win_main, 0,
-                        gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE,
-                        "Successfully reverted %s to the \"%s\" snapshot." % (
-                            self.selected_app.full_name,
-                            self.selected_snapshot_name
-                        ))
-                dlg_success.run()
-                dlg_success.destroy()
-            elif resp == 10:
-                src.hide()
-                self.new_snapshot_ui()
         dlg_confirm = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_WARNING)
         dlg_confirm.set_markup("<i>You may want to take a snapshot before reverting.</i>\n\nDo you want to revert to the \"<b>%s</b>\" snapshot?" % self.selected_snapshot_name)
         dlg_confirm.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg_confirm.add_button("Take Snapshot", 10)
         dlg_confirm.add_button(gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_OK)
-        dlg_confirm.connect('response', response)
-        dlg_confirm.run()
+        response = dlg_confirm.run()
+        if response == gtk.RESPONSE_OK:
+            self.selected_app.revert_to_snapshot(self.selected_snapshot_name)
+            dlg_success = gtk.MessageDialog(self.win_main, 0,
+                    gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE,
+                    "Successfully reverted %s to the \"%s\" snapshot." % (
+                        self.selected_app.full_name,
+                        self.selected_snapshot_name
+                    ))
+            dlg_success.run()
+            dlg_success.destroy()
+        elif response == 10:
+            dlg_confirm.hide()
+            self.new_snapshot_ui()
         dlg_confirm.destroy()
     
     def import_snapshot(self, source=None):
-        pass
+        """
+        Ask for a snapshot to import. Check it & extract it.
+        """
+        dlg_import = gtk.FileChooserDialog("Open Snapshot", self.win_main,
+                gtk.FILE_CHOOSER_ACTION_OPEN, (
+                    gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                    gtk.STOCK_OPEN, gtk.RESPONSE_ACCEPT,
+                ))
+        ff = gtk.FileFilter()
+        ff.set_name("Mound Snapshots (*.mtgz)")
+        ff.add_pattern('*.mtgz')
+        ff.add_pattern('*.tar.gz')
+        dlg_import.add_filter(ff)
+        if dlg_import.run() == gtk.RESPONSE_ACCEPT:
+            # run the import
+            print dlg_import.get_filename()
+            #XXX self.selected_app.import_snapshot(dlg_import.get_filename())
+        dlg_import.destroy()
     
     def export_selected_snapshot(self, source=None):
         """
@@ -188,16 +199,14 @@ class SnapshotsUI:
                 ))
         dlg_export.props.do_overwrite_confirmation = True
         ff = gtk.FileFilter()
-        ff.set_name("Mound Snapshots (*.mound.tar.gz)")
-        ff.add_pattern('*.mound.tar.gz')
+        ff.set_name("Mound Snapshots (*.mtgz)")
+        ff.add_pattern('*.mtgz')
+        ff.add_pattern('*.tar.gz')
         dlg_export.add_filter(ff)
-        #TODO: set default filename
+        dlg_export.set_current_name("%s.mtgz" % self.selected_snapshot_name)
         if dlg_export.run() == gtk.RESPONSE_ACCEPT:
-            export_filename = dlg_export.get_filename()
-            print export_filename
             # run the export
-            #self.selected_app.export_snapshot(self.selected_snapshot_name, 
-            #                                  export_filename)
+            self.selected_app.export_snapshot(dlg_export.get_filename())
         dlg_export.destroy()
 
     def update_ui(self, source=None):

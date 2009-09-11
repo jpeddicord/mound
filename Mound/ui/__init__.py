@@ -154,9 +154,9 @@ class MainUI:
             app.load_snapshots()
             num_snapshots = len(app.snapshots)
             if num_snapshots == 1:
-                size_info += " One snapshot is stored."
+                size_info += "\nOne snapshot is available."
             elif num_snapshots > 1:
-                size_info += " %d snapshots are stored." % num_snapshots
+                size_info += "\n%d snapshots are available." % num_snapshots
             txt.append(size_info)
             # check for errors
             if app.errors:

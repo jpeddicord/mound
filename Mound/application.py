@@ -262,7 +262,7 @@ class Application:
         # write the gzip header with the FCOMMENT flag
         export.write(header[:3] + '\x10' + header[4:])
         # begin writing metadata
-        export.write('MOUNDSNAPSHOT %s %s' % (self.name, snapshot_name))
+        export.write('MOUNDSNAPSHOT\n%s\n%s' % (self.name, snapshot_name))
         # end of metadata
         export.write('\x00')
         # write the rest of the snapshot
@@ -274,4 +274,9 @@ class Application:
         orig.close()
 
     def import_snapshot(self, import_location):
-        pass #TODO: check gzip header for integrity
+        pass
+        # TODO list:
+        # check file for MOUNDSNAPSHOT header or raise exception
+        # check that application in header matches self or raise exception
+        # check that the snapshot doesn't already exist in the list or raise
+        # finally, copy it to the snapshot folder. (shutil.copyfile)
