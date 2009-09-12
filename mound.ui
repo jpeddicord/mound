@@ -314,7 +314,7 @@
                             <property name="tooltip_text" translatable="yes">Import a snapshot</property>
                             <property name="label" translatable="yes">Import</property>
                             <property name="use_underline">True</property>
-                            <property name="icon_name">media-eject</property>
+                            <property name="icon_name">document-open</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>

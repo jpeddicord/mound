@@ -181,10 +181,23 @@ class SnapshotsUI:
         ff.add_pattern('*.mtgz')
         ff.add_pattern('*.tar.gz')
         dlg_import.add_filter(ff)
-        if dlg_import.run() == gtk.RESPONSE_ACCEPT:
-            # run the import
-            print dlg_import.get_filename()
-            #XXX self.selected_app.import_snapshot(dlg_import.get_filename())
+        def response(s, r):
+            if r != gtk.RESPONSE_ACCEPT:
+                return
+            try:
+                self.selected_app.import_snapshot(dlg_import.get_filename())
+            except Exception, e:
+                error = "A problem occurred. This snapshot cannot be used."
+                if getattr(e, 'msg', False):
+                    error += "\n\nError:\n" + e.msg
+                else: #XXX
+                    raise
+                dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
+                        gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, error)
+                dlg_error.run()
+                dlg_error.destroy()
+        dlg_import.connect('response', response)
+        dlg_import.run()
         dlg_import.destroy()
     
     def export_selected_snapshot(self, source=None):
@@ -206,7 +219,8 @@ class SnapshotsUI:
         dlg_export.set_current_name("%s.mtgz" % self.selected_snapshot_name)
         if dlg_export.run() == gtk.RESPONSE_ACCEPT:
             # run the export
-            self.selected_app.export_snapshot(dlg_export.get_filename())
+            self.selected_app.export_snapshot(self.selected_snapshot_name,
+                                              dlg_export.get_filename())
         dlg_export.destroy()
 
     def update_ui(self, source=None):

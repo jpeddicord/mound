@@ -256,7 +256,7 @@ class Application:
         # sanity check
         header = orig.read(10)
         if header[3] != '\x00':
-            raise SnapshotError(self, "Bad source snapshot.")
+            raise SnapshotError(self, "Bad source snapshot")
         # open the export
         export = open(export_location, 'wb')
         # write the gzip header with the FCOMMENT flag
@@ -267,16 +267,56 @@ class Application:
         export.write('\x00')
         # write the rest of the snapshot
         while True:
-            data = orig.read(4096)
-            if not data: break
-            export.write(data)
+            buf = orig.read(4096)
+            if not buf: break
+            export.write(buf)
         export.close()
         orig.close()
 
     def import_snapshot(self, import_location):
-        pass
-        # TODO list:
-        # check file for MOUNDSNAPSHOT header or raise exception
-        # check that application in header matches self or raise exception
-        # check that the snapshot doesn't already exist in the list or raise
-        # finally, copy it to the snapshot folder. (shutil.copyfile)
+        """
+        Import a snapshot, using checks to make sure it is valid for this
+        application. We need a valid MOUNDSNAPSHOT FCOMMENT header,
+        the application contained in the header needs to match, and
+        the header needs to define a snapshot name.
+        We then write it to the snapshot directory in a reverse fashion
+        of self.export_snapshot, saving it without the FCOMMENT header.
+        """
+        snap = open(import_location, 'rb')
+        # check the gzip flag
+        header = snap.read(10)
+        if header[3] != '\x10':
+            snap.close()
+            raise SnapshotError(self, "Bad source snapshot")
+        # read the FCOMMENT header, one byte at a time
+        fcomment = ""
+        while True:
+            byte = snap.read(1)
+            if not byte or byte == '\x00':
+                break
+            fcomment += byte
+        # extract and check the metadata
+        meta = fcomment.split('\n')
+        if len(meta) != 3 or meta[0] != 'MOUNDSNAPSHOT':
+            snap.close()
+            raise SnapshotError(self, "Not a Mound snapshot")
+        if meta[1] != self.name:
+            snap.close()
+            raise SnapshotError(self, "Snapshot does not match application")
+        if meta[2] in self.snapshots.keys():
+            snap.close()
+            raise SnapshotError(self, "Snapshot already exists")
+        # all valid, write it to the snapshot location
+        final_fn = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % meta[2])
+        final = open(final_fn, 'wb')
+        # reset the flag & write the header
+        final.write(header[:3] + '\x00' + header[4:])
+        # write the rest of the snapshot out into the new file
+        # snap should already have the read pointer set correctly
+        while True:
+            buf = snap.read(4096)
+            if not buf: break
+            final.write(buf)
+        snap.close()
+        final.close()
+
