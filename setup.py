@@ -12,7 +12,7 @@ setup_info = dict(
     packages=['Mound', 'Mound.ui'],
     scripts=['mound-data-manager'],
     data_files=[
-        ('share/mound-data-manager', ['mound.ui']),
+        ('share/mound-data-manager', ['data/mound.ui']),
         ('share/applications', ['data/mound-data-manager.desktop']),
         ('/etc', ['data/userdata']),
         ('share/icons/hicolor/16x16/apps', ['data/16x16/mound-data-manager.png']),

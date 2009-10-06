@@ -35,7 +35,7 @@ class MainUI:
         self.mound = mound_inst
         self.builder = gtk.Builder()
         try:
-            self.builder.add_from_file('mound.ui')
+            self.builder.add_from_file('data/mound.ui')
         except:
             self.builder.add_from_file('/usr/share/mound-data-manager/mound.ui')
 
@@ -93,7 +93,8 @@ class MainUI:
         Load the applications from the Mound instance and add them to our
         display.
         """
-        for app in self.mound.applications_lst:
+        for app_name in self.mound.applications:
+            app = self.mound.applications[app_name]
             self.lst_applications.append((app.name, app.full_name, app.icon))
         self.lst_applications.set_sort_column_id(1, gtk.SORT_ASCENDING) 
 
