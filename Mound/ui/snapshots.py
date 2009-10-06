@@ -15,9 +15,10 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import gtk
 import re
 import datetime
+import gobject
+import gtk
 from Mound.util import format_size
 
 RX_SNAPSHOT_NAME = re.compile('^[\w\-\s]+$')
@@ -93,9 +94,11 @@ class SnapshotsUI:
 
     def new_snapshot_ui(self, source=None):
         """
-        Show a dialog prompting for a snapshot name.
+        Show a dialog prompting for a snapshot name. Default to the current
+        date/time.
         """
-        self.entry_snapshot_name.props.text = ""
+        dt = datetime.datetime.now().strftime("%Y-%m-%d %H%M")
+        self.entry_snapshot_name.props.text = dt
         self.entry_snapshot_name.grab_focus()
         self.dlg_new_snapshot.run()
 
@@ -122,9 +125,25 @@ class SnapshotsUI:
                 dlg_error.run()
                 dlg_error.destroy()
                 return
-            # create a snapshot
-            self.selected_app.take_snapshot(snap_name)
-            self.show_snapshots()
+            # disable the interface & change to busy cursor
+            watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
+            self.dlg_new_snapshot.get_window().set_cursor(watch)
+            for c in self.dlg_new_snapshot.get_children():
+                c.props.sensitive = False
+            gobject.idle_add(self.new_snapshot_cb, snap_name)
+        else:
+            self.dlg_new_snapshot.hide()
+    
+    def new_snapshot_cb(self, snap_name):
+        """
+        Create a snapshot in an idle callback, and re-enable the interface
+        when finished.
+        """
+        self.selected_app.take_snapshot(snap_name)
+        self.dlg_new_snapshot.get_window().set_cursor(None)
+        for c in self.dlg_new_snapshot.get_children():
+            c.props.sensitive = True
+        self.show_snapshots()
         self.dlg_new_snapshot.hide()
 
     def delete_selected_snapshot(self, source=None):
@@ -153,18 +172,33 @@ class SnapshotsUI:
         dlg_confirm.add_button(gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_OK)
         response = dlg_confirm.run()
         if response == gtk.RESPONSE_OK:
-            self.selected_app.revert_to_snapshot(self.selected_snapshot_name)
-            dlg_success = gtk.MessageDialog(self.win_main, 0,
-                    gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE,
-                    "Successfully reverted %s to the \"%s\" snapshot." % (
-                        self.selected_app.full_name,
-                        self.selected_snapshot_name
-                    ))
-            dlg_success.run()
-            dlg_success.destroy()
+            # disable the interface & change to busy cursor
+            watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
+            dlg_confirm.get_window().set_cursor(watch)
+            for c in dlg_confirm.get_children():
+                c.props.sensitive = False
+            gobject.idle_add(self.revert_to_selected_cb, dlg_confirm,
+                             self.selected_snapshot_name)
+            return
         elif response == 10:
             dlg_confirm.hide()
             self.new_snapshot_ui()
+        dlg_confirm.destroy()
+    
+    def revert_to_selected_cb(self, dlg_confirm, snap_name):
+        """
+        Revert to the snapshot in an idle callback. We don't need to unlock
+        the dialog here because we destroy it anyway.
+        """
+        self.selected_app.revert_to_snapshot(snap_name)
+        dlg_success = gtk.MessageDialog(dlg_confirm, 0,
+                gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE,
+                "Successfully reverted %s to the \"%s\" snapshot." % (
+                    self.selected_app.full_name,
+                    self.selected_snapshot_name
+                ))
+        dlg_success.run()
+        dlg_success.destroy()
         dlg_confirm.destroy()
     
     def import_snapshot(self, source=None):
@@ -190,8 +224,6 @@ class SnapshotsUI:
                 error = "A problem occurred. This snapshot cannot be used."
                 if getattr(e, 'msg', False):
                     error += "\n\nError:\n" + e.msg
-                else: #XXX
-                    raise
                 dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
                         gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, error)
                 dlg_error.run()
