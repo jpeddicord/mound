@@ -1,0 +1,18 @@
+#!/bin/bash
+
+function scanfiles {
+    # recursive scan hidden directories
+    find $HOME -type d -path "$HOME/.*" -not -path "$HOME/.Private*" -not -path "$HOME/.gvfs*" -not -path "$HOME/.gconf*" -not -path "$HOME/.local/share/Trash*" -print0 | xargs -0 ls -l > $1
+    ls -al $HOME >> $1
+}
+
+echo "Indexing home directory..."
+scanfiles .treediff1
+echo "Launching $1"
+$1
+echo "Scanning home directory for changes..."
+scanfiles .treediff2
+echo "Changes:"
+diff -u .treediff1 .treediff2
+rm -f .treediff1 .treediff2
+

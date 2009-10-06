@@ -1,3 +1,11 @@
+mound (0.3.1-0~ppa1) karmic; urgency=low
+
+  * New upstream preview release
+    - Redesigned UI
+    - Import/export snapshots
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sun, 13 Sep 2009 21:12:51 -0400
+
 mound (0.2.1-0~ppa1) karmic; urgency=low
 
   * Bugfix release

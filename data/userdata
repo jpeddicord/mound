@@ -1,6 +1,8 @@
 adanaxisgpl ~/.adanaxis
 agave $DATA/agave
+alex4 ~/.alex4
 audacity ~/.audacity-data
+ballz ~/.ballz_saves.txt
 banshee-1 $CONFIG/banshee;$CONFIG/banshee-1
 bazaar-properties ~/.bazaar
 blender-fullscreen ~/.blender
@@ -12,6 +14,7 @@ empathy $CONFIG/Empathy;~/.gnome2/Empathy
 epiphany-webkit ~/.gnome2/epiphany
 evince ~/.gnome2/evince
 firefox ~/.mozilla/firefox
+frozen-bubble ~/.frozen-bubble
 f-spot ~/.gnome2/f-spot
 geany $CONFIG/geany
 gedit ~/.gnome2/gedit
@@ -20,6 +23,7 @@ gtk-recordmydesktop ~/.gtk-recordmydesktop
 htop ~/.htoprc
 inkscape $CONFIG/inkscape
 mplayer ~/.mplayer
+neverball ~/.neverball
 nexuiz ~/.nexuiz
 olive-gtk ~/.olive.conf
 openarena ~/.openarena
@@ -37,4 +41,7 @@ transmission $CONFIG/transmission
 VirtualBox ~/.VirtualBox
 VisualBoyAdvance ~/VisualBoyAdvance.cfg
 vlc $CONFIG/vlc
+wesnoth ~/.wesnoth1.6
 wine ~/.wine
+WorldOfGoo ~/.WorldOfGoo
+xmoto ~/.xmoto

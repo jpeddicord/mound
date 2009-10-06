@@ -1,3 +1,14 @@
+0.3.1
+    * 0.4 series beta 1
+    * New UI that makes better use of space, thanks ~rugby417 and ~laudeci
+      for their suggestions and contributions
+    * Importing/exporting of snapshots now works
+    * Launchpad menu items available
+    * More default userdata additions
+    * Fix: XDG environment variables were ignored
+    * Fix: load applications from all XDG data directories
+    * Fix: Applications were sorted in a weird way, now alphabetical
+
 0.2.1
     * Bugfix release for Jaunty
 
