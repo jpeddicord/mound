@@ -20,6 +20,13 @@ import gtk
 import Mound
 from Mound.ui import MainUI
 
+# i18n
+import locale
+import gettext
+locale.setlocale(locale.LC_ALL, '')
+gettext.install('mound', '/usr/share/language', unicode=True)
+
+# the application
 m = Mound.Mound()
 m.load_applications()
 ui = MainUI(m)

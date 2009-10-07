@@ -113,9 +113,9 @@ class MainUI:
                 self.snapshots_ui.show_snapshots(self.selected_app)
                 self.snapshots_ui.new_snapshot_ui()
         dlg_confirm = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_WARNING)
-        dlg_confirm.set_markup("<i>You may want to take a snapshot before continuing.</i>\n\nAre you sure you want to destroy all data, settings, and preferences for <b>%s</b>?" % self.selected_app.full_name)
+        dlg_confirm.set_markup("<i>" + _("You may want to take a snapshot before continuing.") + "</i>\n\n" + _("Are you sure you want to destroy all data, settings, and preferences for %s?") % ("<b>%s</b>" % self.selected_app.full_name))
         dlg_confirm.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
-        dlg_confirm.add_button("Take Snapshot", 10)
+        dlg_confirm.add_button(_("Take Snapshot"), 10)
         dlg_confirm.add_button(gtk.STOCK_DELETE, gtk.RESPONSE_OK)
         dlg_confirm.connect('response', response)
         dlg_confirm.run()
@@ -139,7 +139,7 @@ class MainUI:
             running = self.selected_app.check_running()
             txt = []
             if running:
-                txt.append("<b>Please close %s before managing it.</b>" % self.selected_app.full_name)
+                txt.append("<b>" + _("Please close %s before managing it.") % self.selected_app.full_name + "</b>")
                 self.item_delete.props.sensitive = False
             else:
                 self.item_delete.props.sensitive = True
@@ -147,21 +147,21 @@ class MainUI:
             app.calculate_size()
             if app.data_size > 0:
                 size = format_size(app.data_size)
-                size_info = "This application is using <b>%s</b> of space." % size
+                size_info = _("This application is using %s of space.") % ("<b>%s</b>" % size)
             else:
-                size_info = "This application is not storing any data."
+                size_info = _("This application is not storing any data.")
                 self.item_delete.props.sensitive = False
             # find the number of snapshots
             app.load_snapshots()
             num_snapshots = len(app.snapshots)
             if num_snapshots == 1:
-                size_info += "\nOne snapshot is available."
+                size_info += "\n" + _("One snapshot is available.")
             elif num_snapshots > 1:
-                size_info += "\n%d snapshots are available." % num_snapshots
+                size_info += "\n" + _("%d snapshots are available.") % num_snapshots
             txt.append(size_info)
             # check for errors
             if app.errors:
-                txt = ["<b>A problem occurred. This application cannot be managed.</b>"]
+                txt = ["<b>" + _("A problem occurred. This application cannot be managed.") + "</b>"]
                 self.item_delete.props.sensitive = False
             self.lbl_app_details.props.label = "\n\n".join(txt)
             self.item_details.props.sensitive = True
@@ -170,7 +170,7 @@ class MainUI:
         else:
             self.selected_app = None
             self.lbl_app_details.props.label = ""
-            self.lbl_title.props.label = "Select an Application";
+            self.lbl_title.props.label = _("Select an Application")
             self.img_appicon.set_from_stock('gtk-dialog-question', gtk.ICON_SIZE_DND);
             self.item_delete.props.sensitive = False
             self.item_details.props.sensitive = False

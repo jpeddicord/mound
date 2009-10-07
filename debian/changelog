@@ -1,3 +1,9 @@
+mound (0.3.1-0~ppa2) karmic; urgency=low
+
+  * test build
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Wed, 07 Oct 2009 13:20:07 -0400
+
 mound (0.3.1-0~ppa1) karmic; urgency=low
 
   * New upstream preview release

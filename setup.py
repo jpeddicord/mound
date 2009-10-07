@@ -18,7 +18,6 @@ setup_info = dict(
     },
     data_files=[
         ('share/mound-data-manager', ['data/mound.ui']),
-        #('share/applications', ['data/mound-data-manager.desktop']),
         ('/etc', ['data/userdata']),
         ('share/icons/hicolor/16x16/apps', ['data/16x16/mound-data-manager.png']),
         ('share/icons/hicolor/22x22/apps', ['data/22x22/mound-data-manager.png']),
