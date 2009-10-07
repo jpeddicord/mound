@@ -49,16 +49,18 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="item_details">
-                        <property name="label" translatable="yes">Details</property>
+                        <property name="label" translatable="yes">_Details</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="image">img_info</property>
                         <property name="use_stock">False</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="item_delete">
-                        <property name="label" translatable="yes">Delete Data</property>
+                        <property name="label" translatable="yes">D_elete Data</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="image">img_delete</property>
                         <property name="use_stock">False</property>
                       </object>
@@ -90,16 +92,18 @@
                     <property name="visible">True</property>
                     <child>
                       <object class="GtkImageMenuItem" id="item_lp_help">
-                        <property name="label" translatable="yes">Get Help Online...</property>
+                        <property name="label" translatable="yes">Get _Help Online...</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="image">img_lpi_help</property>
                         <property name="use_stock">False</property>
                       </object>
                     </child>
                     <child>
                       <object class="GtkImageMenuItem" id="item_lp_bug">
-                        <property name="label" translatable="yes">Report a Problem</property>
+                        <property name="label" translatable="yes">Report a _Problem</property>
                         <property name="visible">True</property>
+                        <property name="use_underline">True</property>
                         <property name="image">img_lpi_bug</property>
                         <property name="use_stock">False</property>
                       </object>
@@ -513,8 +517,10 @@
           <object class="GtkLabel" id="label1">
             <property name="visible">True</property>
             <property name="xalign">0</property>
-            <property name="label" translatable="yes">&lt;b&gt;Data&lt;/b&gt;</property>
-            <property name="use_markup">True</property>
+            <property name="label" translatable="yes">Data</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+            </attributes>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -562,12 +568,13 @@
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="btn_baobab">
-                <property name="label" translatable="yes">Analyze</property>
+                <property name="label" translatable="yes">_Analyze</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="image">img_baobab</property>
                 <property name="relief">half</property>
+                <property name="use_underline">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -599,8 +606,10 @@
           <object class="GtkLabel" id="label2">
             <property name="visible">True</property>
             <property name="xalign">0</property>
-            <property name="label" translatable="yes">&lt;b&gt;Information&lt;/b&gt;</property>
-            <property name="use_markup">True</property>
+            <property name="label" translatable="yes">Information</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+            </attributes>
           </object>
           <packing>
             <property name="expand">False</property>

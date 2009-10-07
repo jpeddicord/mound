@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Mound Data Manager
-Comment=Manage your application data
+_Name=Mound Data Manager
+_Comment=Manage your application data
 Icon=mound-data-manager
 Type=Application
 Terminal=false

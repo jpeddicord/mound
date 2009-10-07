@@ -1,0 +1,6 @@
+[type: gettext/glade] data/mound.ui
+data/mound-data-manager.desktop.in
+Mound/application.py
+Mound/ui/details.py
+Mound/ui/__init__.py
+Mound/ui/snapshots.py

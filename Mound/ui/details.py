@@ -99,13 +99,13 @@ class DetailsUI:
             self.btn_baobab.props.sensitive = False
         # information
         if self.selected_app.errors:
-            txt = "This application cannot be managed because of the following problems:\n"
+            txt = _("This application cannot be managed because of the following problems:") + "\n"
             for error in self.selected_app.errors:
                 txt += error.msg + "\n"
         else:
-            txt = "%s was loaded from:\n  %s\n\n" % (self.selected_app.full_name, self.selected_app.desktop_path)
+            txt = (_("%s was loaded from:") + "\n  %s\n\n") % (self.selected_app.full_name, self.selected_app.desktop_path)
             if self.no_links:
-                txt += "Snapshots are stored in:\n  %s" % self.selected_app.app_snapshot_dir
+                txt += _("Snapshots are stored in:") + "\n  %s" % self.selected_app.app_snapshot_dir
             else:
-                txt += "Snapshots are stored in:\n  <a href='%(snapdir)s'>%(snapdir)s</a>" % {'snapdir': self.selected_app.app_snapshot_dir}
+                txt += _("Snapshots are stored in:") + "\n  <a href='%(snapdir)s'>%(snapdir)s</a>" % {'snapdir': self.selected_app.app_snapshot_dir}
         self.lbl_app_information.props.label = txt

@@ -52,7 +52,7 @@ class LocationError(ApplicationError):
         self.application = application
         self.msg = message
         application.errors.append(self)
-        print "Error in %s: %s" % (application.name, message)
+        print _("Error in %s: %s") % (application.name, message)
 class SnapshotError(ApplicationError): pass
 
 class Application:
@@ -101,11 +101,11 @@ class Application:
             loc = os.path.expanduser(loc)
             # we only allow locations in the home directory
             if loc.find(USER_HOME) != 0:
-                raise LocationError(self, "Location is not in home directory")
+                raise LocationError(self, _("Location is not in home directory"))
             # prevent crucial directories from being managed
             for restriction in RESTRICTED:
                 if os.path.normpath(loc) == os.path.normpath(os.path.expanduser(restriction)):
-                    raise LocationError(self, "Cannot manage restricted location")
+                    raise LocationError(self, _("Cannot manage restricted location"))
             self.locations.append(loc)
 
     def load_icon(self):
@@ -256,7 +256,7 @@ class Application:
         # sanity check
         header = orig.read(10)
         if header[3] != '\x00':
-            raise SnapshotError(self, "Bad source snapshot")
+            raise SnapshotError(self, _("Bad source snapshot"))
         # open the export
         export = open(export_location, 'wb')
         # write the gzip header with the FCOMMENT flag
@@ -287,7 +287,7 @@ class Application:
         header = snap.read(10)
         if header[3] != '\x10':
             snap.close()
-            raise SnapshotError(self, "Bad source snapshot")
+            raise SnapshotError(self, _("Bad source snapshot"))
         # read the FCOMMENT header, one byte at a time
         fcomment = ""
         while True:
@@ -299,13 +299,13 @@ class Application:
         meta = fcomment.split('\n')
         if len(meta) != 3 or meta[0] != 'MOUNDSNAPSHOT':
             snap.close()
-            raise SnapshotError(self, "Not a Mound snapshot")
+            raise SnapshotError(self, _("Not a Mound snapshot"))
         if meta[1] != self.name:
             snap.close()
-            raise SnapshotError(self, "Snapshot does not match application")
+            raise SnapshotError(self, _("Snapshot does not match application"))
         if meta[2] in self.snapshots.keys():
             snap.close()
-            raise SnapshotError(self, "Snapshot already exists")
+            raise SnapshotError(self, _("Snapshot already exists"))
         # all valid, write it to the snapshot location
         final_fn = os.path.join(self.app_snapshot_dir, '%s.snapshot.tar.gz' % meta[2])
         final = open(final_fn, 'wb')

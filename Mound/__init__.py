@@ -20,6 +20,12 @@ from ConfigParser import RawConfigParser
 from Mound.application import Application
 from Mound.util import XDGDATADIRS
 
+# i18n
+import locale
+import gettext
+locale.setlocale(locale.LC_ALL, '')
+gettext.install('mound')
+
 class Mound:
     """
     The main application.
