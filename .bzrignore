@@ -2,3 +2,4 @@ MANIFEST
 build
 Mound/info.py
 dist
+data/*.1

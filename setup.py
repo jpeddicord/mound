@@ -2,6 +2,8 @@
 
 from distutils.core import setup
 from DistUtilsExtra.command import *
+from docutils.core import publish_file
+from docutils.writers import manpage
 
 setup_info = dict(
     name='mound',
@@ -26,10 +28,16 @@ setup_info = dict(
     ]
 )
 
+# write package information
 f = open('Mound/info.py', 'w')
 for item in ('name', 'version', 'description', 'author', 'author_email', 'url'):
     f.write("%s = '%s'\n" % (item, setup_info[item]))
 f.close()
+
+# write manpage
+publish_file(source_path='data/mound-data-manager.txt',
+             destination_path='data/mound-data-manager.1',
+             writer=manpage.Writer())
 
 setup(**setup_info)
 

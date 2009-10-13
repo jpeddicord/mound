@@ -1,0 +1,74 @@
+===================
+ mound-data-manager
+===================
+
+--------------------------------------
+manage data on a per-application basis
+--------------------------------------
+
+:Author: Jacob Peddicord <jpeddicord@ubuntu.com>
+:Date:   2009-10-13
+:Manual section: 1
+:Copyright: This manual page is released under the public domain.
+
+SYNOPSIS
+========
+
+``mound-data-manager``
+
+OPTIONS
+=======
+
+``mound-data-manager`` does not accept any command-line options.
+
+DESCRIPTION
+===========
+
+Mound Data Manager is a GTK+ application that can be used to manage data for individual applications. This includes taking snapshots, rolling back, and other data operations.
+
+USERDATA
+========
+
+Applications can be managed by Mound by adding a line to the application's .desktop entry.
+To do so, an `X-UserData` line must be added:
+
+    X-UserData=locations
+  
+where ``locations`` is a semicolon-separated (;) list of files and/or directories that can be managed. These locations must be inside the home directory, and so must start with ``~/`` followed by the data location. The following substitutions are supported:
+
+:$XDGCONFIG: the home XDG configuration directory; usually ~/.config
+:$XDGDATA: the home XDG data directory; usually ~/.local/share
+:$XDGCACHE: the home XDG cache directory; usually ~/.cache
+
+An application can also be managed with an entry in /etc/userdata; see the `FILES` section below for more information.
+
+FILES
+=====
+
+/etc/userdata
+-------------
+
+Contains defaults for mound-data-manager to load when an `X-UserData` line is not present in a .desktop entry.
+The format of this file is:
+
+    desktop-file-name userdata-locations;
+
+where ``desktop-file-name`` is the basename of the .desktop entry without the extenstion, and ``userdata-locations`` is an `X-UserData` value.
+
+EXAMPLES
+========
+
+Example entry in a .desktop file:
+  X-UserData=~/.config/myapp;~/.local/share/myapp
+
+Equalivalent to the above example:
+  X-UserData=$XDGCONFIG/myapp;$XDGDATA/myapp
+
+Entry in /etc/userdata:
+  myapp ~/.myapp
+
+BUGS
+====
+
+Bugs can be reported on https://bugs.launchpad.net/mound or by accessing the ``Report a Problem`` item from the ``Help`` menu.
+
