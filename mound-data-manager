@@ -24,7 +24,7 @@ from Mound.ui import MainUI
 import locale
 import gettext
 locale.setlocale(locale.LC_ALL, '')
-gettext.install('mound', '/usr/share/language', unicode=True)
+gettext.install('mound', '/usr/share/locale', unicode=True)
 
 # the application
 m = Mound.Mound()

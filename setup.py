@@ -2,8 +2,6 @@
 
 from distutils.core import setup
 from DistUtilsExtra.command import *
-from docutils.core import publish_file
-from docutils.writers import manpage
 
 setup_info = dict(
     name='mound',
@@ -35,9 +33,14 @@ for item in ('name', 'version', 'description', 'author', 'author_email', 'url'):
 f.close()
 
 # write manpage
-publish_file(source_path='data/mound-data-manager.txt',
-             destination_path='data/mound-data-manager.1',
-             writer=manpage.Writer())
+try:
+    from docutils.core import publish_file
+    from docutils.writers import manpage
+    publish_file(source_path='data/mound-data-manager.txt',
+                 destination_path='data/mound-data-manager.1',
+                 writer=manpage.Writer())
+except:
+    print "manpage generation error; ignoring"
 
 setup(**setup_info)
 

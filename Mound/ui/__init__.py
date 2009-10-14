@@ -34,6 +34,10 @@ class MainUI:
     def __init__(self, mound_inst):
         self.mound = mound_inst
         self.builder = gtk.Builder()
+        
+        # https://bugzilla.gnome.org/show_bug.cgi?id=574520
+        self.builder.set_translation_domain('mound')
+        
         try:
             self.builder.add_from_file('data/mound.ui')
         except:
@@ -48,6 +52,7 @@ class MainUI:
             'item_delete',
             'item_quit',
             'item_lp_help',
+            'item_lp_translate',
             'item_lp_bug',
             'item_about',
             'dlg_about',
@@ -67,6 +72,7 @@ class MainUI:
         # signals
         self.item_quit.connect('activate', gtk.main_quit)
         self.item_lp_help.connect('activate', lambda s: Popen(['xdg-open', 'https://answers.launchpad.net/mound']))
+        self.item_lp_translate.connect('activate', lambda s: Popen(['xdg-open', 'https://translations.launchpad.net/mound']))
         self.item_lp_bug.connect('activate', lambda s: Popen(['xdg-open', 'https://bugs.launchpad.net/mound/+filebug']))
         self.item_about.connect('activate', lambda s: self.dlg_about.run())
         self.dlg_about.connect('response', lambda s, r: s.hide())

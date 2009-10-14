@@ -1,0 +1,15 @@
+
+Requirements
+============
+
+mound-data-manager requires the following components to build:
+
+* python >= 2.5
+* python-distutils-extra (for i18n)
+* docutils-writer-manpage (for manpages)
+
+mound-data-manager requires the following components to run:
+
+* python >= 2.5
+* python-gtk
+

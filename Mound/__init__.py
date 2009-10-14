@@ -18,7 +18,7 @@
 import os
 from ConfigParser import RawConfigParser
 from Mound.application import Application
-from Mound.util import XDGDATADIRS
+from Mound.util import XDGDATADIRS, LANG_FULL, LANG_SHORT
 
 class Mound:
     """
@@ -73,9 +73,15 @@ class Mound:
                     app.set_locations(locs.split(';'))
                 except:
                     app.locations = []
-
+                
+                # load the name, internationalizing if we can
                 try:
-                    app.full_name = cp.get('Desktop Entry', 'Name')
+                    for lname in ('Name[%s]' % LANG_FULL, 'Name[%s]' % LANG_SHORT):
+                        if cp.has_option('Desktop Entry', lname):
+                            app.full_name = cp.get('Desktop Entry', lname)
+                            break
+                    if not app.full_name:
+                        app.full_name = cp.get('Desktop Entry', 'Name')
                 except:
                     app.full_name = app.name
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 19:33-0400\n"
+"POT-Creation-Date: 2009-10-13 20:46-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgstr ""
 msgid "Snapshots"
 msgstr ""
 
-#: ../data/mound.ui.h:20 ../Mound/ui/__init__.py:118
+#: ../data/mound.ui.h:20 ../Mound/ui/__init__.py:122
 #: ../Mound/ui/snapshots.py:182
 msgid "Take Snapshot"
 msgstr ""
@@ -159,44 +159,44 @@ msgstr ""
 msgid "Snapshots are stored in:"
 msgstr ""
 
-#: ../Mound/ui/__init__.py:116
+#: ../Mound/ui/__init__.py:120
 msgid "You may want to take a snapshot before continuing."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:116
+#: ../Mound/ui/__init__.py:120
 #, python-format
 msgid ""
 "Are you sure you want to destroy all data, settings, and preferences for %s?"
 msgstr ""
 
-#: ../Mound/ui/__init__.py:142
+#: ../Mound/ui/__init__.py:146
 #, python-format
 msgid "Please close %s before managing it."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:150
+#: ../Mound/ui/__init__.py:154
 #, python-format
 msgid "This application is using %s of space."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:152
+#: ../Mound/ui/__init__.py:156
 msgid "This application is not storing any data."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:158
+#: ../Mound/ui/__init__.py:162
 msgid "One snapshot is available."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:160
+#: ../Mound/ui/__init__.py:164
 #, python-format
 msgid "%d snapshots are available."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:164
+#: ../Mound/ui/__init__.py:168
 msgid "A problem occurred. This application cannot be managed."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:173
+#: ../Mound/ui/__init__.py:177
 msgid "Select an Application"
 msgstr ""
 

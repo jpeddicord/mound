@@ -16,6 +16,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
+import locale
 
 try:
     import xdg.BaseDirectory
@@ -28,6 +29,9 @@ except:
     XDGCONFIG = os.path.expanduser('~/.config')
     XDGCACHE = os.path.expanduser('~/.cache')
     XDGDATADIRS = [XDGDATA, '/usr/local/share', '/usr/share']
+
+LANG_FULL = locale.getdefaultlocale()[0]
+LANG_SHORT = LANG_FULL[:2]
 
 def format_size(size):
     """Format a size (bytes) into something more readable."""
