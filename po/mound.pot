@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-13 20:46-0400\n"
+"POT-Creation-Date: 2009-10-13 21:26-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,84 +17,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/mound.ui.h:1
-msgid "Application"
-msgstr ""
-
-#: ../data/mound.ui.h:2
 msgid "Copyright &#xA9; 2009 Jacob Peddicord"
 msgstr ""
 
-#: ../data/mound.ui.h:3
+#: ../data/mound.ui.h:2
 msgid "Create a new snapshot"
 msgstr ""
 
-#: ../data/mound.ui.h:4
+#: ../data/mound.ui.h:3
 msgid "D_elete Data"
 msgstr ""
 
-#: ../data/mound.ui.h:5
+#: ../data/mound.ui.h:4
 msgid "Data"
 msgstr ""
 
-#: ../data/mound.ui.h:6
+#: ../data/mound.ui.h:5
 msgid "Delete"
 msgstr ""
 
-#: ../data/mound.ui.h:7
+#: ../data/mound.ui.h:6
 msgid "Delete this snapshot"
 msgstr ""
 
-#: ../data/mound.ui.h:8
+#: ../data/mound.ui.h:7
 msgid "Details"
 msgstr ""
 
-#: ../data/mound.ui.h:9
+#: ../data/mound.ui.h:8
 msgid "Export"
 msgstr ""
 
-#: ../data/mound.ui.h:10
+#: ../data/mound.ui.h:9
 msgid "Export the selected snapshot"
 msgstr ""
 
-#: ../data/mound.ui.h:11
-msgid "Get _Help Online..."
+#: ../data/mound.ui.h:10
+msgid "Get Help Online..."
 msgstr ""
 
-#: ../data/mound.ui.h:12
+#: ../data/mound.ui.h:11
 msgid "Import"
 msgstr ""
 
-#: ../data/mound.ui.h:13
+#: ../data/mound.ui.h:12
 msgid "Import a snapshot"
 msgstr ""
 
-#: ../data/mound.ui.h:14
+#: ../data/mound.ui.h:13
 msgid "Information"
 msgstr ""
 
-#: ../data/mound.ui.h:15 ../data/mound-data-manager.desktop.in.h:2
+#: ../data/mound.ui.h:14 ../data/mound-data-manager.desktop.in.h:2
 msgid "Mound Data Manager"
 msgstr ""
 
-#: ../data/mound.ui.h:16
-msgid "Report a _Problem"
+#: ../data/mound.ui.h:15
+msgid "Report a Problem"
 msgstr ""
 
-#: ../data/mound.ui.h:17
+#: ../data/mound.ui.h:16
 msgid "Revert"
 msgstr ""
 
-#: ../data/mound.ui.h:18
+#: ../data/mound.ui.h:17
 msgid "Revert to this snapshot"
 msgstr ""
 
-#: ../data/mound.ui.h:19
+#: ../data/mound.ui.h:18
 msgid "Snapshots"
 msgstr ""
 
-#: ../data/mound.ui.h:20 ../Mound/ui/__init__.py:122
+#: ../data/mound.ui.h:19 ../Mound/ui/__init__.py:124
 #: ../Mound/ui/snapshots.py:182
 msgid "Take Snapshot"
+msgstr ""
+
+#: ../data/mound.ui.h:20
+msgid "Translate this Application..."
 msgstr ""
 
 #: ../data/mound.ui.h:21
@@ -159,44 +159,44 @@ msgstr ""
 msgid "Snapshots are stored in:"
 msgstr ""
 
-#: ../Mound/ui/__init__.py:120
+#: ../Mound/ui/__init__.py:122
 msgid "You may want to take a snapshot before continuing."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:120
+#: ../Mound/ui/__init__.py:122
 #, python-format
 msgid ""
 "Are you sure you want to destroy all data, settings, and preferences for %s?"
 msgstr ""
 
-#: ../Mound/ui/__init__.py:146
+#: ../Mound/ui/__init__.py:148
 #, python-format
 msgid "Please close %s before managing it."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:154
+#: ../Mound/ui/__init__.py:156
 #, python-format
 msgid "This application is using %s of space."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:156
+#: ../Mound/ui/__init__.py:158
 msgid "This application is not storing any data."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:162
+#: ../Mound/ui/__init__.py:164
 msgid "One snapshot is available."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:164
+#: ../Mound/ui/__init__.py:166
 #, python-format
 msgid "%d snapshots are available."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:168
+#: ../Mound/ui/__init__.py:170
 msgid "A problem occurred. This application cannot be managed."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:177
+#: ../Mound/ui/__init__.py:179
 msgid "Select an Application"
 msgstr ""
 
