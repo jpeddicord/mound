@@ -13,3 +13,12 @@ mound-data-manager requires the following components to run:
 * python >= 2.5
 * python-gtk
 
+
+Developing and Testing
+======================
+
+When testing a copy of Mound from Bazaar, you'll want to make sure that the
+/etc/userdata file is linked to your copy in the branch (or at least exists
+and has some content). Otherwise, the application list will most likely be
+empty and there won't be anything to test!
+

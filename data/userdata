@@ -35,7 +35,7 @@ tangerine-properties $CONFIG/tangerine
 teeworlds ~/.teeworlds
 texmacs ~/.TeXmacs
 tmw ~/.tmw
-tomboy ~/.tomboy
+tomboy ~/.tomboy;$DATA/tomboy;$CONFIG/tomboy
 totem $CONFIG/totem;$DATA/totem
 transmission $CONFIG/transmission
 VirtualBox ~/.VirtualBox
