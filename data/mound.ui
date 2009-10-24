@@ -673,21 +673,26 @@
   <object class="GtkImage" id="img_info">
     <property name="visible">True</property>
     <property name="stock">gtk-info</property>
+    <property name="icon-size">1</property>
   </object>
   <object class="GtkImage" id="img_delete">
     <property name="visible">True</property>
     <property name="stock">gtk-delete</property>
+    <property name="icon-size">1</property>
   </object>
   <object class="GtkImage" id="img_lpi_help">
     <property name="visible">True</property>
     <property name="icon_name">lpi-help</property>
+    <property name="icon-size">1</property>
   </object>
   <object class="GtkImage" id="img_lpi_bug">
     <property name="visible">True</property>
     <property name="icon_name">lpi-bug</property>
+    <property name="icon-size">1</property>
   </object>
   <object class="GtkImage" id="img_lpi_translate">
     <property name="visible">True</property>
     <property name="icon_name">lpi-translate</property>
+    <property name="icon-size">1</property>
   </object>
 </interface>

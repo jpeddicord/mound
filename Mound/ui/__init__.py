@@ -68,7 +68,7 @@ class MainUI:
 
         self.snapshots_ui = SnapshotsUI(mound_inst, self.builder)
         self.details_ui = DetailsUI(mound_inst, self.builder)
-
+        
         # signals
         self.item_quit.connect('activate', gtk.main_quit)
         self.item_lp_help.connect('activate', lambda s: Popen(['xdg-open', 'https://answers.launchpad.net/mound']))
@@ -82,6 +82,7 @@ class MainUI:
             self.dlg_about.set_version(version)
         except: pass
         
+        # connect some signals together
         self.apps_treeview.connect('cursor-changed', self.update_ui)
         self.apps_treeview_sel = self.apps_treeview.get_selection()
         self.item_details.connect('activate',
@@ -89,7 +90,14 @@ class MainUI:
         self.item_delete.connect('activate', self.delete_application_data)
 
         self.update_ui()
-
+        
+        # RGBA if available
+        screen = self.win_main.get_screen()
+        colormap = screen.get_rgba_colormap()
+        if colormap:
+            gtk.widget_set_default_colormap(colormap)
+        
+        # finally show the window
         self.win_main.connect('focus-in-event', self.update_ui)
         self.win_main.connect('destroy', gtk.main_quit)
         self.win_main.show_all()

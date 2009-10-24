@@ -105,9 +105,12 @@ class Mound:
 
     def load_defaults(self, defaults_file):
         """
-        Load the userdata defaults.
+        Load the userdata defaults if available.
         """
-        f = open(defaults_file, 'r')
+        try:
+            f = open(defaults_file, 'r')
+        except:
+            return self.default_applications
         for line in f:
             line = line.rstrip()
             try:
