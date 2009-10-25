@@ -242,6 +242,7 @@ class SnapshotsUI:
         dlg_import.connect('response', response)
         dlg_import.run()
         dlg_import.destroy()
+        self.show_snapshots()
     
     def export_selected_snapshot(self, source=None):
         """

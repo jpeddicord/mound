@@ -220,11 +220,7 @@ class Application:
         p = Popen(cmd)
         returncode = p.wait()
         assert returncode == 0
-        self.snapshots[snapshot_name] = (
-            snap_filename,
-            os.path.getmtime(snap_filename),
-            os.path.getsize(snap_filename)
-        )
+        self.load_snapshots(force=True)
 
     def revert_to_snapshot(self, snapshot_name):
         """
@@ -287,7 +283,7 @@ class Application:
         header = snap.read(10)
         if header[3] != '\x10':
             snap.close()
-            raise SnapshotError(self, _("Bad source snapshot"))
+            raise SnapshotError(self, _("Not a Mound snapshot"))
         # read the FCOMMENT header, one byte at a time
         fcomment = ""
         while True:
@@ -319,4 +315,5 @@ class Application:
             final.write(buf)
         snap.close()
         final.close()
+        self.load_snapshots(force=True)
 
