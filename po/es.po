@@ -1,235 +1,247 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Spanish translation for mound
+# Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
+# This file is distributed under the same license as the mound package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-11-05 20:17-0500\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2009-11-02 01:40+0000\n"
+"Last-Translator: DiegoJ <diegojromerolopez@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-11-04 23:36+0000\n"
+"X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/mound.ui.h:1
 msgid "Create a new snapshot"
-msgstr ""
+msgstr "Crear una nueva instantánea"
 
 #: ../data/mound.ui.h:2
 msgid "D_elete Data"
-msgstr ""
+msgstr "E_liminar datos"
 
 #: ../data/mound.ui.h:3
 msgid "Data"
-msgstr ""
+msgstr "Datos"
 
 #: ../data/mound.ui.h:4
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #: ../data/mound.ui.h:5
 msgid "Delete this snapshot"
-msgstr ""
+msgstr "Eliminar esta instantánea"
 
 #: ../data/mound.ui.h:6
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 #: ../data/mound.ui.h:7
 msgid "Export"
-msgstr ""
+msgstr "Exportar"
 
 #: ../data/mound.ui.h:8
 msgid "Export the selected snapshot"
-msgstr ""
+msgstr "Exportar la instantánea seleccionada"
 
 #: ../data/mound.ui.h:9
 msgid "Get Help Online..."
-msgstr ""
+msgstr "Obtener ayuda en línea..."
 
 #: ../data/mound.ui.h:10
 msgid "Import"
-msgstr ""
+msgstr "Importar"
 
 #: ../data/mound.ui.h:11
 msgid "Import a snapshot"
-msgstr ""
+msgstr "Importar una instantánea"
 
 #: ../data/mound.ui.h:12
 msgid "Information"
-msgstr ""
+msgstr "Información"
 
 #: ../data/mound.ui.h:13
 msgid "Report a Problem"
-msgstr ""
+msgstr "Informar de un problema"
 
 #: ../data/mound.ui.h:14
 msgid "Revert"
-msgstr ""
+msgstr "Revertir"
 
 #: ../data/mound.ui.h:15
 msgid "Revert to this snapshot"
-msgstr ""
+msgstr "Revertir a esta instantánea"
 
 #: ../data/mound.ui.h:16
 msgid "Snapshots"
-msgstr ""
+msgstr "Instantáneas"
 
 #: ../data/mound.ui.h:17 ../Mound/ui/__init__.py:132
 #: ../Mound/ui/snapshots.py:182
 msgid "Take Snapshot"
-msgstr ""
+msgstr "Tomar instantánea"
 
 #: ../data/mound.ui.h:18
 msgid "Translate this Application..."
-msgstr ""
+msgstr "Traducir esta aplicación..."
 
 #: ../data/mound.ui.h:19
 msgid "_Analyze"
-msgstr ""
+msgstr "_Analizar"
 
 #: ../data/mound.ui.h:20
 msgid "_Application"
-msgstr ""
+msgstr "_Aplicación"
 
 #: ../data/mound.ui.h:21
 msgid "_Details"
-msgstr ""
+msgstr "_Detalles"
 
 #: ../data/mound.ui.h:22
 msgid "_Help"
-msgstr ""
+msgstr "_Ayuda"
 
 #: ../data/mound-data-manager.desktop.in.h:1
 msgid "Manage your application data"
-msgstr ""
+msgstr "Gestione los datos de su aplicación"
 
 #: ../Mound/application.py:55
 #, python-format
 msgid "Error in %s: %s"
-msgstr ""
+msgstr "Error en %s: %s"
 
 #: ../Mound/application.py:104
 msgid "Location is not in home directory"
-msgstr ""
+msgstr "La localización no está en el directorio de inicio"
 
 #: ../Mound/application.py:108
 msgid "Cannot manage restricted location"
-msgstr ""
+msgstr "No se puede gestionar una localización restringida"
 
 #: ../Mound/application.py:255
 msgid "Bad source snapshot"
-msgstr ""
+msgstr "Fuente de instantánea errónea"
 
 #: ../Mound/application.py:286 ../Mound/application.py:298
 msgid "Not a Mound snapshot"
-msgstr ""
+msgstr "No es una instantánea de Mound"
 
 #: ../Mound/application.py:301
 msgid "Snapshot does not match application"
-msgstr ""
+msgstr "La instantánea no concuerda con la aplicación"
 
 #: ../Mound/application.py:304
 msgid "Snapshot already exists"
-msgstr ""
+msgstr "La instantánea ya existe"
 
 #: ../Mound/ui/details.py:102
 msgid "This application cannot be managed because of the following problems:"
 msgstr ""
+"Esta aplicación no puede gestionarse debido a los siguientes problemas:"
 
 #: ../Mound/ui/details.py:106
 #, python-format
 msgid "%s was loaded from:"
-msgstr ""
+msgstr "%s se ha cargado de:"
 
 #: ../Mound/ui/details.py:108 ../Mound/ui/details.py:110
 msgid "Snapshots are stored in:"
-msgstr ""
+msgstr "Las instantáneas se guardan en:"
 
 #: ../Mound/ui/__init__.py:130
 msgid "You may want to take a snapshot before continuing."
-msgstr ""
+msgstr "Quizás quiera tomar una instantánea antes de continuar."
 
 #: ../Mound/ui/__init__.py:130
 #, python-format
 msgid ""
 "Are you sure you want to destroy all data, settings, and preferences for %s?"
 msgstr ""
+"¿Está seguro de que quiere destruir todos los datos, configuraciones y "
+"preferencias de %s?"
 
 #: ../Mound/ui/__init__.py:156
 #, python-format
 msgid "Please close %s before managing it."
-msgstr ""
+msgstr "Por favor, cierre %s antes de gestionarlo."
 
 #: ../Mound/ui/__init__.py:164
 #, python-format
 msgid "This application is using %s of space."
-msgstr ""
+msgstr "Esta aplicación está usando %s de espacio."
 
 #: ../Mound/ui/__init__.py:166
 msgid "This application is not storing any data."
-msgstr ""
+msgstr "Esta aplicación no está almacenando ningún dato."
 
 #: ../Mound/ui/__init__.py:172
 msgid "One snapshot is available."
-msgstr ""
+msgstr "Hay una instantánea disponible."
 
 #: ../Mound/ui/__init__.py:174
 #, python-format
 msgid "%d snapshots are available."
-msgstr ""
+msgstr "Hay %d instantáneas disponibles."
 
 #: ../Mound/ui/__init__.py:178
 msgid "A problem occurred. This application cannot be managed."
-msgstr ""
+msgstr "Ha ocurrido un problema. Esta aplicación no puede gestionarse."
 
 #: ../Mound/ui/__init__.py:187
 msgid "Select an Application"
-msgstr ""
+msgstr "Seleccione una aplicación"
 
 #: ../Mound/ui/snapshots.py:116
 msgid ""
 "The snapshot name may only consist of letters, numbers, spaces, underscores, "
 "and dashes."
 msgstr ""
+"El nombre de la instantánea sólo puede consistir en letras, números, "
+"espacios, guiones y guiones bajos."
 
 #: ../Mound/ui/snapshots.py:124
 msgid "This snapshot already exists."
-msgstr ""
+msgstr "Esta instantánea ya existe."
 
 #: ../Mound/ui/snapshots.py:157
 #, python-format
 msgid "Are you sure you want to delete the \"%s\" snapshot?"
-msgstr ""
+msgstr "¿Está seguro de que quiere eliminar al instantánea \"%s\"?"
 
 #: ../Mound/ui/snapshots.py:160
 #, python-format
 msgid "This will not delete any data %s currently uses."
-msgstr ""
+msgstr "Esto no eliminará ningún dato que %s use actualmente."
 
 #: ../Mound/ui/snapshots.py:176
 msgid "You may want to take a snapshot before reverting."
-msgstr ""
+msgstr "Quizás quiera tomar una instantánea antes de revertir."
 
 #: ../Mound/ui/snapshots.py:178
 #, python-format
 msgid "Do you want to revert to the \"%s\" snapshot?"
-msgstr ""
+msgstr "¿Quiere revertir a la instantánea \"%s\"?"
 
 #: ../Mound/ui/snapshots.py:207
 #, python-format
 msgid "Successfully reverted %s to the \"%s\" snapshot."
-msgstr ""
+msgstr "Se revirtió con éxito %s a la instantánea \"%s\"."
 
 #: ../Mound/ui/snapshots.py:219
 msgid "Open Snapshot"
-msgstr ""
+msgstr "Abrir instantánea"
 
 #: ../Mound/ui/snapshots.py:225
 msgid "Mound Snapshots"
-msgstr ""
+msgstr "Instantáneas de Mound"
+
+#~ msgid "Copyright &#xA9; 2009 Jacob Peddicord"
+#~ msgstr "Copyright &#xA9; 2009 Jacob Peddicord"
+
+#~ msgid "Mound Data Manager"
+#~ msgstr "Mound Data Manager"

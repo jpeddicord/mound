@@ -23,6 +23,7 @@ gtk-recordmydesktop ~/.gtk-recordmydesktop
 htop ~/.htoprc
 inkscape $CONFIG/inkscape
 mplayer ~/.mplayer
+mupen64plus $CONFIG/mupen64plus;$DATA/mupen64plus
 neverball ~/.neverball
 nexuiz ~/.nexuiz
 olive-gtk ~/.olive.conf

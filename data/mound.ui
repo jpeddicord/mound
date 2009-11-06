@@ -29,7 +29,7 @@
     </columns>
   </object>
   <object class="GtkWindow" id="win_main">
-    <property name="title" translatable="yes">Mound Data Manager</property>
+    <property name="title">Mound Data Manager</property>
     <property name="default_width">700</property>
     <property name="default_height">450</property>
     <child>
@@ -479,7 +479,7 @@
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">win_main</property>
     <property name="program_name">Mound Data Manager</property>
-    <property name="copyright" translatable="yes">Copyright &#xA9; 2009 Jacob Peddicord</property>
+    <property name="copyright">Copyright &#xA9; 2009 Jacob Peddicord</property>
     <property name="website">https://launchpad.net/mound</property>
     <property name="logo_icon_name">mound-data-manager</property>
     <child internal-child="vbox">
