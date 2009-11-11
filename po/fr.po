@@ -112,7 +112,7 @@ msgstr ""
 
 #: ../Mound/application.py:55
 #, python-format
-msgid "Error in %s: %s"
+msgid "Error in %(application)s: %(error)s"
 msgstr ""
 
 #: ../Mound/application.py:104
@@ -145,7 +145,7 @@ msgstr ""
 
 #: ../Mound/ui/details.py:106
 #, python-format
-msgid "%s was loaded from:"
+msgid "%(application)s was loaded from:"
 msgstr ""
 
 #: ../Mound/ui/details.py:108 ../Mound/ui/details.py:110
@@ -159,20 +159,21 @@ msgstr "Vous voulez peut-être faire un instantané avant de continuer."
 #: ../Mound/ui/__init__.py:130
 #, python-format
 msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for %s?"
+"Are you sure you want to destroy all data, settings, and preferences for %"
+"(application)s?"
 msgstr ""
 "Êtes-vous sûr de vouloir détruite toutes les données, les paramètres et les "
-"préférences pour %s ?"
+"préférences pour %(application)s ?"
 
 #: ../Mound/ui/__init__.py:156
 #, python-format
-msgid "Please close %s before managing it."
+msgid "Please close %(application)s before managing it."
 msgstr ""
 
 #: ../Mound/ui/__init__.py:164
 #, python-format
-msgid "This application is using %s of space."
-msgstr "Cette application utilise %s d'espace disque."
+msgid "This application is using %(size)s of space."
+msgstr "Cette application utilise %(size)s d'espace disque."
 
 #: ../Mound/ui/__init__.py:166
 msgid "This application is not storing any data."
@@ -184,8 +185,8 @@ msgstr "Un instantané est disponible."
 
 #: ../Mound/ui/__init__.py:174
 #, python-format
-msgid "%d snapshots are available."
-msgstr "%d instantanés sont disponibles."
+msgid "%(num)d snapshots are available."
+msgstr "%(num)d instantanés sont disponibles."
 
 #: ../Mound/ui/__init__.py:178
 msgid "A problem occurred. This application cannot be managed."
@@ -207,12 +208,12 @@ msgstr "Cet instantané existe déjà."
 
 #: ../Mound/ui/snapshots.py:157
 #, python-format
-msgid "Are you sure you want to delete the \"%s\" snapshot?"
-msgstr "Êtes-vous sûr de vouloir supprimer l'instantané \"%s\" ?"
+msgid "Are you sure you want to delete the \"%(snap_name)s\" snapshot?"
+msgstr "Êtes-vous sûr de vouloir supprimer l'instantané \"%(snap_name)s\" ?"
 
 #: ../Mound/ui/snapshots.py:160
 #, python-format
-msgid "This will not delete any data %s currently uses."
+msgid "This will not delete any data %(application)s currently uses."
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:176
@@ -221,12 +222,13 @@ msgstr ""
 
 #: ../Mound/ui/snapshots.py:178
 #, python-format
-msgid "Do you want to revert to the \"%s\" snapshot?"
+msgid "Do you want to revert to the \"%(snap_name)s\" snapshot?"
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:207
 #, python-format
-msgid "Successfully reverted %s to the \"%s\" snapshot."
+msgid ""
+"Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:219

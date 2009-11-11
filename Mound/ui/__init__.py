@@ -127,7 +127,9 @@ class MainUI:
                 self.snapshots_ui.show_snapshots(self.selected_app)
                 self.snapshots_ui.new_snapshot_ui()
         dlg_confirm = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_WARNING)
-        dlg_confirm.set_markup("<i>" + _("You may want to take a snapshot before continuing.") + "</i>\n\n" + _("Are you sure you want to destroy all data, settings, and preferences for %s?") % ("<b>%s</b>" % self.selected_app.full_name))
+        txt = "<i>" + _("You may want to take a snapshot before continuing.") + "</i>\n\n"
+        txt += _("Are you sure you want to destroy all data, settings, and preferences for %(application)s?") % {'application': "<b>" + self.selected_app.full_name + "</b>"}
+        dlg_confirm.set_markup(txt)
         dlg_confirm.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg_confirm.add_button(_("Take Snapshot"), 10)
         dlg_confirm.add_button(gtk.STOCK_DELETE, gtk.RESPONSE_OK)
@@ -153,7 +155,7 @@ class MainUI:
             running = self.selected_app.check_running()
             txt = []
             if running:
-                txt.append("<b>" + _("Please close %s before managing it.") % self.selected_app.full_name + "</b>")
+                txt.append("<b>" + _("Please close %(application)s before managing it.") % {'application': self.selected_app.full_name} + "</b>")
                 self.item_delete.props.sensitive = False
             else:
                 self.item_delete.props.sensitive = True
@@ -161,7 +163,8 @@ class MainUI:
             app.calculate_size()
             if app.data_size > 0:
                 size = format_size(app.data_size)
-                size_info = _("This application is using %s of space.") % ("<b>%s</b>" % size)
+                # [i18n] %(size)s includes the unit, such as KB or MB.
+                size_info = _("This application is using %(size)s of space.") % {'size': "<b>" + size + "</b>"}
             else:
                 size_info = _("This application is not storing any data.")
                 self.item_delete.props.sensitive = False
@@ -171,7 +174,7 @@ class MainUI:
             if num_snapshots == 1:
                 size_info += "\n" + _("One snapshot is available.")
             elif num_snapshots > 1:
-                size_info += "\n" + _("%d snapshots are available.") % num_snapshots
+                size_info += "\n" + _("%(num)d snapshots are available.") % {'num': num_snapshots}
             txt.append(size_info)
             # check for errors
             if app.errors:

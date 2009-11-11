@@ -153,13 +153,9 @@ class SnapshotsUI:
         """
         dlg_confirm = gtk.MessageDialog(self.win_main, 0,
                 gtk.MESSAGE_WARNING, gtk.BUTTONS_OK_CANCEL)
-        dlg_confirm.set_markup(
-            _("Are you sure you want to delete the \"%s\" snapshot?") \
-                % ("<b>%s</b>" % self.selected_snapshot_name) +
-            "\n\n<i>" +
-            _("This will not delete any data %s currently uses.") \
-                % self.selected_app.full_name + "</i>"
-        )
+        txt = _("Are you sure you want to delete the \"%(snap_name)s\" snapshot?") % {'snap_name': "<b>" + self.selected_snapshot_name + "</b>"}
+        txt += "\n\n<i>" + _("This will not delete any data %(application)s currently uses.") % {'application': self.selected_app.full_name} + "</i>"
+        dlg_confirm.set_markup(txt)
         if dlg_confirm.run() == gtk.RESPONSE_OK:
             self.selected_app.delete_snapshot(self.selected_snapshot_name)
             self.selected_app.load_snapshots(force=True)
@@ -172,12 +168,9 @@ class SnapshotsUI:
         option to take another snapshot just to be safe.
         """
         dlg_confirm = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_WARNING)
-        dlg_confirm.set_markup(
-            "<i>" + _("You may want to take a snapshot before reverting.") +
-            "</i>\n\n" +
-            _("Do you want to revert to the \"%s\" snapshot?") % \
-                ("<b>%s</b>" % self.selected_snapshot_name)
-        )
+        txt = "<i>" + _("You may want to take a snapshot before reverting.") + "</i>\n\n"
+        txt += _("Do you want to revert to the \"%(snap_name)s\" snapshot?") % {'snap_name': "<b>" + self.selected_snapshot_name + "</b>"}
+        dlg_confirm.set_markup(txt)
         dlg_confirm.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
         dlg_confirm.add_button(_("Take Snapshot"), 10)
         dlg_confirm.add_button(gtk.STOCK_REVERT_TO_SAVED, gtk.RESPONSE_OK)
@@ -204,10 +197,10 @@ class SnapshotsUI:
         self.selected_app.revert_to_snapshot(snap_name)
         dlg_success = gtk.MessageDialog(dlg_confirm, 0,
                 gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE,
-                _("Successfully reverted %s to the \"%s\" snapshot.") % (
-                    self.selected_app.full_name,
-                    self.selected_snapshot_name
-                ))
+                _("Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot.") % {
+                    'application': self.selected_app.full_name,
+                    'snap_name': self.selected_snapshot_name
+                })
         dlg_success.run()
         dlg_success.destroy()
         dlg_confirm.destroy()
@@ -232,9 +225,9 @@ class SnapshotsUI:
             try:
                 self.selected_app.import_snapshot(dlg_import.get_filename())
             except Exception, e:
-                error = "A problem occurred. This snapshot cannot be used."
+                error = _("A problem occurred. This snapshot cannot be used.")
                 if getattr(e, 'msg', False):
-                    error += "\n\nError:\n" + e.msg
+                    error += "\n\n" + _("Error:") + "\n" + e.msg
                 dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
                         gtk.MESSAGE_ERROR, gtk.BUTTONS_OK, error)
                 dlg_error.run()
@@ -249,14 +242,14 @@ class SnapshotsUI:
         Present a dialog allowing the user to export a snapshot.
         """
         # ask for a filename
-        dlg_export = gtk.FileChooserDialog("Save Snapshot As", self.win_main,
+        dlg_export = gtk.FileChooserDialog(_("Save Snapshot As"), self.win_main,
                 gtk.FILE_CHOOSER_ACTION_SAVE, (
                     gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
                     gtk.STOCK_SAVE, gtk.RESPONSE_ACCEPT,
                 ))
         dlg_export.props.do_overwrite_confirmation = True
         ff = gtk.FileFilter()
-        ff.set_name("Mound Snapshots (*.mtgz)")
+        ff.set_name(_("Mound Snapshots") + " (*.mtgz)")
         ff.add_pattern('*.mtgz')
         ff.add_pattern('*.tar.gz')
         dlg_export.add_filter(ff)

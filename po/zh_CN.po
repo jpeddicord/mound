@@ -1,4 +1,4 @@
-# Dutch translation for mound
+# Chinese (Simplified) translation for mound
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the mound package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
@@ -6,242 +6,234 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
-"Report-Msgid-Bugs-To: \n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2009-11-05 20:17-0500\n"
-"PO-Revision-Date: 2009-11-02 07:52+0000\n"
-"Last-Translator: Daniël H. <Unknown>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"PO-Revision-Date: 2009-11-08 17:39+0000\n"
+"Last-Translator: Aron Xu <Unknown>\n"
+"Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2009-11-04 23:36+0000\n"
+"X-Launchpad-Export-Date: 2009-11-11 01:16+0000\n"
 "X-Generator: Launchpad (build Unknown)\n"
 
 #: ../data/mound.ui.h:1
 msgid "Create a new snapshot"
-msgstr "Een nieuwe snapshot aanmaken"
+msgstr "建立新的快照"
 
 #: ../data/mound.ui.h:2
 msgid "D_elete Data"
-msgstr "G_egevens verwijderen"
+msgstr "删除数据(_E)"
 
 #: ../data/mound.ui.h:3
 msgid "Data"
-msgstr "Gegevens"
+msgstr "数据"
 
 #: ../data/mound.ui.h:4
 msgid "Delete"
-msgstr "Verwijderen"
+msgstr "删除"
 
 #: ../data/mound.ui.h:5
 msgid "Delete this snapshot"
-msgstr "Deze snapshot verwijderen"
+msgstr "删除这个快照"
 
 #: ../data/mound.ui.h:6
 msgid "Details"
-msgstr "Details"
+msgstr "详细信息"
 
 #: ../data/mound.ui.h:7
 msgid "Export"
-msgstr "Exporteren"
+msgstr "导出"
 
 #: ../data/mound.ui.h:8
 msgid "Export the selected snapshot"
-msgstr "Geselecteerde snapshot exporteren"
+msgstr "导出选中的快照"
 
 #: ../data/mound.ui.h:9
 msgid "Get Help Online..."
-msgstr "Online hulp verkrijgen..."
+msgstr "获取在线帮助"
 
 #: ../data/mound.ui.h:10
 msgid "Import"
-msgstr "Importeren"
+msgstr "导入"
 
 #: ../data/mound.ui.h:11
 msgid "Import a snapshot"
-msgstr "Snapshot importeren"
+msgstr "导入一个快照"
 
 #: ../data/mound.ui.h:12
 msgid "Information"
-msgstr "Informatie"
+msgstr "信息"
 
 #: ../data/mound.ui.h:13
 msgid "Report a Problem"
-msgstr "Een probleem melden"
+msgstr "提交一个问题"
 
 #: ../data/mound.ui.h:14
 msgid "Revert"
-msgstr "Terugdraaien"
+msgstr "还原"
 
 #: ../data/mound.ui.h:15
 msgid "Revert to this snapshot"
-msgstr "Terugdraaien naar deze snapshot"
+msgstr "还原此快照"
 
 #: ../data/mound.ui.h:16
 msgid "Snapshots"
-msgstr "Snapshots"
+msgstr "快照"
 
 #: ../data/mound.ui.h:17 ../Mound/ui/__init__.py:132
 #: ../Mound/ui/snapshots.py:182
 msgid "Take Snapshot"
-msgstr "Snapshot maken"
+msgstr "截屏"
 
 #: ../data/mound.ui.h:18
 msgid "Translate this Application..."
-msgstr "Dit programma vertalen..."
+msgstr "翻译这个程序..."
 
 #: ../data/mound.ui.h:19
 msgid "_Analyze"
-msgstr "_Analyseren"
+msgstr "分析(_A)"
 
 #: ../data/mound.ui.h:20
 msgid "_Application"
-msgstr "Toep_assing"
+msgstr "应用程序(_A)"
 
 #: ../data/mound.ui.h:21
 msgid "_Details"
-msgstr "_Details"
+msgstr "详细信息(_D)"
 
 #: ../data/mound.ui.h:22
 msgid "_Help"
-msgstr "_Help"
+msgstr "帮助(_H)"
 
 #: ../data/mound-data-manager.desktop.in.h:1
 msgid "Manage your application data"
-msgstr "Beheer gegevens van programma's"
+msgstr "管理您的应用程序数据"
 
 #: ../Mound/application.py:55
 #, python-format
 msgid "Error in %(application)s: %(error)s"
-msgstr "Fout in %(application)s: %(error)s"
+msgstr "%(application)s: %(error)s 里的错误"
 
 #: ../Mound/application.py:104
 msgid "Location is not in home directory"
-msgstr "Locatie bevindt zich niet in home-map"
+msgstr "地址不在主目录"
 
 #: ../Mound/application.py:108
 msgid "Cannot manage restricted location"
-msgstr "Kan locatie met beperkte toegang niet beheren"
+msgstr "无法管理限制的地址"
 
 #: ../Mound/application.py:255
 msgid "Bad source snapshot"
-msgstr "Verkeerde bron voor snapshot"
+msgstr "错误的快照来源"
 
 #: ../Mound/application.py:286 ../Mound/application.py:298
 msgid "Not a Mound snapshot"
-msgstr "Geen Mound-snapshot"
+msgstr "不是 Mound 快照"
 
 #: ../Mound/application.py:301
 msgid "Snapshot does not match application"
-msgstr "Snapshot komt niet overeen met programma"
+msgstr "快照不符合此应用程序"
 
 #: ../Mound/application.py:304
 msgid "Snapshot already exists"
-msgstr "Snapshot bestaat al"
+msgstr "快照已经存在"
 
 #: ../Mound/ui/details.py:102
 msgid "This application cannot be managed because of the following problems:"
-msgstr "Dit programma kan niet beheerd worden door de volgende problemen:"
+msgstr "因为以下原因导致这个程序不能被管理："
 
 #: ../Mound/ui/details.py:106
 #, python-format
 msgid "%(application)s was loaded from:"
-msgstr "%(application)s werd geladen van:"
+msgstr ""
 
 #: ../Mound/ui/details.py:108 ../Mound/ui/details.py:110
 msgid "Snapshots are stored in:"
-msgstr "Snapshots worden opgeslagen in:"
+msgstr "快照存储在："
 
 #: ../Mound/ui/__init__.py:130
 msgid "You may want to take a snapshot before continuing."
-msgstr "Er kan een snapshot worden gemaakt"
+msgstr "也许您应该在继续之前保存一个快照。"
 
 #: ../Mound/ui/__init__.py:130
 #, python-format
 msgid ""
 "Are you sure you want to destroy all data, settings, and preferences for %"
 "(application)s?"
-msgstr ""
-"Wilt u zeker alle gegevens, instellingen en voorkeuren voor %(application)s verwijderen?"
+msgstr "您却定您要删除 %(application)s 的所有的数据，设置，还有偏好么？"
 
 #: ../Mound/ui/__init__.py:156
 #, python-format
 msgid "Please close %(application)s before managing it."
-msgstr "Sluit %(application)s alvorens het te beheren."
+msgstr "请在管理之前关掉 %(application)s 。"
 
 #: ../Mound/ui/__init__.py:164
 #, python-format
 msgid "This application is using %(size)s of space."
-msgstr "Dit programma gebruikt %(size)s van de beschikbare ruimte."
+msgstr "这个程序使用了 %(size)s 空间。"
 
 #: ../Mound/ui/__init__.py:166
 msgid "This application is not storing any data."
-msgstr "Dit programma slaat geen gegevens op."
+msgstr "这个程序没有保存任何数据。"
 
 #: ../Mound/ui/__init__.py:172
 msgid "One snapshot is available."
-msgstr "Eén snapshot is beschikbaar."
+msgstr "已经存在一个快照。"
 
 #: ../Mound/ui/__init__.py:174
 #, python-format
-msgid "%d snapshots are available."
-msgstr "%d snapshots zijn beschikbaar."
+msgid "%(num)d snapshots are available."
+msgstr "%(num)d 个可用快照。"
 
 #: ../Mound/ui/__init__.py:178
 msgid "A problem occurred. This application cannot be managed."
-msgstr "Er trad een probleem op. Dit programma kan niet worden beheerd."
+msgstr "一个错误发生了。这个程序不能被管理。"
 
 #: ../Mound/ui/__init__.py:187
 msgid "Select an Application"
-msgstr "Selecteer een programma"
+msgstr "选择一个应用程序"
 
 #: ../Mound/ui/snapshots.py:116
 msgid ""
 "The snapshot name may only consist of letters, numbers, spaces, underscores, "
 "and dashes."
-msgstr ""
-"De naam van de snapshot mag alleen bestaan uit letters, nummers, spaties, "
-"lage en gewone streepjes."
+msgstr "快照名称只可以包含字母，数字，空格，下划线，和破折号。"
 
 #: ../Mound/ui/snapshots.py:124
 msgid "This snapshot already exists."
-msgstr "Deze snapshot bestaat al."
+msgstr "这个快照已经存在。"
 
 #: ../Mound/ui/snapshots.py:157
 #, python-format
-msgid "Are you sure you want to delete the \"%(snap_name)s\" snapshot?"
-msgstr "Wilt u de snapshot \"%(snap_name)s\" verwijderen?"
+msgid ""
+"Are you sure you want to delete the \"%(snap_name)s\" snapshot?"
+msgstr "您却定您要删除 \"%(snap_name)s\" 快照？"
 
 #: ../Mound/ui/snapshots.py:160
 #, python-format
 msgid "This will not delete any data %(application)s currently uses."
-msgstr "Dit zal geen gegevens verwijderen die %(application)s nu gebruikt."
+msgstr "这样不会删除任何 %(application)s 正在使用的数据。"
 
 #: ../Mound/ui/snapshots.py:176
 msgid "You may want to take a snapshot before reverting."
-msgstr "Er kan een snapshot genomen worden voor terugdraaien."
+msgstr "在还原前也许您应该保存一个快照"
 
 #: ../Mound/ui/snapshots.py:178
 #, python-format
 msgid "Do you want to revert to the \"%(snap_name)s\" snapshot?"
-msgstr "\"%(snap_name)s\" snapshot terugdraaien?"
+msgstr "您却定您要还原 \"%(snap_name)s\" 快照？"
 
 #: ../Mound/ui/snapshots.py:207
 #, python-format
 msgid ""
 "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
-msgstr "Succesvol %(application)s naar \"%(snap_name)s\" snapshot teruggedraaid."
+msgstr "成功把 %(application)s 还原为 \"%(snap_name)s\" 快照。"
 
 #: ../Mound/ui/snapshots.py:219
 msgid "Open Snapshot"
-msgstr "Snapshot openen"
+msgstr "打开快照"
 
 #: ../Mound/ui/snapshots.py:225
 msgid "Mound Snapshots"
-msgstr "Mound-snapshots"
-
-#~ msgid "Copyright &#xA9; 2009 Jacob Peddicord"
-#~ msgstr "Copyright &#xA9; 2009 Jacob Peddicord"
-
-#~ msgid "Mound Data Manager"
-#~ msgstr "Mound databeheer"
+msgstr "Mound 快照"

@@ -52,7 +52,7 @@ class LocationError(ApplicationError):
         self.application = application
         self.msg = message
         application.errors.append(self)
-        print _("Error in %s: %s") % (application.name, message)
+        print _("Error in %(application)s: %(error)s") % {'application': application.name, 'error': message}
 class SnapshotError(ApplicationError): pass
 
 class Application:

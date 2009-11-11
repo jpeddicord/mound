@@ -112,8 +112,8 @@ msgstr "Gestione los datos de su aplicación"
 
 #: ../Mound/application.py:55
 #, python-format
-msgid "Error in %s: %s"
-msgstr "Error en %s: %s"
+msgid "Error in %(application)s: %(error)s"
+msgstr "Error en %(application)s: %(error)s"
 
 #: ../Mound/application.py:104
 msgid "Location is not in home directory"
@@ -146,8 +146,8 @@ msgstr ""
 
 #: ../Mound/ui/details.py:106
 #, python-format
-msgid "%s was loaded from:"
-msgstr "%s se ha cargado de:"
+msgid "%(application)s was loaded from:"
+msgstr "%(application)s se ha cargado de:"
 
 #: ../Mound/ui/details.py:108 ../Mound/ui/details.py:110
 msgid "Snapshots are stored in:"
@@ -160,20 +160,21 @@ msgstr "Quizás quiera tomar una instantánea antes de continuar."
 #: ../Mound/ui/__init__.py:130
 #, python-format
 msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for %s?"
+"Are you sure you want to destroy all data, settings, and preferences for %"
+"(application)s?"
 msgstr ""
 "¿Está seguro de que quiere destruir todos los datos, configuraciones y "
-"preferencias de %s?"
+"preferencias de %(application)s?"
 
 #: ../Mound/ui/__init__.py:156
 #, python-format
-msgid "Please close %s before managing it."
-msgstr "Por favor, cierre %s antes de gestionarlo."
+msgid "Please close %(application)s before managing it."
+msgstr "Por favor, cierre %(application)s antes de gestionarlo."
 
 #: ../Mound/ui/__init__.py:164
 #, python-format
-msgid "This application is using %s of space."
-msgstr "Esta aplicación está usando %s de espacio."
+msgid "This application is using %(size)s of space."
+msgstr "Esta aplicación está usando %(size)s de espacio."
 
 #: ../Mound/ui/__init__.py:166
 msgid "This application is not storing any data."
@@ -185,8 +186,8 @@ msgstr "Hay una instantánea disponible."
 
 #: ../Mound/ui/__init__.py:174
 #, python-format
-msgid "%d snapshots are available."
-msgstr "Hay %d instantáneas disponibles."
+msgid "%(num)d snapshots are available."
+msgstr "Hay %(num)d instantáneas disponibles."
 
 #: ../Mound/ui/__init__.py:178
 msgid "A problem occurred. This application cannot be managed."
@@ -210,13 +211,13 @@ msgstr "Esta instantánea ya existe."
 
 #: ../Mound/ui/snapshots.py:157
 #, python-format
-msgid "Are you sure you want to delete the \"%s\" snapshot?"
-msgstr "¿Está seguro de que quiere eliminar al instantánea \"%s\"?"
+msgid "Are you sure you want to delete the \"%(snap_name)s\" snapshot?"
+msgstr "¿Está seguro de que quiere eliminar al instantánea \"%(snap_name)s\"?"
 
 #: ../Mound/ui/snapshots.py:160
 #, python-format
-msgid "This will not delete any data %s currently uses."
-msgstr "Esto no eliminará ningún dato que %s use actualmente."
+msgid "This will not delete any data %(application)s currently uses."
+msgstr "Esto no eliminará ningún dato que %(application)s use actualmente."
 
 #: ../Mound/ui/snapshots.py:176
 msgid "You may want to take a snapshot before reverting."
@@ -224,13 +225,14 @@ msgstr "Quizás quiera tomar una instantánea antes de revertir."
 
 #: ../Mound/ui/snapshots.py:178
 #, python-format
-msgid "Do you want to revert to the \"%s\" snapshot?"
-msgstr "¿Quiere revertir a la instantánea \"%s\"?"
+msgid "Do you want to revert to the \"%(snap_name)s\" snapshot?"
+msgstr "¿Quiere revertir a la instantánea \"%(snap_name)s\"?"
 
 #: ../Mound/ui/snapshots.py:207
 #, python-format
-msgid "Successfully reverted %s to the \"%s\" snapshot."
-msgstr "Se revirtió con éxito %s a la instantánea \"%s\"."
+msgid ""
+"Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
+msgstr "Se revirtió con éxito %(application)s a la instantánea \"%(snap_name)s\"."
 
 #: ../Mound/ui/snapshots.py:219
 msgid "Open Snapshot"

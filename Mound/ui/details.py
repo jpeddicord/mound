@@ -103,7 +103,8 @@ class DetailsUI:
             for error in self.selected_app.errors:
                 txt += error.msg + "\n"
         else:
-            txt = (_("%s was loaded from:") + "\n  %s\n\n") % (self.selected_app.full_name, self.selected_app.desktop_path)
+            txt = _("%(application)s was loaded from:") % {'application': self.selected_app.full_name}
+            txt += "\n  " + self.selected_app.desktop_path + "\n\n"
             if self.no_links:
                 txt += _("Snapshots are stored in:") + "\n  %s" % self.selected_app.app_snapshot_dir
             else:
