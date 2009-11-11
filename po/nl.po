@@ -184,8 +184,8 @@ msgstr "Eén snapshot is beschikbaar."
 
 #: ../Mound/ui/__init__.py:174
 #, python-format
-msgid "%d snapshots are available."
-msgstr "%d snapshots zijn beschikbaar."
+msgid "%(num)d snapshots are available."
+msgstr "%(num)d snapshots zijn beschikbaar."
 
 #: ../Mound/ui/__init__.py:178
 msgid "A problem occurred. This application cannot be managed."
