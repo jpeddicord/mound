@@ -20,6 +20,7 @@ from ConfigParser import RawConfigParser
 from Mound.application import Application
 from Mound.util import XDGDATADIRS, LANG_FULL, LANG_SHORT
 
+
 class Mound:
     """
     The main application.

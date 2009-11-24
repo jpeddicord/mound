@@ -16,15 +16,20 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import gtk
-import Mound
-from Mound.ui import MainUI
+import os, sys
+if not os.environ.get('DISPLAY', None):
+    print "Display not available, cannot continue."
+    sys.exit(1)
 
 # i18n
 import locale
 import gettext
 locale.setlocale(locale.LC_ALL, '')
 gettext.install('mound', '/usr/share/locale', unicode=True)
+
+import gtk
+import Mound
+from Mound.ui import MainUI
 
 # the application
 m = Mound.Mound()

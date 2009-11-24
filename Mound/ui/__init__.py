@@ -22,6 +22,7 @@ from Mound.util import format_size
 from Mound.ui.snapshots import SnapshotsUI
 from Mound.ui.details import DetailsUI
 
+
 class MainUI:
     """
     Main window UI procedures.

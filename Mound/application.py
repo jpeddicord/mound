@@ -18,14 +18,19 @@
 import os
 from subprocess import Popen
 from shutil import rmtree, copyfile
-import gtk
 from Mound.util import XDGDATA, XDGCONFIG, XDGCACHE
 
 MOUND_DATA = os.path.join(XDGDATA, 'mound')
 MOUND_SNAPSHOTS = os.path.join(MOUND_DATA, 'snapshots')
 USER_HOME = os.path.expanduser('~')
-ICON_THEME_DEFAULT = gtk.icon_theme_get_default()
-ICON_UNKNOWN = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
+
+# skip loading GTK if there is no display
+if os.environ.get('DISPLAY', None):
+    import gtk
+    ICON_THEME_DEFAULT = gtk.icon_theme_get_default()
+    ICON_UNKNOWN = gtk.Invisible().render_icon(gtk.STOCK_DIALOG_QUESTION, gtk.ICON_SIZE_DND)
+else:
+    ICON_UNKNOWN = None
 
 # these cannot be managed
 RESTRICTED = (
