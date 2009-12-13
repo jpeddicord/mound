@@ -5,7 +5,7 @@ from DistUtilsExtra.command import *
 
 setup_info = dict(
     name='mound',
-    version='0.4.0',
+    version='0.4.1',
     description='Mound Data Manager',
     author='Jacob Peddicord',
     author_email='jpeddicord@ubuntu.com',
