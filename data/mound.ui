@@ -437,8 +437,8 @@
     <property name="transient_for">win_main</property>
     <property name="message_type">question</property>
     <property name="buttons">ok-cancel</property>
-    <property name="text">New Snapshot</property>
-    <property name="secondary_text">Enter a name for this snapshot below.</property>
+    <property name="text" translatable="yes">New Snapshot</property>
+    <property name="secondary_text" translatable="yes">Enter a name for this snapshot below.</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox4">
         <property name="visible">True</property>
