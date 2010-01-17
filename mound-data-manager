@@ -16,10 +16,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import os, sys
-if not os.environ.get('DISPLAY', None):
-    print "Display not available, cannot continue."
-    sys.exit(1)
+import os
 
 # i18n
 import locale
@@ -27,14 +24,20 @@ import gettext
 locale.setlocale(locale.LC_ALL, '')
 gettext.install('mound', '/usr/share/locale', unicode=True)
 
-import gtk
 import Mound
-from Mound.ui import MainUI
 
-# the application
-m = Mound.Mound()
-m.load_applications()
-ui = MainUI(m)
-ui.load_applications()
-gtk.main()
+# we have a gui
+if os.environ.get('DISPLAY', None):
+    import gtk
+    from Mound.ui import MainUI
+
+    # the application
+    m = Mound.Mound()
+    m.load_applications()
+    ui = MainUI(m)
+    ui.load_applications()
+    gtk.main()
+# console mode
+else:
+    pass #TODO
 
