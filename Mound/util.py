@@ -1,5 +1,5 @@
 # Mound Data Manager <https://launchpad.net/mound>
-# Copyright (C) 2009 Jacob Peddicord <jpeddicord@ubuntu.com>
+# Copyright (C) 2009-2010 Jacob Peddicord <jpeddicord@ubuntu.com>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -24,11 +24,13 @@ try:
     XDGCONFIG = xdg.BaseDirectory.xdg_config_home
     XDGCACHE = xdg.BaseDirectory.xdg_cache_home
     XDGDATADIRS = xdg.BaseDirectory.xdg_data_dirs
+    XDGCONFIGDIRS = xdg.BaseDirectory.xdg_config_dirs
 except:
     XDGDATA = os.path.expanduser('~/.local/share')
     XDGCONFIG = os.path.expanduser('~/.config')
     XDGCACHE = os.path.expanduser('~/.cache')
     XDGDATADIRS = [XDGDATA, '/usr/local/share', '/usr/share']
+    XDGCONFIGDIRS = [XDGCONFIG, '/etc/xdg']
 
 LANG_FULL = locale.getdefaultlocale()[0]
 LANG_SHORT = LANG_FULL[:2]

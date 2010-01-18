@@ -77,6 +77,7 @@ class Application:
         self.exec_name = ""
         self.snapshots = {}
         self.running = False
+        self.is_default = False
         self._app_snapshot_dir = os.path.join(MOUND_SNAPSHOTS, self.name)
         self.errors = []
     
