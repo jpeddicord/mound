@@ -32,8 +32,8 @@ class MainUI:
 
     selected_app = None
 
-    def __init__(self, mound_inst):
-        self.mound = mound_inst
+    def __init__(self, userdata_inst):
+        self.userdata = userdata_inst
         self.builder = gtk.Builder()
         
         # https://bugzilla.gnome.org/show_bug.cgi?id=574520
@@ -67,13 +67,13 @@ class MainUI:
         for item in load:
             self.__dict__[item] = self.builder.get_object(item)
 
-        self.snapshots_ui = SnapshotsUI(mound_inst, self.builder)
-        self.details_ui = DetailsUI(mound_inst, self.builder)
+        self.snapshots_ui = SnapshotsUI(self.builder)
+        self.details_ui = DetailsUI(self.builder)
         
         # signals
         self.item_quit.connect('activate', gtk.main_quit)
         self.item_lp_help.connect('activate', lambda s: Popen(['xdg-open', 'https://answers.launchpad.net/mound']))
-        self.item_lp_translate.connect('activate', lambda s: Popen(['xdg-open', 'https://translations.launchpad.net/mound']))
+        self.item_lp_translate.connect('activate', lambda s: Popen(['xdg-open', 'http://www.transifex.net/projects/p/mound/']))
         self.item_lp_bug.connect('activate', lambda s: Popen(['xdg-open', 'https://bugs.launchpad.net/mound/+filebug']))
         self.item_about.connect('activate', lambda s: self.dlg_about.run())
         self.dlg_about.connect('response', lambda s, r: s.hide())
@@ -108,8 +108,8 @@ class MainUI:
         Load the applications from the Mound instance and add them to our
         display.
         """
-        for app_name in self.mound.applications:
-            app = self.mound.applications[app_name]
+        for app_name in self.userdata.applications:
+            app = self.userdata.applications[app_name]
             self.lst_applications.append((app.name, app.full_name, app.icon))
         self.lst_applications.set_sort_column_id(1, gtk.SORT_ASCENDING) 
 
@@ -148,7 +148,7 @@ class MainUI:
         if ti:
             # find the selected application
             selected = self.lst_applications.get_value(ti, 0)
-            app = self.selected_app = self.mound.applications[selected]
+            app = self.selected_app = self.userdata.applications[selected]
             # update the title & icon
             self.lbl_title.props.label = app.full_name
             self.img_appicon.set_from_pixbuf(app.icon)

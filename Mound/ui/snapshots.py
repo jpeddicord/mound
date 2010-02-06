@@ -31,8 +31,7 @@ class SnapshotsUI:
     instance.
     """
 
-    def __init__(self, mound_inst, builder):
-        self.mound = mound_inst
+    def __init__(self, builder):
         self.builder = builder
 
         load = [
