@@ -23,6 +23,12 @@ from Mound.util import XDGCONFIGDIRS, XDGDATADIRS, LANG_FULL, LANG_SHORT
 
 default_dirs = list(XDGCONFIGDIRS)
 default_dirs.append('/etc')
+default_dirs.reverse()
+
+application_dirs = []
+for d in XDGDATADIRS:
+    application_dirs.insert(0, os.path.join(d, 'applications'))
+
 
 class UserData:
     """
@@ -30,47 +36,41 @@ class UserData:
     """
     default_locations = {}
     applications = {}
-    _defaults_loaded = []
     _desktop_loaded = []
 
     def load_defaults(self, scan_directories=default_dirs):
         """
-        Load the userdata defaults from all of the scan_directories,
-        preferring userdata from files first in the list.
+        Load the userdata defaults from all of the scan_directories.
+        Directories loaded later with conflicting userdata entries will
+        overwrite values from earlier files, so system directories should
+        be loaded first and user last.
         """
         for sdir in scan_directories:
             userdata_file = os.path.join(sdir, 'userdata')
-            print "Loading", userdata_file, "..."
             try:
                 f = open(userdata_file, 'r')
             except:
-                print '     failed.'
                 continue
             # read this userdata file
             for line in f:
                 line = line.rstrip()
                 try:
                     appline = line.split(' ', 1)
-                    # don't add to list if already loaded earlier
-                    if appline[0] in self._defaults_loaded:
-                        continue
                     self.default_locations[appline[0]] = appline[1]
-                    # save to loaded list
-                    self._defaults_loaded.append(appline[0])
                 except:
                     continue
             f.close()
-        return self.default_userdata
+        return self.default_locations
     
-    def load_applications(self, scan_directories=XDGDATADIRS):
+    def load_applications(self, scan_directories=application_dirs):
         """
         Load up the applications we can manage, using defaults from
         load_defaults if available. Searches scan_directories for applications
         to load, preferring earlier discovered userdata.
         """
         # scan all application directories
-        for sdir in scan_directories:
-            appdir = os.path.join(sdir, 'applications')
+        for appdir in scan_directories:
+            print "scanning", appdir
             if not os.path.isdir(appdir):
                 continue
             for f in os.listdir(appdir):
@@ -79,8 +79,6 @@ class UserData:
                     continue
                 # check for duplicates
                 appname = f.replace('.desktop', '')
-                if appname in self._applications_loaded:
-                    continue
                 
                 # create an application
                 app = Application(appname)
@@ -134,9 +132,4 @@ class UserData:
                     pass
 
                 self.applications[appname] = app
-                
-                # store the name if we loaded from the desktop entry to
-                # prevent duplicates. if we loaded a default, don't add it
-                # in case there is a line in a later file.
-                if not app.is_default:
-                    self._applications_loaded.append(appname)
+                print app

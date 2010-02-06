@@ -25,6 +25,10 @@ locale.setlocale(locale.LC_ALL, '')
 gettext.install('mound', '/usr/share/locale', unicode=True)
 
 import Mound
+from Mound.userdata import UserData
+ud = UserData()
+ud.load_defaults()
+ud.load_applications()
 
 # we have a gui
 if os.environ.get('DISPLAY', None):
@@ -32,11 +36,11 @@ if os.environ.get('DISPLAY', None):
     from Mound.ui import MainUI
 
     # the application
-    m = Mound.Mound()
-    m.load_applications()
-    ui = MainUI(m)
-    ui.load_applications()
-    gtk.main()
+    #m = Mound.Mound()
+    #m.load_applications()
+    #ui = MainUI(m)
+    #ui.load_applications()
+    #gtk.main()
 # console mode
 else:
     pass #TODO
