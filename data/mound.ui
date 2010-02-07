@@ -358,7 +358,7 @@
                         <child>
                           <object class="GtkTreeView" id="snapshots_treeview">
                             <property name="width_request">400</property>
-                            <property name="height_request">150</property>
+                            <property name="height_request">200</property>
                             <property name="visible">True</property>
                             <property name="sensitive">False</property>
                             <property name="can_focus">True</property>
