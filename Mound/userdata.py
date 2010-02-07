@@ -70,7 +70,6 @@ class UserData:
         """
         # scan all application directories
         for appdir in scan_directories:
-            print "scanning", appdir
             if not os.path.isdir(appdir):
                 continue
             for f in os.listdir(appdir):
@@ -132,4 +131,3 @@ class UserData:
                     pass
 
                 self.applications[appname] = app
-                print app

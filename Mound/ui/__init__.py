@@ -17,6 +17,7 @@
 
 from math import ceil
 from subprocess import Popen
+import gobject
 import gtk
 from Mound.util import format_size
 from Mound.ui.snapshots import SnapshotsUI
@@ -32,8 +33,9 @@ class MainUI:
 
     selected_app = None
 
-    def __init__(self, userdata_inst):
+    def __init__(self, userdata_inst, startup_app=None):
         self.userdata = userdata_inst
+        self.startup_app = startup_app
         self.builder = gtk.Builder()
         
         # https://bugzilla.gnome.org/show_bug.cgi?id=574520
@@ -82,7 +84,7 @@ class MainUI:
             from Mound.info import version
             self.dlg_about.set_version(version)
         except: pass
-        
+
         # connect some signals together
         self.apps_treeview.connect('cursor-changed', self.update_ui)
         self.apps_treeview_sel = self.apps_treeview.get_selection()
@@ -90,18 +92,22 @@ class MainUI:
                 lambda s: self.details_ui.show_details(self.selected_app))
         self.item_delete.connect('activate', self.delete_application_data)
 
+        # update our ui
         self.update_ui()
-        
-        # RGBA if available
-        screen = self.win_main.get_screen()
-        colormap = screen.get_rgba_colormap()
-        if colormap:
-            gtk.widget_set_default_colormap(colormap)
         
         # finally show the window
         self.win_main.connect('focus-in-event', self.update_ui)
         self.win_main.connect('destroy', gtk.main_quit)
         self.win_main.show_all()
+
+        # set the startup application when ready
+        gobject.idle_add(self.set_startup_application)
+
+    def set_startup_application(self):
+        if self.startup_app:
+            # FIXME
+            self.apps_treeview.set_cursor('4')
+        return False
 
     def load_applications(self):
         """
@@ -144,10 +150,10 @@ class MainUI:
         application. Disable certain buttons if their features are not
         available for use on the application.
         """
-        model, ti = self.apps_treeview_sel.get_selected()
-        if ti:
+        model, treeiter = self.apps_treeview_sel.get_selected()
+        if treeiter:
             # find the selected application
-            selected = self.lst_applications.get_value(ti, 0)
+            selected = self.lst_applications.get_value(treeiter, 0)
             app = self.selected_app = self.userdata.applications[selected]
             # update the title & icon
             self.lbl_title.props.label = app.full_name

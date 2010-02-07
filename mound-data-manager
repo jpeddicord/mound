@@ -16,7 +16,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import os
+import sys
 
 # i18n
 import locale
@@ -24,21 +24,20 @@ import gettext
 locale.setlocale(locale.LC_ALL, '')
 gettext.install('mound', '/usr/share/locale', unicode=True)
 
-import Mound
-from Mound.userdata import UserData
-ud = UserData()
-ud.load_defaults()
-ud.load_applications()
-
 # we have a gui
-if os.environ.get('DISPLAY', None):
+if len(sys.argv) == 1:
     import gtk
     from Mound.ui import MainUI
-
+    from Mound.userdata import UserData
+    
+    ud = UserData()
+    ud.load_defaults()
+    ud.load_applications()
     ui = MainUI(ud)
     ui.load_applications()
     gtk.main()
 # console mode
 else:
-    pass #TODO
+    from Mound import run_cli
+    sys.exit(run_cli())
 
