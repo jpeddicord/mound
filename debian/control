@@ -1,0 +1,26 @@
+Source: mound
+Section: utils
+Priority: optional
+Maintainer: Jacob Peddicord <jpeddicord@ubuntu.com>
+Build-Depends: debhelper (>= 7), cdbs (>= 0.4.49), python, python-support (>= 0.5.3)
+Build-Depends-Indep: python-distutils-extra, docutils-writer-manpage
+Standards-Version: 3.8.3
+Homepage: https://launchpad.net/mound
+
+Package: mound-data-manager
+Architecture: all
+Depends: ${python:Depends}, ${misc:Depends}, xdg-utils, python-gtk2, python-xdg, userdata-defaults
+Recommends: baobab
+Description: application data manager
+ Mound Data Manager is an tool that can manage data in the context of
+ other applications. You can take snapshots, delete, and move data from
+ many of your favorite applications.
+
+Package: userdata-defaults
+Architecture: all
+Depends: ${misc:Depends}
+Replaces: mound-data-manager (< 0.3.99)
+Description: application userdata defaults
+ This contains the /etc/userdata file used by Mound Data Manager (and other
+ software). The file is used as a fallback for managing applications that
+ do not ship X-UserData lines in their .desktop entries.

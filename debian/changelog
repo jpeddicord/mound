@@ -1,0 +1,70 @@
+mound (0.4.1-0~ppa2) karmic; urgency=low
+
+  * Fix problem with source tarball naming
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sun, 13 Dec 2009 16:17:37 -0500
+
+mound (0.4.1-0~ppa1) karmic; urgency=low
+
+  * Maintenance release (0.4.1)
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sun, 13 Dec 2009 16:13:22 -0500
+
+mound (0.4.0-0~ppa1) karmic; urgency=low
+
+  * New upstream release (0.4.0)
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sun, 01 Nov 2009 00:02:27 -0400
+
+mound (0.3.1-99~ppa1) karmic; urgency=low
+
+  * New preview release (0.4 RC)
+    - Minor fixes from 0.3.1
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sat, 24 Oct 2009 22:24:34 -0400
+
+mound (0.3.1-0~ppa2) karmic; urgency=low
+
+  * test build
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Wed, 07 Oct 2009 13:20:07 -0400
+
+mound (0.3.1-0~ppa1) karmic; urgency=low
+
+  * New upstream preview release
+    - Redesigned UI
+    - Import/export snapshots
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sun, 13 Sep 2009 21:12:51 -0400
+
+mound (0.2.1-0~ppa1) karmic; urgency=low
+
+  * Bugfix release
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Fri, 04 Sep 2009 23:49:27 -0400
+
+mound (0.2.0-0~ppa1) karmic; urgency=low
+
+  * New upstream release
+    - Details dialog
+    - Baobab integration
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Thu, 03 Sep 2009 22:39:34 -0400
+
+mound (0.1.1-0~ppa1) karmic; urgency=low
+
+  * Second preview release
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Mon, 31 Aug 2009 19:22:16 -0400
+
+mound (0.1.0~ppa2) karmic; urgency=low
+
+  * Fix short description
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sat, 29 Aug 2009 23:32:32 -0400
+
+mound (0.1.0~ppa1) karmic; urgency=low
+
+  * Initial release for PPA.
+
+ -- Jacob Peddicord <jpeddicord@ubuntu.com>  Sat, 29 Aug 2009 21:38:16 -0400
