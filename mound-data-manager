@@ -67,7 +67,7 @@ def run_cli():
     ud.load_applications()
     
     # no action commands
-    elif optsum == 0:
+    if optsum == 0:
         # load the gui
         import gtk
         from Mound.ui import MainUI
@@ -84,8 +84,8 @@ def run_cli():
             print ud.applications[app].name, ';'.join(ud.applications[app].locations)
     
     elif opts.take_snapshot:
-        if args[0] not in ud.applications:
-            print _("%(application)s does not exist or cannot be managed.")
+        if opts.take_snapshot not in ud.applications:
+            print _("%(application)s does not exist or cannot be managed.") %{'application': opts.take_snapshot}
     
     elif opts.revert_snapshot:
         pass
