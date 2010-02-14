@@ -46,13 +46,15 @@ def run_cli():
 
     (opts, args) = p.parse_args()
 
+    # we _could_ use callbacks instead, but we also only want one option
+    # to run at a time.
     optsum = 0
     for opt in ['list_applications', 'take_snapshot', 'revert_snapshot', 'delete_data']:
         if opts.__dict__[opt]:
             optsum += 1
-
     if optsum > 1:
         p.error(_("Only one action may be used at a time."))
+    
     # if there were no parsable options, there's probably just an appname
     elif optsum == 0:
         # load the gui
@@ -67,8 +69,6 @@ def run_cli():
         gtk.main()
         return
 
-    # we _could_ use callbacks instead, but we also only want one option
-    # to run at a time.
     if opts.list_applications:
         from Mound.userdata import UserData
         ud = UserData()

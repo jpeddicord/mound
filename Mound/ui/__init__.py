@@ -104,9 +104,17 @@ class MainUI:
         gobject.idle_add(self.set_startup_application)
 
     def set_startup_application(self):
+        """
+        Set a selected application on startup. This must be called after
+        the list is ready and gtk is idle.
+        """
         if self.startup_app:
-            # FIXME
-            self.apps_treeview.set_cursor('4')
+            i = 0
+            for row in self.lst_applications:
+                if self.lst_applications.get_value(row.iter, 0) == self.startup_app:
+                    break
+                i += 1
+            self.apps_treeview.set_cursor(str(i))
         return False
 
     def load_applications(self):

@@ -1,6 +1,6 @@
 0.5.1
     * 0.6 series beta 1
-    * 
+    * Load default userdata from user directories in addition to system
 
 0.4.1
     * Maintenance release
