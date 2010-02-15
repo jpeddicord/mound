@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-10 21:12-0500\n"
+"POT-Creation-Date: 2010-02-15 18:07-0500\n"
 "PO-Revision-Date: 2009-11-30 17:46+0000\n"
 "Last-Translator: Tino Meinen <tino.meinen@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -42,67 +42,75 @@ msgid "Details"
 msgstr "Details"
 
 #: ../data/mound.ui.h:7
+msgid "Enter a name for this snapshot below."
+msgstr ""
+
+#: ../data/mound.ui.h:8
 msgid "Export"
 msgstr "Exporteren"
 
-#: ../data/mound.ui.h:8
+#: ../data/mound.ui.h:9
 msgid "Export the selected snapshot"
 msgstr "Geselecteerde snapshot exporteren"
 
-#: ../data/mound.ui.h:9
+#: ../data/mound.ui.h:10
 msgid "Get Help Online..."
 msgstr "Online hulp verkrijgen..."
 
-#: ../data/mound.ui.h:10
+#: ../data/mound.ui.h:11
 msgid "Import"
 msgstr "Importeren"
 
-#: ../data/mound.ui.h:11
+#: ../data/mound.ui.h:12
 msgid "Import a snapshot"
 msgstr "Snapshot importeren"
 
-#: ../data/mound.ui.h:12
+#: ../data/mound.ui.h:13
 msgid "Information"
 msgstr "Informatie"
 
-#: ../data/mound.ui.h:13
+#: ../data/mound.ui.h:14
+msgid "New Snapshot"
+msgstr ""
+
+#: ../data/mound.ui.h:15
 msgid "Report a Problem"
 msgstr "Een probleem melden"
 
-#: ../data/mound.ui.h:14
+#: ../data/mound.ui.h:16
 msgid "Revert"
 msgstr "Terugdraaien"
 
-#: ../data/mound.ui.h:15
+#: ../data/mound.ui.h:17
 msgid "Revert to this snapshot"
 msgstr "Terugdraaien naar deze snapshot"
 
-#: ../data/mound.ui.h:16
+#: ../data/mound.ui.h:18
 msgid "Snapshots"
 msgstr "Snapshots"
 
-#: ../data/mound.ui.h:17 ../Mound/ui/__init__.py:134
-#: ../Mound/ui/snapshots.py:175
+#: ../data/mound.ui.h:19 ../Mound/ui/__init__.py:149
+#: ../Mound/ui/snapshots.py:172
 msgid "Take Snapshot"
 msgstr "Snapshot maken"
 
-#: ../data/mound.ui.h:18
+#: ../data/mound.ui.h:20
 msgid "Translate this Application..."
 msgstr "Dit programma vertalen..."
 
-#: ../data/mound.ui.h:19
+#: ../data/mound.ui.h:21
 msgid "_Analyze"
 msgstr "_Analyseren"
 
-#: ../data/mound.ui.h:20
+#: ../data/mound.ui.h:22
 msgid "_Application"
 msgstr "Toep_assing"
 
-#: ../data/mound.ui.h:21
+#: ../data/mound.ui.h:23
 msgid "_Details"
 msgstr "_Details"
 
-#: ../data/mound.ui.h:22
+#: ../data/mound.ui.h:24
 msgid "_Help"
 msgstr "_Help"
 
@@ -110,94 +118,93 @@ msgstr "_Help"
 msgid "Manage your application data"
 msgstr "Beheer gegevens van programma's"
 
-#: ../Mound/application.py:55
+#: ../Mound/application.py:62
 #, python-format
 msgid "Error in %(application)s: %(error)s"
 msgstr "Fout in %(application)s: %(error)s"
 
-#: ../Mound/application.py:104
+#: ../Mound/application.py:112
 msgid "Location is not in home directory"
 msgstr "Locatie bevindt zich niet in home-map"
 
-#: ../Mound/application.py:108
+#: ../Mound/application.py:116
 msgid "Cannot manage restricted location"
 msgstr "Kan locatie met beperkte toegang niet beheren"
 
-#: ../Mound/application.py:255
+#: ../Mound/application.py:263
 msgid "Bad source snapshot"
 msgstr "Verkeerde bron voor snapshot"
 
-#: ../Mound/application.py:286 ../Mound/application.py:298
+#: ../Mound/application.py:294 ../Mound/application.py:306
 msgid "Not a Mound snapshot"
 msgstr "Geen Mound-snapshot"
 
-#: ../Mound/application.py:301
+#: ../Mound/application.py:309
 msgid "Snapshot does not match application"
 msgstr "Snapshot komt niet overeen met programma"
 
-#: ../Mound/application.py:304
+#: ../Mound/application.py:312
 msgid "Snapshot already exists"
 msgstr "Snapshot bestaat al"
 
-#: ../Mound/ui/details.py:102
+#: ../Mound/ui/details.py:101
 msgid "This application cannot be managed because of the following problems:"
 msgstr "Dit programma kan niet beheerd worden door de volgende problemen:"
 
-#: ../Mound/ui/details.py:106
+#: ../Mound/ui/details.py:105
 #, python-format
 msgid "%(application)s was loaded from:"
 msgstr "%(application)s werd geladen van:"
 
-#: ../Mound/ui/details.py:109 ../Mound/ui/details.py:111
+#: ../Mound/ui/details.py:108 ../Mound/ui/details.py:110
 msgid "Snapshots are stored in:"
 msgstr "Snapshots worden opgeslagen in:"
 
-#: ../Mound/ui/__init__.py:130
+#: ../Mound/ui/__init__.py:145
 msgid "You may want to take a snapshot before continuing."
 msgstr "Er kan een snapshot worden gemaakt"
 
-#: ../Mound/ui/__init__.py:131
+#: ../Mound/ui/__init__.py:146
 #, python-format
 msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for "
-"%(application)s?"
+"Are you sure you want to destroy all data, settings, and preferences for %"
+"(application)s?"
 msgstr ""
 "Wilt u zeker alle gegevens, instellingen en voorkeuren voor %(application)s "
 "verwijderen?"
 
-#: ../Mound/ui/__init__.py:158
+#: ../Mound/ui/__init__.py:173
 #, python-format
 msgid "Please close %(application)s before managing it."
 msgstr "Sluit %(application)s alvorens het te beheren."
 
-#. [i18n] %(size)s includes the unit, such as KB or MB.
-#: ../Mound/ui/__init__.py:167
+#: ../Mound/ui/__init__.py:181
 #, python-format
 msgid "This application is using %(size)s of space."
 msgstr "Dit programma gebruikt %(size)s van de beschikbare ruimte."
 
-#: ../Mound/ui/__init__.py:169
+#: ../Mound/ui/__init__.py:183
 msgid "This application is not storing any data."
 msgstr "Dit programma slaat geen gegevens op."
 
-#: ../Mound/ui/__init__.py:175
+#: ../Mound/ui/__init__.py:189
 msgid "One snapshot is available."
 msgstr "Eén snapshot is beschikbaar."
 
-#: ../Mound/ui/__init__.py:177
+#: ../Mound/ui/__init__.py:191
 #, python-format
 msgid "%(num)d snapshots are available."
 msgstr "%(num)d snapshots zijn beschikbaar."
 
-#: ../Mound/ui/__init__.py:181
+#: ../Mound/ui/__init__.py:195
 msgid "A problem occurred. This application cannot be managed."
 msgstr "Er trad een probleem op. Dit programma kan niet worden beheerd."
 
-#: ../Mound/ui/__init__.py:190
+#: ../Mound/ui/__init__.py:204
 msgid "Select an Application"
 msgstr "Selecteer een programma"
 
-#: ../Mound/ui/snapshots.py:116
+#: ../Mound/ui/snapshots.py:113
 msgid ""
 "The snapshot name may only consist of letters, numbers, spaces, underscores, "
 "and dashes."
@@ -205,54 +212,54 @@ msgstr ""
 "De naam van de snapshot mag alleen bestaan uit letters, nummers, spaties, "
 "lage en gewone streepjes."
 
-#: ../Mound/ui/snapshots.py:124
+#: ../Mound/ui/snapshots.py:121
 msgid "This snapshot already exists."
 msgstr "Deze snapshot bestaat al."
 
-#: ../Mound/ui/snapshots.py:156
+#: ../Mound/ui/snapshots.py:153
 #, python-format
 msgid "Are you sure you want to delete the \"%(snap_name)s\" snapshot?"
 msgstr "Wilt u de snapshot \"%(snap_name)s\" verwijderen?"
 
-#: ../Mound/ui/snapshots.py:157
+#: ../Mound/ui/snapshots.py:154
 #, python-format
 msgid "This will not delete any data %(application)s currently uses."
 msgstr "Dit zal geen gegevens verwijderen die %(application)s nu gebruikt."
 
-#: ../Mound/ui/snapshots.py:171
+#: ../Mound/ui/snapshots.py:168
 msgid "You may want to take a snapshot before reverting."
 msgstr "Er kan een snapshot genomen worden voor terugdraaien."
 
-#: ../Mound/ui/snapshots.py:172
+#: ../Mound/ui/snapshots.py:169
 #, python-format
 msgid "Do you want to revert to the \"%(snap_name)s\" snapshot?"
 msgstr "\"%(snap_name)s\" snapshot terugdraaien?"
 
-#: ../Mound/ui/snapshots.py:200
+#: ../Mound/ui/snapshots.py:197
 #, python-format
 msgid ""
 "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
 msgstr ""
 "Succesvol %(application)s naar \"%(snap_name)s\" snapshot teruggedraaid."
 
-#: ../Mound/ui/snapshots.py:212
+#: ../Mound/ui/snapshots.py:209
 msgid "Open Snapshot"
 msgstr "Snapshot openen"
 
-#: ../Mound/ui/snapshots.py:218 ../Mound/ui/snapshots.py:252
+#: ../Mound/ui/snapshots.py:215 ../Mound/ui/snapshots.py:249
 msgid "Mound Snapshots"
 msgstr "Mound-snapshots"
 
-#: ../Mound/ui/snapshots.py:228
+#: ../Mound/ui/snapshots.py:225
 msgid "A problem occurred. This snapshot cannot be used."
 msgstr "Er is een probleem. Deze snapshot kan niet gebruikt worden."
 
-#: ../Mound/ui/snapshots.py:230
+#: ../Mound/ui/snapshots.py:227
 msgid "Error:"
 msgstr "Foutmelding:"
 
 #. ask for a filename
-#: ../Mound/ui/snapshots.py:245
+#: ../Mound/ui/snapshots.py:242
 msgid "Save Snapshot As"
 msgstr "Snapshot opslaan als"
 

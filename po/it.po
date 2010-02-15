@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2009-11-10 21:12-0500\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-02-15 18:07-0500\n"
 "PO-Revision-Date: 2009-11-23 21:18+0000\n"
 "Last-Translator: Nicola Jelmorini <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -42,67 +42,75 @@ msgid "Details"
 msgstr ""
 
 #: ../data/mound.ui.h:7
-msgid "Export"
+msgid "Enter a name for this snapshot below."
 msgstr ""
 
 #: ../data/mound.ui.h:8
-msgid "Export the selected snapshot"
+msgid "Export"
 msgstr ""
 
 #: ../data/mound.ui.h:9
-msgid "Get Help Online..."
+msgid "Export the selected snapshot"
 msgstr ""
 
 #: ../data/mound.ui.h:10
-msgid "Import"
+msgid "Get Help Online..."
 msgstr ""
 
 #: ../data/mound.ui.h:11
+msgid "Import"
+msgstr ""
+
+#: ../data/mound.ui.h:12
 msgid "Import a snapshot"
 msgstr "Importa un'istantanea"
 
-#: ../data/mound.ui.h:12
+#: ../data/mound.ui.h:13
 msgid "Information"
 msgstr ""
 
-#: ../data/mound.ui.h:13
-msgid "Report a Problem"
-msgstr ""
-
 #: ../data/mound.ui.h:14
-msgid "Revert"
+msgid "New Snapshot"
 msgstr ""
 
 #: ../data/mound.ui.h:15
+msgid "Report a Problem"
+msgstr ""
+
+#: ../data/mound.ui.h:16
+msgid "Revert"
+msgstr ""
+
+#: ../data/mound.ui.h:17
 msgid "Revert to this snapshot"
 msgstr "Ripristinare a questa istantanea"
 
-#: ../data/mound.ui.h:16
+#: ../data/mound.ui.h:18
 msgid "Snapshots"
 msgstr "Istantanee"
 
-#: ../data/mound.ui.h:17 ../Mound/ui/__init__.py:134
-#: ../Mound/ui/snapshots.py:175
+#: ../data/mound.ui.h:19 ../Mound/ui/__init__.py:149
+#: ../Mound/ui/snapshots.py:172
 msgid "Take Snapshot"
 msgstr ""
 
-#: ../data/mound.ui.h:18
+#: ../data/mound.ui.h:20
 msgid "Translate this Application..."
 msgstr ""
 
-#: ../data/mound.ui.h:19
+#: ../data/mound.ui.h:21
 msgid "_Analyze"
 msgstr "_Analizzare"
 
-#: ../data/mound.ui.h:20
+#: ../data/mound.ui.h:22
 msgid "_Application"
 msgstr ""
 
-#: ../data/mound.ui.h:21
+#: ../data/mound.ui.h:23
 msgid "_Details"
 msgstr ""
 
-#: ../data/mound.ui.h:22
+#: ../data/mound.ui.h:24
 msgid "_Help"
 msgstr ""
 
@@ -110,145 +118,144 @@ msgstr ""
 msgid "Manage your application data"
 msgstr ""
 
-#: ../Mound/application.py:55
+#: ../Mound/application.py:62
 #, python-format
 msgid "Error in %(application)s: %(error)s"
 msgstr ""
 
-#: ../Mound/application.py:104
+#: ../Mound/application.py:112
 msgid "Location is not in home directory"
 msgstr "La posizione non è nella cartella home"
 
-#: ../Mound/application.py:108
+#: ../Mound/application.py:116
 msgid "Cannot manage restricted location"
 msgstr "Posizioni con restrizioni non possono essere gestite"
 
-#: ../Mound/application.py:255
+#: ../Mound/application.py:263
 msgid "Bad source snapshot"
 msgstr "Sorgente dell'instantanea errata"
 
-#: ../Mound/application.py:286 ../Mound/application.py:298
+#: ../Mound/application.py:294 ../Mound/application.py:306
 msgid "Not a Mound snapshot"
 msgstr "Non è un'istantanea di Mound"
 
-#: ../Mound/application.py:301
+#: ../Mound/application.py:309
 msgid "Snapshot does not match application"
 msgstr "L'istantanea non corrisponde all'applicazione"
 
-#: ../Mound/application.py:304
+#: ../Mound/application.py:312
 msgid "Snapshot already exists"
 msgstr "L'instantanea esiste già"
 
-#: ../Mound/ui/details.py:102
+#: ../Mound/ui/details.py:101
 msgid "This application cannot be managed because of the following problems:"
 msgstr ""
 "Questa applicazione non può essere gestita a causa dei seguenti problemi:"
 
-#: ../Mound/ui/details.py:106
+#: ../Mound/ui/details.py:105
 #, python-format
 msgid "%(application)s was loaded from:"
 msgstr ""
 
-#: ../Mound/ui/details.py:109 ../Mound/ui/details.py:111
+#: ../Mound/ui/details.py:108 ../Mound/ui/details.py:110
 msgid "Snapshots are stored in:"
 msgstr "Le istantanee sono archiviate in:"
 
-#: ../Mound/ui/__init__.py:130
+#: ../Mound/ui/__init__.py:145
 msgid "You may want to take a snapshot before continuing."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:131
+#: ../Mound/ui/__init__.py:146
 #, python-format
 msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for "
-"%(application)s?"
+"Are you sure you want to destroy all data, settings, and preferences for %"
+"(application)s?"
 msgstr ""
 
-#: ../Mound/ui/__init__.py:158
+#: ../Mound/ui/__init__.py:173
 #, python-format
 msgid "Please close %(application)s before managing it."
 msgstr ""
 
-#. [i18n] %(size)s includes the unit, such as KB or MB.
-#: ../Mound/ui/__init__.py:167
+#: ../Mound/ui/__init__.py:181
 #, python-format
 msgid "This application is using %(size)s of space."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:169
+#: ../Mound/ui/__init__.py:183
 msgid "This application is not storing any data."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:175
+#: ../Mound/ui/__init__.py:189
 msgid "One snapshot is available."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:177
+#: ../Mound/ui/__init__.py:191
 #, python-format
 msgid "%(num)d snapshots are available."
 msgstr ""
 
-#: ../Mound/ui/__init__.py:181
+#: ../Mound/ui/__init__.py:195
 msgid "A problem occurred. This application cannot be managed."
 msgstr ""
 "Si è verificato un problema. Questa applicazione non può essere gestita."
 
-#: ../Mound/ui/__init__.py:190
+#: ../Mound/ui/__init__.py:204
 msgid "Select an Application"
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:116
+#: ../Mound/ui/snapshots.py:113
 msgid ""
 "The snapshot name may only consist of letters, numbers, spaces, underscores, "
 "and dashes."
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:124
+#: ../Mound/ui/snapshots.py:121
 msgid "This snapshot already exists."
 msgstr "Questa istantanea esiste già."
 
-#: ../Mound/ui/snapshots.py:156
+#: ../Mound/ui/snapshots.py:153
 #, python-format
 msgid "Are you sure you want to delete the \"%(snap_name)s\" snapshot?"
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:157
+#: ../Mound/ui/snapshots.py:154
 #, python-format
 msgid "This will not delete any data %(application)s currently uses."
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:171
+#: ../Mound/ui/snapshots.py:168
 msgid "You may want to take a snapshot before reverting."
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:172
+#: ../Mound/ui/snapshots.py:169
 #, python-format
 msgid "Do you want to revert to the \"%(snap_name)s\" snapshot?"
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:200
+#: ../Mound/ui/snapshots.py:197
 #, python-format
 msgid ""
 "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:212
+#: ../Mound/ui/snapshots.py:209
 msgid "Open Snapshot"
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:218 ../Mound/ui/snapshots.py:252
+#: ../Mound/ui/snapshots.py:215 ../Mound/ui/snapshots.py:249
 msgid "Mound Snapshots"
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:228
+#: ../Mound/ui/snapshots.py:225
 msgid "A problem occurred. This snapshot cannot be used."
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:230
+#: ../Mound/ui/snapshots.py:227
 msgid "Error:"
 msgstr ""
 
 #. ask for a filename
-#: ../Mound/ui/snapshots.py:245
+#: ../Mound/ui/snapshots.py:242
 msgid "Save Snapshot As"
 msgstr ""
