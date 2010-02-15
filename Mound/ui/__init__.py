@@ -178,7 +178,6 @@ class MainUI:
             app.calculate_size()
             if app.data_size > 0:
                 size = format_size(app.data_size)
-                # [i18n] %(size)s includes the unit, such as KB or MB.
                 size_info = _("This application is using %(size)s of space.") % {'size': "<b>" + size + "</b>"}
             else:
                 size_info = _("This application is not storing any data.")

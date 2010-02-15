@@ -37,19 +37,18 @@ def run_cli():
     
     p = OptionParser(usage="%prog [action [options]] [application]", version=version)
 
-    #FIXME: we should consume arguments
     p.add_option('--list-applications',
         action='store_true', dest='list_applications', default=False,
-        help=_("List applications that have valid userdata."))
-    p.add_option('--take-snapshot', metavar='SNAPNAME',
+        help="List applications that have valid userdata.")
+    p.add_option('--take-snapshot', metavar='SNAPNAME APPLICATION', nargs=2,
         action='store', type='string', dest='take_snapshot',
-        help=_("Take a snapshot of an application."))
-    p.add_option('--revert-snapshot', metavar='SNAPNAME',
+        help="Take a snapshot of APPLICATION and store it as SNAPNAME.")
+    p.add_option('--revert-snapshot', metavar='SNAPNAME APPLICATION', nargs=2,
         action='store', type='string', dest='revert_snapshot',
-        help=_("Load a snapshot from a file and revert to it."))
+        help="Load a snapshot SNAPNAME for APPLICATION.")
     p.add_option('--delete-data',
         action='store_true', dest='delete_data', default=False,
-        help=_("Delete data for an application."))
+        help="Delete data for an application.")
 
     (opts, args) = p.parse_args()
 
@@ -60,7 +59,7 @@ def run_cli():
         if opts.__dict__[opt]:
             optsum += 1
     if optsum > 1:
-        p.error(_("Only one action may be used at a time."))
+        p.error("Only one action may be used at a time.")
 
     from Mound.userdata import UserData
     ud = UserData()
@@ -80,22 +79,24 @@ def run_cli():
         gtk.main()
         return 0
 
-    app_err = _("%(application)s does not exist or cannot be managed.")
+    app_err = "%(application)s does not exist or cannot be managed."
 
     if opts.list_applications:
         for app in ud.applications:
             print ud.applications[app].name, ';'.join(ud.applications[app].locations)
     
     elif opts.take_snapshot:
-        if args[0] not in ud.applications:
-            print app_err % {'application': args[0]}
+        snapname, appname = opts.take_snapshot
+        if appname not in ud.applications:
+            print app_err % {'application': appname}
             return 1
         from Mound.util import is_valid_snapshot_name
         
     
     elif opts.revert_snapshot:
-        if args[0] not in ud.applications: #FIXME
-            print app_err % {'application': args[0]}
+        snapname, appname = opts.revert_snapshot
+        if appname not in ud.applications:
+            print app_err % {'application': appname}
             return 1
         from Mound.util import is_valid_snapshot_name
         
