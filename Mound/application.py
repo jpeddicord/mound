@@ -46,6 +46,8 @@ RESTRICTED = (
 # and some extras
     '~/.gnome2',
     '~/.gconf',
+# we're reserving this for possible metadata use inside the snapshot
+    '~/.__MOUND',
 )
 
 class ApplicationError(Exception):

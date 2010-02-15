@@ -15,13 +15,11 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-import re
 import datetime
 import gobject
 import gtk
-from Mound.util import format_size
+from Mound.util import format_size, is_valid_snapshot_name
 
-RX_SNAPSHOT_NAME = re.compile('^[\w\-\s]+$')
 
 class SnapshotsUI:
     """
@@ -109,7 +107,7 @@ class SnapshotsUI:
         if response == gtk.RESPONSE_OK:
             snap_name = self.entry_snapshot_name.props.text
             # check for valid name
-            if not RX_SNAPSHOT_NAME.match(snap_name):
+            if not is_valid_snapshot_name(snap_name):
                 dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
                         gtk.MESSAGE_ERROR, gtk.BUTTONS_OK,
                         _("The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes."))

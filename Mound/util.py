@@ -16,6 +16,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import os
+import re
 import locale
 
 try:
@@ -45,3 +46,12 @@ def format_size(size):
     else:
         # bytes aren't a friendly unit, use more precision instead
         return "%0.2f KB" % (size / 1024)
+
+RX_SNAPSHOT_NAME = re.compile('^[\w\-\s]+$')
+
+def is_valid_snapshot_name(snap_name):
+    """Returns whether the given name is valid for a snapshot."""
+    if RX_SNAPSHOT_NAME.match(snap_name):
+        return True
+    return False
+

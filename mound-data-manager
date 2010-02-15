@@ -36,14 +36,15 @@ def run_cli():
     """
     
     p = OptionParser(usage="%prog [action [options]] [application]", version=version)
-    
+
+    #FIXME: we should consume arguments
     p.add_option('--list-applications',
         action='store_true', dest='list_applications', default=False,
         help=_("List applications that have valid userdata."))
-    p.add_option('--take-snapshot', metavar='FILENAME',
+    p.add_option('--take-snapshot', metavar='SNAPNAME',
         action='store', type='string', dest='take_snapshot',
         help=_("Take a snapshot of an application."))
-    p.add_option('--revert-snapshot', metavar='FILENAME',
+    p.add_option('--revert-snapshot', metavar='SNAPNAME',
         action='store', type='string', dest='revert_snapshot',
         help=_("Load a snapshot from a file and revert to it."))
     p.add_option('--delete-data',
@@ -79,19 +80,30 @@ def run_cli():
         gtk.main()
         return 0
 
+    app_err = _("%(application)s does not exist or cannot be managed.")
+
     if opts.list_applications:
         for app in ud.applications:
             print ud.applications[app].name, ';'.join(ud.applications[app].locations)
     
     elif opts.take_snapshot:
-        if opts.take_snapshot not in ud.applications:
-            print _("%(application)s does not exist or cannot be managed.") %{'application': opts.take_snapshot}
+        if args[0] not in ud.applications:
+            print app_err % {'application': args[0]}
+            return 1
+        from Mound.util import is_valid_snapshot_name
+        
     
     elif opts.revert_snapshot:
-        pass
+        if args[0] not in ud.applications: #FIXME
+            print app_err % {'application': args[0]}
+            return 1
+        from Mound.util import is_valid_snapshot_name
+        
     
     elif opts.delete_data:
-        pass
+        if opts.delete_data not in ud.applications:
+            print app_err % {'application': opts.delete_data}
+            return 1
 
 
 if __name__ == '__main__':
