@@ -110,7 +110,7 @@ class SnapshotsUI:
             if not is_valid_snapshot_name(snap_name):
                 dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
                         gtk.MESSAGE_ERROR, gtk.BUTTONS_OK,
-                        _("The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes."))
+                        _("The snapshot name may not contain slashes."))
                 dlg_error.run()
                 dlg_error.destroy()
                 return

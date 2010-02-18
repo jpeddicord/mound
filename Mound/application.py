@@ -197,7 +197,8 @@ class Application:
         ss_dir = os.path.join(MOUND_SNAPSHOTS, self.name)
         for root, dirs, files in os.walk(ss_dir):
             for f in files:
-                if not '.snapshot.tar.gz' in f:
+                spl = f.rsplit('.snapshot.tar.gz', 1)
+                if len(spl) < 2 or spl[1]:
                     continue
                 f = os.path.join(root, f)
                 snap_name = os.path.basename(f).split('.', 1)[0]
