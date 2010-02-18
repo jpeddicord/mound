@@ -2,12 +2,12 @@
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the mound package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:06-0500\n"
+"POT-Creation-Date: 2010-02-15 18:07-0500\n"
 "PO-Revision-Date: 2009-11-13 19:25+0000\n"
 "Last-Translator: Alfonso E. Romero <alfonsoeromero@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -70,8 +70,9 @@ msgid "Information"
 msgstr "Información"
 
 #: ../data/mound.ui.h:14
+#, fuzzy
 msgid "New Snapshot"
-msgstr ""
+msgstr "Nueva instantánea"
 
 #: ../data/mound.ui.h:15
 msgid "Report a Problem"
@@ -149,8 +150,7 @@ msgstr "La instantánea ya existe"
 
 #: ../Mound/ui/details.py:101
 msgid "This application cannot be managed because of the following problems:"
-msgstr ""
-"Esta aplicación no puede gestionarse debido a los siguientes problemas:"
+msgstr "Esta aplicación no puede gestionarse debido a los siguientes problemas:"
 
 #: ../Mound/ui/details.py:105
 #, python-format
@@ -167,12 +167,8 @@ msgstr "Quizás quiera tomar una instantánea antes de continuar."
 
 #: ../Mound/ui/__init__.py:146
 #, python-format
-msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for %"
-"(application)s?"
-msgstr ""
-"¿Está seguro de que quiere destruir todos los datos, configuraciones y "
-"preferencias de %(application)s?"
+msgid "Are you sure you want to destroy all data, settings, and preferences for %(application)s?"
+msgstr "¿Está seguro de que quiere destruir todos los datos, configuraciones y preferencias de %(application)s?"
 
 #: ../Mound/ui/__init__.py:173
 #, python-format
@@ -206,12 +202,8 @@ msgid "Select an Application"
 msgstr "Seleccione una aplicación"
 
 #: ../Mound/ui/snapshots.py:113
-msgid ""
-"The snapshot name may only consist of letters, numbers, spaces, underscores, "
-"and dashes."
-msgstr ""
-"El nombre de la instantánea sólo puede consistir en letras, números, "
-"espacios, guiones y guiones bajos."
+msgid "The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes."
+msgstr "El nombre de la instantánea sólo puede consistir en letras, números, espacios, guiones y guiones bajos."
 
 #: ../Mound/ui/snapshots.py:121
 msgid "This snapshot already exists."
@@ -238,10 +230,8 @@ msgstr "¿Quiere revertir a la instantánea \"%(snap_name)s\"?"
 
 #: ../Mound/ui/snapshots.py:197
 #, python-format
-msgid ""
-"Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
-msgstr ""
-"Se revirtió con éxito %(application)s a la instantánea \"%(snap_name)s\"."
+msgid "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
+msgstr "Se revirtió con éxito %(application)s a la instantánea \"%(snap_name)s\"."
 
 #: ../Mound/ui/snapshots.py:209
 msgid "Open Snapshot"
