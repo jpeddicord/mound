@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:07-0500\n"
+"POT-Creation-Date: 2010-02-17 22:10-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,19 +130,19 @@ msgstr ""
 msgid "Cannot manage restricted location"
 msgstr ""
 
-#: ../Mound/application.py:263
+#: ../Mound/application.py:264
 msgid "Bad source snapshot"
 msgstr ""
 
-#: ../Mound/application.py:294 ../Mound/application.py:306
+#: ../Mound/application.py:295 ../Mound/application.py:307
 msgid "Not a Mound snapshot"
 msgstr ""
 
-#: ../Mound/application.py:309
+#: ../Mound/application.py:310
 msgid "Snapshot does not match application"
 msgstr ""
 
-#: ../Mound/application.py:312
+#: ../Mound/application.py:313
 msgid "Snapshot already exists"
 msgstr ""
 
@@ -202,9 +202,7 @@ msgid "Select an Application"
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:113
-msgid ""
-"The snapshot name may only consist of letters, numbers, spaces, underscores, "
-"and dashes."
+msgid "The snapshot name may not contain slashes."
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:121

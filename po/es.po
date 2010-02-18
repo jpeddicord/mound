@@ -2,12 +2,12 @@
 # Copyright (c) 2009 Rosetta Contributors and Canonical Ltd 2009
 # This file is distributed under the same license as the mound package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2009.
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:07-0500\n"
+"POT-Creation-Date: 2010-02-17 22:10-0500\n"
 "PO-Revision-Date: 2009-11-13 19:25+0000\n"
 "Last-Translator: Alfonso E. Romero <alfonsoeromero@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -132,19 +132,19 @@ msgstr "La localización no está en el directorio de inicio"
 msgid "Cannot manage restricted location"
 msgstr "No se puede gestionar una localización restringida"
 
-#: ../Mound/application.py:263
+#: ../Mound/application.py:264
 msgid "Bad source snapshot"
 msgstr "Fuente de instantánea errónea"
 
-#: ../Mound/application.py:294 ../Mound/application.py:306
+#: ../Mound/application.py:295 ../Mound/application.py:307
 msgid "Not a Mound snapshot"
 msgstr "No es una instantánea de Mound"
 
-#: ../Mound/application.py:309
+#: ../Mound/application.py:310
 msgid "Snapshot does not match application"
 msgstr "La instantánea no concuerda con la aplicación"
 
-#: ../Mound/application.py:312
+#: ../Mound/application.py:313
 msgid "Snapshot already exists"
 msgstr "La instantánea ya existe"
 
@@ -202,8 +202,8 @@ msgid "Select an Application"
 msgstr "Seleccione una aplicación"
 
 #: ../Mound/ui/snapshots.py:113
-msgid "The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes."
-msgstr "El nombre de la instantánea sólo puede consistir en letras, números, espacios, guiones y guiones bajos."
+msgid "The snapshot name may not contain slashes."
+msgstr ""
 
 #: ../Mound/ui/snapshots.py:121
 msgid "This snapshot already exists."
@@ -253,6 +253,9 @@ msgstr "Error:"
 #: ../Mound/ui/snapshots.py:242
 msgid "Save Snapshot As"
 msgstr "Guardar instantánea como"
+
+#~ msgid "The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes."
+#~ msgstr "El nombre de la instantánea sólo puede consistir en letras, números, espacios, guiones y guiones bajos."
 
 #~ msgid "Copyright &#xA9; 2009 Jacob Peddicord"
 #~ msgstr "Copyright &#xA9; 2009 Jacob Peddicord"

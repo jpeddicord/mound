@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:07-0500\n"
+"POT-Creation-Date: 2010-02-17 22:10-0500\n"
 "PO-Revision-Date: 2009-11-08 17:39+0000\n"
 "Last-Translator: Aron Xu <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -131,19 +131,19 @@ msgstr "地址不在主目录"
 msgid "Cannot manage restricted location"
 msgstr "无法管理限制的地址"
 
-#: ../Mound/application.py:263
+#: ../Mound/application.py:264
 msgid "Bad source snapshot"
 msgstr "错误的快照来源"
 
-#: ../Mound/application.py:294 ../Mound/application.py:306
+#: ../Mound/application.py:295 ../Mound/application.py:307
 msgid "Not a Mound snapshot"
 msgstr "不是 Mound 快照"
 
-#: ../Mound/application.py:309
+#: ../Mound/application.py:310
 msgid "Snapshot does not match application"
 msgstr "快照不符合此应用程序"
 
-#: ../Mound/application.py:312
+#: ../Mound/application.py:313
 msgid "Snapshot already exists"
 msgstr "快照已经存在"
 
@@ -166,9 +166,7 @@ msgstr "也许您应该在继续之前保存一个快照。"
 
 #: ../Mound/ui/__init__.py:146
 #, python-format
-msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for %"
-"(application)s?"
+msgid "Are you sure you want to destroy all data, settings, and preferences for %(application)s?"
 msgstr "您却定您要删除 %(application)s 的所有的数据，设置，还有偏好么？"
 
 #: ../Mound/ui/__init__.py:173
@@ -203,10 +201,8 @@ msgid "Select an Application"
 msgstr "选择一个应用程序"
 
 #: ../Mound/ui/snapshots.py:113
-msgid ""
-"The snapshot name may only consist of letters, numbers, spaces, underscores, "
-"and dashes."
-msgstr "快照名称只可以包含字母，数字，空格，下划线，和破折号。"
+msgid "The snapshot name may not contain slashes."
+msgstr ""
 
 #: ../Mound/ui/snapshots.py:121
 msgid "This snapshot already exists."
@@ -233,8 +229,7 @@ msgstr "您却定您要还原 \"%(snap_name)s\" 快照？"
 
 #: ../Mound/ui/snapshots.py:197
 #, python-format
-msgid ""
-"Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
+msgid "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
 msgstr "成功把 %(application)s 还原为 \"%(snap_name)s\" 快照。"
 
 #: ../Mound/ui/snapshots.py:209
@@ -257,3 +252,6 @@ msgstr ""
 #: ../Mound/ui/snapshots.py:242
 msgid "Save Snapshot As"
 msgstr ""
+
+#~ msgid "The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes."
+#~ msgstr "快照名称只可以包含字母，数字，空格，下划线，和破折号。"

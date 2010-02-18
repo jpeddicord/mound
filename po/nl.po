@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:07-0500\n"
+"POT-Creation-Date: 2010-02-17 22:10-0500\n"
 "PO-Revision-Date: 2009-11-30 17:46+0000\n"
 "Last-Translator: Tino Meinen <tino.meinen@gmail.com>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -131,19 +131,19 @@ msgstr "Locatie bevindt zich niet in home-map"
 msgid "Cannot manage restricted location"
 msgstr "Kan locatie met beperkte toegang niet beheren"
 
-#: ../Mound/application.py:263
+#: ../Mound/application.py:264
 msgid "Bad source snapshot"
 msgstr "Verkeerde bron voor snapshot"
 
-#: ../Mound/application.py:294 ../Mound/application.py:306
+#: ../Mound/application.py:295 ../Mound/application.py:307
 msgid "Not a Mound snapshot"
 msgstr "Geen Mound-snapshot"
 
-#: ../Mound/application.py:309
+#: ../Mound/application.py:310
 msgid "Snapshot does not match application"
 msgstr "Snapshot komt niet overeen met programma"
 
-#: ../Mound/application.py:312
+#: ../Mound/application.py:313
 msgid "Snapshot already exists"
 msgstr "Snapshot bestaat al"
 
@@ -166,12 +166,8 @@ msgstr "Er kan een snapshot worden gemaakt"
 
 #: ../Mound/ui/__init__.py:146
 #, python-format
-msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for %"
-"(application)s?"
-msgstr ""
-"Wilt u zeker alle gegevens, instellingen en voorkeuren voor %(application)s "
-"verwijderen?"
+msgid "Are you sure you want to destroy all data, settings, and preferences for %(application)s?"
+msgstr "Wilt u zeker alle gegevens, instellingen en voorkeuren voor %(application)s verwijderen?"
 
 #: ../Mound/ui/__init__.py:173
 #, python-format
@@ -205,12 +201,8 @@ msgid "Select an Application"
 msgstr "Selecteer een programma"
 
 #: ../Mound/ui/snapshots.py:113
-msgid ""
-"The snapshot name may only consist of letters, numbers, spaces, underscores, "
-"and dashes."
+msgid "The snapshot name may not contain slashes."
 msgstr ""
-"De naam van de snapshot mag alleen bestaan uit letters, nummers, spaties, "
-"lage en gewone streepjes."
 
 #: ../Mound/ui/snapshots.py:121
 msgid "This snapshot already exists."
@@ -237,10 +229,8 @@ msgstr "\"%(snap_name)s\" snapshot terugdraaien?"
 
 #: ../Mound/ui/snapshots.py:197
 #, python-format
-msgid ""
-"Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
-msgstr ""
-"Succesvol %(application)s naar \"%(snap_name)s\" snapshot teruggedraaid."
+msgid "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
+msgstr "Succesvol %(application)s naar \"%(snap_name)s\" snapshot teruggedraaid."
 
 #: ../Mound/ui/snapshots.py:209
 msgid "Open Snapshot"
@@ -262,6 +252,9 @@ msgstr "Foutmelding:"
 #: ../Mound/ui/snapshots.py:242
 msgid "Save Snapshot As"
 msgstr "Snapshot opslaan als"
+
+#~ msgid "The snapshot name may only consist of letters, numbers, spaces, underscores, and dashes."
+#~ msgstr "De naam van de snapshot mag alleen bestaan uit letters, nummers, spaties, lage en gewone streepjes."
 
 #~ msgid "Copyright &#xA9; 2009 Jacob Peddicord"
 #~ msgstr "Copyright &#xA9; 2009 Jacob Peddicord"

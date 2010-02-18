@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:07-0500\n"
+"POT-Creation-Date: 2010-02-17 22:10-0500\n"
 "PO-Revision-Date: 2009-11-02 00:05+0000\n"
 "Last-Translator: Guilhem Lettron <guilhem.lettron@gmail.com>\n"
 "Language-Team: French <fr@li.org>\n"
@@ -131,19 +131,19 @@ msgstr ""
 msgid "Cannot manage restricted location"
 msgstr ""
 
-#: ../Mound/application.py:263
+#: ../Mound/application.py:264
 msgid "Bad source snapshot"
 msgstr "La source n'est pas un instantané valide"
 
-#: ../Mound/application.py:294 ../Mound/application.py:306
+#: ../Mound/application.py:295 ../Mound/application.py:307
 msgid "Not a Mound snapshot"
 msgstr ""
 
-#: ../Mound/application.py:309
+#: ../Mound/application.py:310
 msgid "Snapshot does not match application"
 msgstr "L'instantané ne correspond pas a l'application"
 
-#: ../Mound/application.py:312
+#: ../Mound/application.py:313
 msgid "Snapshot already exists"
 msgstr "L'instantané existe déjà"
 
@@ -166,12 +166,8 @@ msgstr "Vous voulez peut-être faire un instantané avant de continuer."
 
 #: ../Mound/ui/__init__.py:146
 #, python-format
-msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for %"
-"(application)s?"
-msgstr ""
-"Êtes-vous sûr de vouloir détruite toutes les données, les paramètres et les "
-"préférences pour %(application)s ?"
+msgid "Are you sure you want to destroy all data, settings, and preferences for %(application)s?"
+msgstr "Êtes-vous sûr de vouloir détruite toutes les données, les paramètres et les préférences pour %(application)s ?"
 
 #: ../Mound/ui/__init__.py:173
 #, python-format
@@ -205,9 +201,7 @@ msgid "Select an Application"
 msgstr "Choisissez une application"
 
 #: ../Mound/ui/snapshots.py:113
-msgid ""
-"The snapshot name may only consist of letters, numbers, spaces, underscores, "
-"and dashes."
+msgid "The snapshot name may not contain slashes."
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:121
@@ -235,8 +229,7 @@ msgstr ""
 
 #: ../Mound/ui/snapshots.py:197
 #, python-format
-msgid ""
-"Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
+msgid "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:209

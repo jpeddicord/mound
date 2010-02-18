@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-02-15 18:07-0500\n"
+"POT-Creation-Date: 2010-02-17 22:10-0500\n"
 "PO-Revision-Date: 2009-11-23 21:18+0000\n"
 "Last-Translator: Nicola Jelmorini <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -131,26 +131,25 @@ msgstr "La posizione non è nella cartella home"
 msgid "Cannot manage restricted location"
 msgstr "Posizioni con restrizioni non possono essere gestite"
 
-#: ../Mound/application.py:263
+#: ../Mound/application.py:264
 msgid "Bad source snapshot"
 msgstr "Sorgente dell'instantanea errata"
 
-#: ../Mound/application.py:294 ../Mound/application.py:306
+#: ../Mound/application.py:295 ../Mound/application.py:307
 msgid "Not a Mound snapshot"
 msgstr "Non è un'istantanea di Mound"
 
-#: ../Mound/application.py:309
+#: ../Mound/application.py:310
 msgid "Snapshot does not match application"
 msgstr "L'istantanea non corrisponde all'applicazione"
 
-#: ../Mound/application.py:312
+#: ../Mound/application.py:313
 msgid "Snapshot already exists"
 msgstr "L'instantanea esiste già"
 
 #: ../Mound/ui/details.py:101
 msgid "This application cannot be managed because of the following problems:"
-msgstr ""
-"Questa applicazione non può essere gestita a causa dei seguenti problemi:"
+msgstr "Questa applicazione non può essere gestita a causa dei seguenti problemi:"
 
 #: ../Mound/ui/details.py:105
 #, python-format
@@ -167,9 +166,7 @@ msgstr ""
 
 #: ../Mound/ui/__init__.py:146
 #, python-format
-msgid ""
-"Are you sure you want to destroy all data, settings, and preferences for %"
-"(application)s?"
+msgid "Are you sure you want to destroy all data, settings, and preferences for %(application)s?"
 msgstr ""
 
 #: ../Mound/ui/__init__.py:173
@@ -197,17 +194,14 @@ msgstr ""
 
 #: ../Mound/ui/__init__.py:195
 msgid "A problem occurred. This application cannot be managed."
-msgstr ""
-"Si è verificato un problema. Questa applicazione non può essere gestita."
+msgstr "Si è verificato un problema. Questa applicazione non può essere gestita."
 
 #: ../Mound/ui/__init__.py:204
 msgid "Select an Application"
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:113
-msgid ""
-"The snapshot name may only consist of letters, numbers, spaces, underscores, "
-"and dashes."
+msgid "The snapshot name may not contain slashes."
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:121
@@ -235,8 +229,7 @@ msgstr ""
 
 #: ../Mound/ui/snapshots.py:197
 #, python-format
-msgid ""
-"Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
+msgid "Successfully reverted %(application)s to the \"%(snap_name)s\" snapshot."
 msgstr ""
 
 #: ../Mound/ui/snapshots.py:209

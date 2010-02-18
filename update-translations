@@ -5,5 +5,5 @@ echo "Generating template"
 intltool-update -p -g mound
 for p in *.po; do
     echo "Merging $p"
-    msgmerge -U -N $p mound.pot 
+    msgmerge -U --no-wrap -N $p mound.pot 
 done
