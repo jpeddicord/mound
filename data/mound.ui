@@ -479,8 +479,8 @@
     <property name="skip_pager_hint">True</property>
     <property name="transient_for">win_main</property>
     <property name="program_name">Mound Data Manager</property>
-    <property name="copyright">Copyright &#xA9; 2009 Jacob Peddicord</property>
-    <property name="website">https://launchpad.net/mound</property>
+    <property name="copyright">Copyright &#xA9; 2009-2010 Jacob Peddicord</property>
+    <property name="website">http://codechunk.net/mound/</property>
     <property name="logo_icon_name">mound-data-manager</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
