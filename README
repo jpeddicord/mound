@@ -1,3 +1,5 @@
+Mound Data Manager
+http://codechunk.net/mound/
 
 Requirements
 ============
@@ -5,8 +7,8 @@ Requirements
 mound-data-manager requires the following components to build:
 
 * python >= 2.6
-* python-distutils-extra (for i18n)
-* docutils-writer-manpage (for manpages)
+* python-distutils-extra
+* docutils-writer-manpage (optional; for manpage generation)
 
 mound-data-manager requires the following components to run:
 
@@ -17,8 +19,9 @@ mound-data-manager requires the following components to run:
 Developing and Testing
 ======================
 
-When testing a copy of Mound from Bazaar, you'll want to make sure that the
-/etc/userdata file is linked to your copy in the branch (or at least exists
+When testing a copy of Mound from Git, you'll want to make sure that the
+/etc/xdg/userdata file is linked to your copy in the branch (or at least exists
 and has some content). Otherwise, the application list will most likely be
 empty and there won't be anything to test!
 
+Alternatively, Mound will also look in ~/.config/userdata for definitions.

@@ -40,15 +40,18 @@ def run_cli():
     p.add_option('--list-applications',
         action='store_true', dest='list_applications', default=False,
         help="List applications that have valid userdata.")
-    p.add_option('--take-snapshot', metavar='SNAPNAME APPLICATION', nargs=2,
+    p.add_option('--take-snapshot', metavar='APPLICATION SNAPSHOT', nargs=2,
         action='store', type='string', dest='take_snapshot',
-        help="Take a snapshot of APPLICATION and store it as SNAPNAME.")
-    p.add_option('--revert-snapshot', metavar='SNAPNAME APPLICATION', nargs=2,
+        help="Take a snapshot of APPLICATION and store it as snapshot SNAPSHOT.")
+    p.add_option('--revert-snapshot', metavar='APPLICATION SNAPSHOT', nargs=2,
         action='store', type='string', dest='revert_snapshot',
-        help="Load a snapshot SNAPNAME for APPLICATION.")
-    p.add_option('--delete-data',
-        action='store_true', dest='delete_data', default=False,
+        help="Load a snapshot SNAPSHOT for APPLICATION.")
+    p.add_option('--delete-data', metavar='APPLICATION',
+        action='store', dest='delete_data', default=False,
         help="Delete data for an application.")
+    p.add_option('-f', '--force',
+        action='store_true', dest='force', default=False,
+        help="Suppress all command-line prompts; use with caution.")
 
     (opts, args) = p.parse_args()
 
@@ -79,32 +82,88 @@ def run_cli():
         gtk.main()
         return 0
 
-    app_err = "%(application)s does not exist or cannot be managed."
+    app_err = "%(application)s does not exist or cannot be managed.\n"
+    running_prompt = "Warning: %(application)s is currently running. Continue anyway? [y/N] "
 
     if opts.list_applications:
         for app in ud.applications:
             print ud.applications[app].name, ';'.join(ud.applications[app].locations)
     
     elif opts.take_snapshot:
-        snapname, appname = opts.take_snapshot
+        appname, snapname = opts.take_snapshot
         if appname not in ud.applications:
-            print app_err % {'application': appname}
+            sys.stderr.write(app_err % {'application': appname})
             return 1
         from Mound.util import is_valid_snapshot_name
+        if not is_valid_snapshot_name(snapname):
+            sys.stderr.write("A snapshot name can not contain slashes.\n")
+            return 1
+        app = ud.applications[appname]
+        # safety checks
+        app.calculate_size()
+        if app.data_size == 0:
+            sys.stderr.write("No data has been stored for %(application)s.\n" % {'application': appname})
+            return 2
+        if app.check_running() and not opts.force:
+            sys.stderr.write(running_prompt % {'application': appname})
+            if raw_input() != 'y':
+                return 0
+        # take the snapshot
+        app.take_snapshot(snapname)
+        print "Created snapshot \"%(snapname)s\" for %(application)s" % {
+            'application': appname, 'snapname': snapname
+        }
         
     
     elif opts.revert_snapshot:
-        snapname, appname = opts.revert_snapshot
+        appname, snapname = opts.revert_snapshot
         if appname not in ud.applications:
-            print app_err % {'application': appname}
+            sys.stderr.write(app_err % {'application': appname})
             return 1
-        from Mound.util import is_valid_snapshot_name
-        
+        # make sure our application and snapshots exist
+        app = ud.applications[appname]
+        app.load_snapshots()
+        if snapname not in app.snapshots.keys():
+            sys.stderr.write("%(application)s does not have a snapshot named %(snapname)s\n" % {
+                'application': appname, 'snapname': snapname
+            })
+            return 1
+        # safety prompts
+        if not opts.force:
+            if app.check_running():
+                sys.stderr.write(running_prompt % {'application': appname})
+                if raw_input() != 'y':
+                    return 0
+            sys.stderr.write("Are you sure you want to revert %(application)s to \"%(snapname)s\"? [y/N] " % {
+                'application': appname, 'snapname': snapname
+            })
+            if raw_input() != 'y':
+                    return 0
+        # revert!
+        app.revert_to_snapshot(snapname)
+        print "Reverted %(application)s to \"%(snapname)s\"." % {
+            'application': appname, 'snapname': snapname
+        }
     
     elif opts.delete_data:
-        if opts.delete_data not in ud.applications:
-            print app_err % {'application': opts.delete_data}
+        appname = opts.delete_data
+        if appname not in ud.applications:
+            sys.stderr.write(app_err % {'application': appname})
             return 1
+        app = ud.applications[appname]
+        # safety prompts
+        if not opts.force:
+            if app.check_running():
+                sys.stderr.write(running_prompt % {'application': appname})
+                if raw_input() != 'y':
+                    return 0
+            sys.stderr.write("Are you sure you want to destroy all data for %(application)s? [y/N] " % {'application': appname})
+            if raw_input() != 'y':
+                return 0
+        # delete!
+        app.delete_data()
+        print "Deleted data for %(application)s." % {'application': appname}
+    return 0
 
 
 if __name__ == '__main__':

@@ -135,6 +135,7 @@ class Application:
             self.icon_name = None
             self.icon = ICON_UNKNOWN
 
+    # XXX: make this a property
     def calculate_size(self, force=False):
         """
         Try to calculate the size of the application's user data.

@@ -131,3 +131,13 @@ class UserData:
                     pass
 
                 self.applications[appname] = app
+
+
+class DefaultsParser(dict):
+    """
+    A parser for the default userdata fallback files.
+    Returns a dictionary of appname: location pairs.
+    """
+
+    #def load_defaults(self, filename):
+    #    f = open TODO
