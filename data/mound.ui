@@ -352,7 +352,7 @@
                       <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">never</property>
+                        <property name="hscrollbar_policy">automatic</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <property name="shadow_type">in</property>
                         <child>
@@ -368,6 +368,7 @@
                             <property name="search_column">0</property>
                             <child>
                               <object class="GtkTreeViewColumn" id="col_snapshot_name">
+                                <property name="resizable">True</property>
                                 <property name="title">Name</property>
                                 <property name="expand">True</property>
                                 <child>
