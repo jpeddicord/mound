@@ -71,6 +71,18 @@
                       </object>
                     </child>
                     <child>
+                      <object class="GtkMenuItem" id="item_userdata_update">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Update Application Data...</property>
+                        <property name="use_underline">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem" id="separatormenuitem3">
+                        <property name="visible">True</property>
+                      </object>
+                    </child>
+                    <child>
                       <object class="GtkImageMenuItem" id="item_quit">
                         <property name="label">gtk-quit</property>
                         <property name="visible">True</property>

@@ -15,11 +15,13 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+import os
+import sys
 from math import ceil
 from subprocess import Popen
 import gobject
 import gtk
-from Mound.util import format_size
+from Mound.util import format_size, XDGCONFIG, USERDATA_UPDATE_URL
 from Mound.ui.snapshots import SnapshotsUI
 from Mound.ui.details import DetailsUI
 
@@ -53,6 +55,7 @@ class MainUI:
             'win_main',
             'item_details',
             'item_delete',
+            'item_userdata_update',
             'item_quit',
             'item_lp_help',
             'item_lp_translate',
@@ -91,6 +94,7 @@ class MainUI:
         self.item_details.connect('activate',
                 lambda s: self.details_ui.show_details(self.selected_app))
         self.item_delete.connect('activate', self.delete_application_data)
+        self.item_userdata_update.connect('activate', self.update_userdata)
 
         # update our ui
         self.update_ui()
@@ -132,15 +136,6 @@ class MainUI:
         Trigger a dialog to delete data for an application. The user is
         prompted to take a snapshot beforehand.
         """
-        def response(src, resp):
-            if resp == gtk.RESPONSE_OK:
-                self.selected_app.delete_data()
-                self.selected_app.calculate_size(force=True)
-                self.update_ui()
-            elif resp == 10:
-                src.hide()
-                self.snapshots_ui.show_snapshots(self.selected_app)
-                self.snapshots_ui.new_snapshot_ui()
         dlg_confirm = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_WARNING)
         txt = "<i>" + _("You may want to take a snapshot before continuing.") + "</i>\n\n"
         txt += _("Are you sure you want to destroy all data, settings, and preferences for %(application)s?") % {'application': "<b>" + self.selected_app.full_name + "</b>"}
@@ -149,7 +144,16 @@ class MainUI:
         dlg_confirm.add_button(_("Take Snapshot"), 10)
         dlg_confirm.add_button(gtk.STOCK_DELETE, gtk.RESPONSE_OK)
         dlg_confirm.connect('response', response)
-        dlg_confirm.run()
+
+        resp = dlg_confirm.run()
+        if resp == gtk.RESPONSE_OK:
+            self.selected_app.delete_data()
+            self.selected_app.calculate_size(force=True)
+            self.update_ui()
+        elif resp == 10:
+            dlg_confirm.hide()
+            self.snapshots_ui.show_snapshots(self.selected_app)
+            self.snapshots_ui.new_snapshot_ui()
         dlg_confirm.destroy()
     
     def update_ui(self, *args, **kwargs):
@@ -206,3 +210,15 @@ class MainUI:
             self.item_delete.props.sensitive = False
             self.item_details.props.sensitive = False
             self.snapshots_ui.show_snapshots(None)
+
+    def update_userdata(self, source=None):
+        """
+        Download new userdata defaults from the Internet, and merge them
+        with our local catalog. Saves the merged library to ~/.config/userdata
+        """
+        self.win_main.hide()
+        dlg_update = gtk.MessageDialog()
+        #self.userdata.default_locations.load_from_url(USERDATA_UPDATE_URL)
+        #self.userdata.write_to_file(os.path)
+        os.execl(sys.executable, sys.executable, *sys.argv)
+        
