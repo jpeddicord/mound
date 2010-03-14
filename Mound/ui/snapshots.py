@@ -42,8 +42,6 @@ class SnapshotsUI:
             'tb_snap_delete',
             'tb_snap_import',
             'tb_snap_export',
-            'dlg_new_snapshot',
-            'entry_snapshot_name',
         ]
         for item in load:
             self.__dict__[item] = self.builder.get_object(item)
@@ -56,9 +54,6 @@ class SnapshotsUI:
         self.tb_snap_revert.connect('clicked', self.revert_to_selected)
         self.tb_snap_import.connect('clicked', self.import_snapshot)
         self.tb_snap_export.connect('clicked', self.export_selected_snapshot)
-
-        self.dlg_new_snapshot.connect('response', self.new_snapshot_ui_response)
-        self.dlg_new_snapshot.set_default_response(gtk.RESPONSE_OK)
 
     def show_snapshots(self, selected_app=False):
         """
@@ -94,54 +89,56 @@ class SnapshotsUI:
         Show a dialog prompting for a snapshot name. Default to the current
         date/time.
         """
-        dt = datetime.datetime.now().strftime("%Y-%m-%d %H%M")
-        self.entry_snapshot_name.props.text = dt
-        self.entry_snapshot_name.grab_focus()
-        self.dlg_new_snapshot.run()
 
-    def new_snapshot_ui_response(self, source, response):
-        """
-        Handle the "new snapshot" dialog. (See self.new_snapshot_ui)
-        Prevents invalid snapshot names. Takes a snapshot once valid.
-        """
+        def idle_callback(snap_name, dialog):
+            """
+            Create a snapshot in an idle callback, and re-enable the interface
+            when finished.
+            """
+            self.selected_app.take_snapshot(snap_name)
+            self.show_snapshots()
+            dialog.destroy()
+        
+        dlg_new = gtk.MessageDialog(self.win_main, gtk.DIALOG_MODAL,
+                gtk.MESSAGE_QUESTION, gtk.BUTTONS_OK_CANCEL, _("New Snapshot"))
+        dlg_new.set_default_response(gtk.RESPONSE_OK)
+        dlg_new.format_secondary_text(_("Enter a name for this snapshot below."))
+
+        entry_name = gtk.Entry()
+        entry_name.props.text = datetime.datetime.now().strftime("%Y-%m-%d %H%M")
+        dlg_new.vbox.pack_start(entry_name)
+        entry_name.show()
+        entry_name.grab_focus()
+
+        response = dlg_new.run()
         if response == gtk.RESPONSE_OK:
-            snap_name = self.entry_snapshot_name.props.text
+            snap_name = entry_name.props.text
             # check for valid name
             if not is_valid_snapshot_name(snap_name):
-                dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
+                dlg_error = gtk.MessageDialog(dlg_new, 0,
                         gtk.MESSAGE_ERROR, gtk.BUTTONS_OK,
                         _("The snapshot name may not contain slashes."))
                 dlg_error.run()
                 dlg_error.destroy()
-                return
+                dlg_new.destroy()
             # duplicates not allowed
             if snap_name in self.selected_app.snapshots.keys():
-                dlg_error = gtk.MessageDialog(self.dlg_new_snapshot, 0,
+                dlg_error = gtk.MessageDialog(dlg_new, 0,
                         gtk.MESSAGE_ERROR, gtk.BUTTONS_OK,
                         _("This snapshot already exists."))
                 dlg_error.run()
                 dlg_error.destroy()
+                dlg_new.destroy()
                 return
             # disable the interface & change to busy cursor
             watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
-            self.dlg_new_snapshot.get_window().set_cursor(watch)
-            for c in self.dlg_new_snapshot.get_children():
+            dlg_new.get_window().set_cursor(watch)
+            for c in dlg_new.get_children():
                 c.props.sensitive = False
-            gobject.idle_add(self.new_snapshot_cb, snap_name)
+            # idle_callback defined above
+            gobject.idle_add(idle_callback, snap_name, dlg_new)
         else:
-            self.dlg_new_snapshot.hide()
-    
-    def new_snapshot_cb(self, snap_name):
-        """
-        Create a snapshot in an idle callback, and re-enable the interface
-        when finished.
-        """
-        self.selected_app.take_snapshot(snap_name)
-        self.dlg_new_snapshot.get_window().set_cursor(None)
-        for c in self.dlg_new_snapshot.get_children():
-            c.props.sensitive = True
-        self.show_snapshots()
-        self.dlg_new_snapshot.hide()
+            dlg_new.destroy()
 
     def delete_selected_snapshot(self, source=None):
         """
