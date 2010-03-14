@@ -35,6 +35,8 @@ except:
 LANG_FULL = locale.getdefaultlocale()[0]
 LANG_SHORT = LANG_FULL[:2]
 
+USERDATA_UPDATE_URL = "http://files.codechunk.net/mound/userdata"
+
 def format_size(size):
     """
     Format a size (bytes) into something more readable, using both IEC (KiB)
