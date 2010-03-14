@@ -106,6 +106,7 @@ class SnapshotsUI:
 
         entry_name = gtk.Entry()
         entry_name.props.text = datetime.datetime.now().strftime("%Y-%m-%d %H%M")
+        entry_name.props.activates_default = True
         dlg_new.vbox.pack_start(entry_name)
         entry_name.show()
         entry_name.grab_focus()
@@ -121,6 +122,7 @@ class SnapshotsUI:
                 dlg_error.run()
                 dlg_error.destroy()
                 dlg_new.destroy()
+                return
             # duplicates not allowed
             if snap_name in self.selected_app.snapshots.keys():
                 dlg_error = gtk.MessageDialog(dlg_new, 0,
