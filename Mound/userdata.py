@@ -34,9 +34,11 @@ class UserData:
     """
     Loads and manages userdata entries for applications.
     """
-    default_locations = {}
-    applications = {}
-    _desktop_loaded = []
+
+    def __init__(self):
+        self.default_locations = DefaultsParser()
+        self.applications = {}
+        self._desktop_loaded = []
 
     def load_defaults(self, scan_directories=default_dirs):
         """
@@ -48,18 +50,8 @@ class UserData:
         for sdir in scan_directories:
             userdata_file = os.path.join(sdir, 'userdata')
             try:
-                f = open(userdata_file, 'r')
-            except:
-                continue
-            # read this userdata file
-            for line in f:
-                line = line.rstrip()
-                try:
-                    appline = line.split(' ', 1)
-                    self.default_locations[appline[0]] = appline[1]
-                except:
-                    continue
-            f.close()
+                self.default_locations.load_defaults(userdata_file)
+            except: pass
         return self.default_locations
     
     def load_applications(self, scan_directories=application_dirs):
@@ -132,12 +124,30 @@ class UserData:
 
                 self.applications[appname] = app
 
+class ParsingError(Exception):
+    pass
+class DuplicateDefaultError(ParsingError):
+    pass
 
 class DefaultsParser(dict):
     """
-    A parser for the default userdata fallback files.
-    Returns a dictionary of appname: location pairs.
+    A simple parser for the default userdata files.
+    Returns a dictionary of with appnames as keys and location lists as values.
     """
 
-    #def load_defaults(self, filename):
-    #    f = open TODO
+    def load_defaults(self, filename):
+        """
+        Load defaults from a file and merge with this list.
+        """
+        f = open(filename, 'r')
+        loaded = {}
+        for line in f:
+            line = line.strip()
+            if len(line) > 0 and line[0] != '#':
+                appname, locations = line.split(' ', 1)
+                appname, locations = appname.strip(), locations.strip()
+                if appname in loaded:
+                    raise DuplicateDefaultError, "%s is used more than once" % appname
+                loaded[appname] = locations
+        self.update(loaded)
+
