@@ -216,9 +216,24 @@ class MainUI:
         Download new userdata defaults from the Internet, and merge them
         with our local catalog. Saves the merged library to ~/.config/userdata
         """
+        def idle_callback():
+            self.userdata.default_locations.load_from_url(USERDATA_UPDATE_URL)
+            self.userdata.default_locations.write_to_file(os.path.join(XDGCONFIG, 'userdata'))
+            os.execl(sys.executable, sys.executable, *sys.argv)
+            
+        dlg_update = gtk.MessageDialog(self.win_main, 0, gtk.MESSAGE_QUESTION,
+                message_format=_("Mound will now connect to the Internet to download updates for the applications it knows about."))
+        dlg_update.add_button(gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL)
+        dlg_update.add_button(gtk.STOCK_REFRESH, gtk.RESPONSE_OK)
         self.win_main.hide()
-        dlg_update = gtk.MessageDialog()
-        #self.userdata.default_locations.load_from_url(USERDATA_UPDATE_URL)
-        #self.userdata.write_to_file(os.path)
-        os.execl(sys.executable, sys.executable, *sys.argv)
-        
+        if dlg_update.run() == gtk.RESPONSE_OK:
+            # disable the interface
+            watch = gtk.gdk.Cursor(gtk.gdk.WATCH)
+            dlg_update.get_window().set_cursor(watch)
+            for c in dlg_update.get_children():
+                c.props.sensitive = False
+            # idle_callback defined above
+            gobject.idle_add(idle_callback)
+        else:
+            dlg_update.destroy()
+            self.win_main.show()
