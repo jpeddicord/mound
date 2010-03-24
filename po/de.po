@@ -3,7 +3,7 @@
 # Copyright (C) 2010 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Thorsten M. <thorsten@gmx.de>, 2010.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: mound\n"
@@ -89,8 +89,7 @@ msgstr ""
 msgid "Snapshots"
 msgstr ""
 
-#: ../data/mound.ui.h:19
-#: ../Mound/ui/__init__.py:149
+#: ../data/mound.ui.h:19 ../Mound/ui/__init__.py:149
 #: ../Mound/ui/snapshots.py:172
 msgid "Take Snapshot"
 msgstr ""
@@ -136,8 +135,7 @@ msgstr ""
 msgid "Bad source snapshot"
 msgstr ""
 
-#: ../Mound/application.py:295
-#: ../Mound/application.py:307
+#: ../Mound/application.py:295 ../Mound/application.py:307
 msgid "Not a Mound snapshot"
 msgstr ""
 
@@ -158,8 +156,7 @@ msgstr ""
 msgid "%(application)s was loaded from:"
 msgstr ""
 
-#: ../Mound/ui/details.py:108
-#: ../Mound/ui/details.py:110
+#: ../Mound/ui/details.py:108 ../Mound/ui/details.py:110
 msgid "Snapshots are stored in:"
 msgstr ""
 
@@ -201,7 +198,7 @@ msgstr ""
 
 #: ../Mound/ui/__init__.py:204
 msgid "Select an Application"
-msgstr ""
+msgstr "Wählen Sie eine Anwendung"
 
 #: ../Mound/ui/snapshots.py:113
 msgid "The snapshot name may not contain slashes."
@@ -239,8 +236,7 @@ msgstr ""
 msgid "Open Snapshot"
 msgstr ""
 
-#: ../Mound/ui/snapshots.py:215
-#: ../Mound/ui/snapshots.py:249
+#: ../Mound/ui/snapshots.py:215 ../Mound/ui/snapshots.py:249
 msgid "Mound Snapshots"
 msgstr ""
 
@@ -256,4 +252,3 @@ msgstr "Fehler:"
 #: ../Mound/ui/snapshots.py:242
 msgid "Save Snapshot As"
 msgstr ""
-
