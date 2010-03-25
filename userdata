@@ -10,7 +10,7 @@ brasero $CONFIG/brasero
 chromium-browser $CONFIG/chromium
 cinelerra ~/.bcast
 driconf ~/.drirc
-empathy $CONFIG/Empathy;~/.gnome2/Empathy
+empathy $CONFIG/Empathy;$DATA/Empathy;~/.gnome2/Empathy
 epiphany-webkit ~/.gnome2/epiphany
 evince ~/.gnome2/evince
 firefox ~/.mozilla/firefox
