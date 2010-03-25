@@ -17,7 +17,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 import sys
-from optparse import OptionParser
+from optparse import OptionParser, SUPPRESS_HELP
 
 try:
     from Mound.info import version
@@ -52,13 +52,17 @@ def run_cli():
     p.add_option('-f', '--force',
         action='store_true', dest='force', default=False,
         help="Suppress all command-line prompts; use with caution.")
+    p.add_option('--dbus',
+        action='store_true', dest='dbusservice', default=False,
+        help=SUPPRESS_HELP)
+        
 
     (opts, args) = p.parse_args()
 
     # we _could_ use callbacks instead, but we also only want one option
     # to run at a time.
     optsum = 0
-    for opt in ['list_applications', 'take_snapshot', 'revert_snapshot', 'delete_data']:
+    for opt in ['list_applications', 'take_snapshot', 'revert_snapshot', 'delete_data', 'dbusservice']:
         if opts.__dict__[opt]:
             optsum += 1
     if optsum > 1:
@@ -87,7 +91,7 @@ def run_cli():
 
     if opts.list_applications:
         for app in ud.applications:
-            print ud.applications[app].name, ';'.join(ud.applications[app].locations)
+            print app, ';'.join(ud.applications[app].locations)
     
     elif opts.take_snapshot:
         appname, snapname = opts.take_snapshot
@@ -163,6 +167,22 @@ def run_cli():
         # delete!
         app.delete_data()
         print "Deleted data for %(application)s." % {'application': appname}
+
+    elif opts.dbusservice:
+        from gobject import threads_init, MainLoop
+        from dbus import SessionBus
+        from dbus.service import BusName
+        from dbus.mainloop.glib import DBusGMainLoop
+        from Mound.dbusservice import MoundService
+        
+        DBusGMainLoop(set_as_default=True)
+        threads_init()
+
+        srv = MoundService(BusName('org.mound', bus=SessionBus()), '/org/mound/manager')
+        srv.load_userdata()
+        srv.loop = MainLoop()
+        srv.loop.run()
+    
     return 0
 
 

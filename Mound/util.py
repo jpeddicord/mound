@@ -35,22 +35,22 @@ except:
 LANG_FULL = locale.getdefaultlocale()[0]
 LANG_SHORT = LANG_FULL[:2]
 
+# this url updates every 24 hours from the userdata branch on gitorious
 USERDATA_UPDATE_URL = "http://files.codechunk.net/mound/userdata"
 
 def format_size(size):
     """
-    Format a size (bytes) into something more readable, using both IEC (KiB)
-    and SI (KB) conventions.
+    Format a size (bytes) into something more readable, using IEC units.
     """
 
     size = float(size)
     if size > 1024 * 1024:
-        return "%0.1f MB (%0.1f MiB)" % (size / 1000 / 1000, size / 1024 / 1024)
+        return "%0.1f MiB" % (size / 1024 / 1024)
     elif size > 1024:
-        return "%0.1f KB (%0.1f KiB)" % (size / 1000, size / 1024)
+        return "%0.1f KiB" % (size / 1024)
     else:
         # bytes aren't a friendly unit, use more precision instead
-        return "%0.2f KB (%0.2f KiB)" % (size / 1000, size / 1024)
+        return "%0.2f KiB" % (size / 1024)
 
 def is_valid_snapshot_name(snap_name):
     """Returns whether the given name is valid for a snapshot."""
